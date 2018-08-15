@@ -1,0 +1,29 @@
+%h1 Events
+
+%table{border: 1}
+  %thead
+    %tr
+      %th.name Name
+      %th.location Location
+      %th.start_date Start date
+      %th.end_date End date
+      %th.buildup Buildup
+      %th.removel Removel
+      %th.cases Cases
+      %th.actions Actions
+  %tbody
+  - @events.each do |event|
+    %tr
+      %td= event.name
+      %td= event.location
+      %td= event.start_date
+      %td= event.end_date
+      %td= event.buildup
+      %td= event.removel
+      %td
+      %td
+        %a{href: event_path(event)} show
+        %a{href: edit_event_path(event)} edit
+
+%a{href: new_event_path} create new event
+%a{href: ""} import events

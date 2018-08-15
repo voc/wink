@@ -1,0 +1,18 @@
+%h1= @event.name
+
+%table{border: 1}
+  %tbody
+    %tr
+      %th Name
+      %td= @event.name
+    %tr
+      %th Type
+      %td= @event.event_type.name
+    %tr
+      %th Number
+      %td= @event.number
+    %tr
+      %th Actions
+      %td
+        %a{href: edit_event_path(@event)} edit
+        %a{href: delete_event_path(@event)} delete
