@@ -5,10 +5,12 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-
+# Case types
 ["Room case", "Audio case"].each do |type|
   CaseType.create(name: type)
 end
+
+# Cases
 
 [1,2,3,4,5,6].each do |number|
   Case.create(name: "Case #{number}", number: number,
@@ -17,3 +19,31 @@ end
   Case.create(name: "Audio case #{number}", number: number,
     case_type: CaseType.find_by(name: "Audio case"))
 end
+
+# Event
+
+Event.create(
+  name: "FrOSCon 2018",
+  location: "St. Augustin",
+  start_date: Date.parse("2018-08-25"),
+  end_date: Date.parse("2018-08-26"),
+  buildup: DateTime.parse("2018-08-24 10:00"),
+  removel: DateTime.parse("2018-08-26 18:00")
+)
+
+# Items
+
+Item.create(
+  name: "Encoding Cube",
+  price: 1000,
+  date_of_purchase: Date.parse("2014-05-01"),
+  serial_number: "02656001-d69e-4d23-8d0f-1a36b7b1dd71"
+)
+
+Item.new(
+  name: "Encoding Cube",
+  case: Case.first,
+  price: 1000,
+  date_of_purchase: Date.parse("2014-05-01"),
+  serial_number: "02656001-d69e-4d23-8d0f-1a36b7b1dd71"
+)
