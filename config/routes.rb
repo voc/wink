@@ -8,6 +8,17 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :events do
+    member do
+      get :delete
+    end
+  end
+
+  resources :transports do
+    member do
+      get :delete
+    end
+  end
 
   root :to => 'root#show'
 end

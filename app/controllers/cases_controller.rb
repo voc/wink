@@ -6,7 +6,15 @@ class CasesController < ApplicationController
   end
 
   def index
-    @cases = Case.all
+    @cases = {}
+    CaseType.all.each do |type|
+      @cases[type.name] = []
+      Case.where(case_type: type).each do |c|
+        @cases[type.name] << c
+      end
+    end
+
+    p @cases
   end
 
   private
