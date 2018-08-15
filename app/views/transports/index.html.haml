@@ -1,0 +1,20 @@
+%h1 Transports
+
+%table{border: 1}
+  %thead
+    %tr
+      %th.name Source event
+      %th.type Destination event
+      %th.number Cases
+      %th.actions Actions
+  %tbody
+  - @transports.each do |t|
+    %tr
+      %td= t.source_event
+      %td= t.destination_event
+      %td
+      %td
+        %a{href: transport_path(t)} show
+        %a{href: edit_transport_path(t)} edit
+
+%a{href: new_transport_path} create new transport
