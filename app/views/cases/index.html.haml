@@ -1,20 +1,21 @@
 %h1 Cases
 
-%table{border: 1}
-  %thead
-    %tr
-      %th.name Name
-      %th.type Type
-      %th.number Number
-      %th.actions Actions
-  %tbody
-  - @cases.each do |c|
-    %tr
-      %td= c.name
-      %td= c.case_type.name
-      %td= c.number
-      %td
-        %a{href: case_path(c)} show
-        %a{href: edit_case_path(c)} edit
+- @cases.each do |type, cases|
+  %h2= type
+  %table{border: 1}
+    %thead
+      %tr
+        %th.name Name
+        %th.number Number
+        %th.actions Actions
+    %tbody
+      - cases.each do |c|
+        %tr
+          %td= c.name
+          %td= c.number
+          %td
+            %a{href: case_path(c)} show
+            %a{href: edit_case_path(c)} edit
+
 
 %a{href: new_case_path} create new case
