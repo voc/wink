@@ -1,0 +1,18 @@
+%h1= @case.name
+
+%table{border: 1}
+  %tbody
+    %tr
+      %th Name
+      %td= @case.name
+    %tr
+      %th Type
+      %td= @case.case_type.name
+    %tr
+      %th Number
+      %td= @case.number
+    %tr
+      %th Actions
+      %td
+        %a{href: edit_case_path(@case)} edit
+        %a{href: delete_case_path(@case)} delete

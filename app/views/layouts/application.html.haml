@@ -1,13 +1,26 @@
 !!!
 %html
-    %head
-        %title ElectionsoftServer
-        = stylesheet_link_tag    "application", :media => "all"
-        = javascript_include_tag "application"
-        = csrf_meta_tags
+  %head
+    %title WINK
+
+    = stylesheet_link_tag    "application", :media => "all"
+    = javascript_include_tag "application"
+    = csrf_meta_tags
+
+
 %body
+  #alarms
     %p.notice
-        = notice
+      = notice
     %p.alert
-        = alert
+      = alert
+
+  #menu
+    %ul.menu
+      %li
+        %a{href: dashboard_path} dashboard
+      %li
+        %a{href: cases_path} cases
+
+  #main
     = yield
