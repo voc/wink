@@ -59,6 +59,7 @@ ActiveRecord::Schema.define(version: 2018_08_15_222326) do
     t.string "name"
     t.string "description"
     t.string "manufacturer"
+    t.string "model"
     t.integer "item_id"
     t.integer "case_id"
     t.date "date_of_purchase"

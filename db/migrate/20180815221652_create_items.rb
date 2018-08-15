@@ -4,6 +4,7 @@ class CreateItems < ActiveRecord::Migration[5.2]
       t.string :name
       t.string :description
       t.string :manufacturer
+      t.string :model
       t.belongs_to :item, index: true
       t.belongs_to :case, index: true
       t.date :date_of_purchase
