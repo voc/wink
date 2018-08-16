@@ -11,6 +11,39 @@ class EventsController < ApplicationController
     @events = Event.all.order(start_date: :desc)
   end
 
+  def new
+    @event = Event.new
+  end
+
+  def create
+    @event = Event.new(event_params)
+
+    if @event.save
+      redirect_to events_path
+    else
+      render action: 'new'
+    end
+  end
+
+  def edit
+  end
+
+  def update
+    if @event.update_attributes(event_params)
+      redirect_to events_path
+    else
+      render action: 'edit'
+    end
+  end
+
+  def delete
+  end
+
+  def destroy
+    @event.destroy
+    redirect_to events_path
+  end
+
   def import_events
     uri = URI("https://c3voc.de/eventkalender/events.json")
     json = JSON.parse(Net::HTTP.get(uri))
@@ -41,6 +74,11 @@ class EventsController < ApplicationController
 
   def find_event
     @event = Event.find(params[:id])
+  end
+
+  def event_params
+    params.require(:event).permit(:name, :start_date, :end_date, :buildup,
+                                 :removel, :location)
   end
 
 end

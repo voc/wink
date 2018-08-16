@@ -1,0 +1,13 @@
+
+%h2 Create new event
+- if @event.errors.any?
+  %ul
+    - @event.errors.each do |message|
+      %li
+        = message
+
+= form_for(@event, as: :event) do |f|
+  = render partial: 'form', locals: {f: f}, object: @event
+
+  = f.submit "Create"
+  = link_to 'Cancel', events_path

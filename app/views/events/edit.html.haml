@@ -1,0 +1,13 @@
+%h2= "Edit '#{@event.name}'"
+
+- if @event.errors.any?
+  %ul
+    - @event.errors.each do |message|
+      %li
+        = message
+
+= form_for(@event, as: :event, url: event_path(@event), method: 'PUT') do |f|
+  = render partial: 'form', locals: {f: f}, object: @event
+
+  = f.submit "Edit"
+  = link_to 'Cancel', events_path

@@ -1,0 +1,7 @@
+%form{action: event_path(@event), method: 'POST'}
+  %input{type: 'hidden', name: '_method', value: 'DELETE'}
+
+  %p= "Delete event '#{@event.name}'?"
+
+  %input{type: 'submit', value: "Delete"}
+  = link_to 'Cancel', events_path

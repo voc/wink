@@ -1,0 +1,24 @@
+%p
+  %label{for: 'name'}= "Name:"
+  %label.hint FrOSCon 2018
+  = f.text_field :name
+%p
+  %label{for: 'location'}= "Location:"
+  %label.hint St. Augustin
+  = f.text_field :location
+%p
+  %label{for: 'start_date'}= "Start date:"
+  %label.hint Conference start date
+  = f.text_field :start_date
+%p
+  %label{for: 'end_date'}= "End date:"
+  %label.hint Conference end date
+  = f.text_field :end_date
+%p
+  %label{for: 'buildup'}= "Buildup start timestemp:"
+  %label.hint Conference buildup start
+  = f.text_field :buildup
+%p
+  %label{for: 'removel'}= "Removel start timestemp:"
+  %label.hint Conference teardown start
+  = f.text_field :removel

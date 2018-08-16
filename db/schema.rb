@@ -30,10 +30,12 @@ ActiveRecord::Schema.define(version: 2018_08_15_222326) do
   create_table "event_cases", force: :cascade do |t|
     t.integer "event_id"
     t.integer "case_id"
+    t.integer "transport_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["case_id"], name: "index_event_cases_on_case_id"
     t.index ["event_id"], name: "index_event_cases_on_event_id"
+    t.index ["transport_id"], name: "index_event_cases_on_transport_id"
   end
 
   create_table "events", force: :cascade do |t|
