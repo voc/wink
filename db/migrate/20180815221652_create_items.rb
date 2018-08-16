@@ -10,6 +10,7 @@ class CreateItems < ActiveRecord::Migration[5.2]
       t.date :date_of_purchase
       t.decimal :price
       t.string :serial_number
+      t.boolean :broken, default: false
 
       t.timestamps
     end

@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 2018_08_15_222326) do
   create_table "cases", force: :cascade do |t|
     t.integer "case_type_id"
     t.string "name"
-    t.integer "number"
+    t.string "acronym"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["case_type_id"], name: "index_cases_on_case_type_id"
@@ -65,6 +65,7 @@ ActiveRecord::Schema.define(version: 2018_08_15_222326) do
     t.date "date_of_purchase"
     t.decimal "price"
     t.string "serial_number"
+    t.boolean "broken", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["case_id"], name: "index_items_on_case_id"

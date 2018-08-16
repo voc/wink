@@ -4,8 +4,8 @@ class CreateCases < ActiveRecord::Migration[5.2]
       t.belongs_to :case_type, index: true
 
       t.string :name
-      t.integer :number
-      
+      t.string :acronym
+
       t.timestamps
     end
   end

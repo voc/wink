@@ -13,10 +13,10 @@ end
 
 # Cases
 [1,2,3,4,5,6].each do |number|
-  Case.create(name: "Case #{number}", number: number,
+  Case.create(name: "Case #{number}", acronym: "#{number}",
     case_type: CaseType.find_by(name: "Room case"))
 
-  Case.create(name: "Audio case #{number}", number: number,
+  Case.create(name: "Audio case #{number}", acronym: "A#{number}",
     case_type: CaseType.find_by(name: "Audio case"))
 end
 
@@ -75,5 +75,6 @@ Item.create(
 Item.create(
   name: "USBC → HDMI-Adapter",
   case: Case.first,
+  broken: true,
   item: Item.find_by(case: Case.first, name: "Speaker-Adapter")
 )
