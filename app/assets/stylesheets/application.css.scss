@@ -18,23 +18,23 @@
 
 // property lists
  ol.properties {
-     list-style: none;
-     display: table;
+   list-style: none;
+   display: table;
  }
 
  ol.properties li {
-     display: table-row;
+   display: table-row;
  }
 
  ol.properties li label {
-     display: table-cell;
-     width: 50%;
-     font-weight: bold;
+   display: table-cell;
+   width: 50%;
+   font-weight: bold;
  }
 
  ol.properties li span {
-     display: table-cell;
-     width: 50%;
+   display: table-cell;
+   width: 50%;
  }
 
 // forms
@@ -45,10 +45,12 @@ input[type=text], textarea {
 label { display: block; }
 
 // links
-#h1 {
-  a {
-      text-decoration: none;
-      color: black;
+h1 {
+  a,
+  a:hover {
+    text-decoration: none;
+    color: #28c3ab;
+    background-color: black;
   }
 }
 
@@ -57,6 +59,14 @@ label { display: block; }
 }
 
 table {
+  border-collapse: collapse;
+  margin-top: 10px;
+
+  td, th, tr {
+    border: 1px solid black;
+    padding: 5px;
+  }
+
   .broken {
     background-color: red;
   }
@@ -64,4 +74,47 @@ table {
     background-color: blue;
     color: white;
   }
+}
+
+#menu {
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #000;
+  }
+
+  li {
+    float: left;
+    text-transform: capitalize;
+  }
+
+  li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+
+  /* Change the link color to #111 (black) on hover */
+  li a:hover {
+    background-color: #176e61;
+  }
+}
+
+
+a {
+  color: #28c3ab;
+  -webkit-transition: all .2s ease-in-out;
+  -moz-transition: all .2s ease-in-out;
+  transition: all .2s ease-in-out;
+  background-color: black;
+}
+
+a:hover,
+a:focus {
+  text-decoration: none;
+  color: #176e61;
 }

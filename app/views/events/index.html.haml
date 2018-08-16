@@ -1,6 +1,9 @@
 %h2 Events
 
-%table{border: 1}
+%a{href: new_event_path} create new event
+%a{href: ""} import events
+
+%table
   %thead
     %tr
       %th.name Name
@@ -24,6 +27,3 @@
       %td
         %a{href: event_path(event)} show
         %a{href: edit_event_path(event)} edit
-
-%a{href: new_event_path} create new event
-%a{href: ""} import events

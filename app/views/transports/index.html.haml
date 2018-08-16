@@ -1,6 +1,8 @@
 %h2 Transports
 
-%table{border: 1}
+%a{href: new_transport_path} create new transport
+
+%table
   %thead
     %tr
       %th.name Source event
@@ -16,5 +18,3 @@
       %td
         %a{href: transport_path(t)} show
         %a{href: edit_transport_path(t)} edit
-
-%a{href: new_transport_path} create new transport
