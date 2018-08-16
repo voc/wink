@@ -35,6 +35,13 @@
       %a{href: edit_item_path(@item)} edit
       %a{href: delete_item_path(@item)} delete
 
+- if @subitems.count != 0
+  %h3 Subitems
+  %ul
+    - @subitems.each do |subitem|
+      %li
+        %a{href: item_path(subitem)}= subitem.name
+
 %h3 Comments
 
 %a{href: ""} create new comment

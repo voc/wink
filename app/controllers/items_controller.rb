@@ -3,6 +3,7 @@ class ItemsController < ApplicationController
   before_action :find_item, except: [:index, :create, :new]
 
   def show
+    @subitems = Item.where(item: @item)
   end
 
   def index
@@ -50,7 +51,7 @@ class ItemsController < ApplicationController
   end
 
   def item_params
-    params.require(:item).permit(:name, :description, :manufactor, :model,
+    params.require(:item).permit(:name, :description, :manufacturer, :model,
                                  :item_id, :case_id, :date_of_purchase,
                                  :price, :serial_number, :broken, :missing)
   end

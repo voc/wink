@@ -7,6 +7,10 @@
   %label.hint T420
   = f.text_field :model
 %p
+  %label{for: 'manufacturer'}= "Manufacturer:"
+  %label.hint Lenovo
+  = f.text_field :manufacturer
+%p
   %label{for: 'description'}= "Description:"
   = f.text_area :description
 %p

@@ -2,11 +2,11 @@
 
 - if @item.errors.any?
   %ul
-    - @case.errors.each do |message|
+    - @item.errors.each do |message|
       %li
         = message
 
-= form_for(@item, as: :case, url: item_path(@item), method: 'PUT') do |f|
+= form_for(@item, as: :item, url: item_path(@item), method: 'PUT') do |f|
   = render partial: 'form', locals: {f: f}, object: @item
 
   = f.submit "Edit"
