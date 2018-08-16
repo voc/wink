@@ -15,6 +15,8 @@ class CreateTransports < ActiveRecord::Migration[5.2]
       t.boolean :quotation, default: false
       t.boolean :ordered, default: false
 
+      t.string :carrier
+
       t.column :destination_event, :event
       t.column :source_event, :event
     end
