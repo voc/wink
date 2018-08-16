@@ -1,26 +1,37 @@
 %h2 Dashboard
 
+.page_navigation
+  %ul
+    %li
+      %a{href: "\#transports"} transports
+    %li
+      %a{href: "\#events"} events
+    %li
+      %a{href: "\#items"} broken items
 
+%a{name: "transports"}
 %h3 Upcoming transports
 
 - if @upcoming_transports.count == 0
-  %p no transports planed for the next 6 weeks
+  %p no transports planed for the next 4 weeks
 - else
 
 
-
+%a{name: "events"}
 %h3 Upcoming events
 
-%table
-  %theader
-    %tr
-      %th Name
-      %th Start date
-      %th End date
-      %th Location
-      %th Transports
-  %tbody
-    - @upcoming_events.each do |event|
+- @upcoming_events.group_by{|e| e.start_date.month}.each do |month,events|
+  %h4= Date::MONTHNAMES[month]
+  %table
+    %theader
+      %tr
+        %th Name
+        %th Start date
+        %th End date
+        %th Location
+        %th Transports
+    %tbody
+    - events.each do |event|
       %tr
         %td= event.name
         %td= event.start_date
@@ -28,6 +39,7 @@
         %td= event.location
         %td
 
+%a{name: "items"}
 %h3 Broken or missing items
 
 - if @broken_or_missing_items.count == 0

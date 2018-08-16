@@ -107,6 +107,25 @@ table {
 }
 
 
+.page_navigation {
+
+  float: right;
+  border: 1px solid black;
+  padding-left: 0px;
+  padding-right: 0px;
+  list-style-type: '★';
+  ul {
+    padding-left: 20px;
+    padding-right: 20px;
+    list-style-type: '★';
+  }
+
+  ul li {
+    list-style-type: '★';
+  }
+}
+
+
 a {
   color: #28c3ab;
   -webkit-transition: all .2s ease-in-out;

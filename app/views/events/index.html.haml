@@ -3,7 +3,14 @@
 %a{href: new_event_path} create new event
 %a{href: events_import_path} import events
 
+.page_navigation
+  %ul
+    - @events.group_by{|e| e.start_date.year}.each do |year,events|
+      %li
+        %a{href: "\##{year}"}= year
+
 - @events.group_by{|e| e.start_date.year}.each do |year,events|
+  %a{name: year}
   %h3= "#{year} (#{events.count})"
   %table
     %thead
