@@ -1,0 +1,40 @@
+%h2= "#{@item.case.name}: #{@item.name}"
+
+%ol.properties
+  %li
+    %label Name
+    %span.about= @item.name
+  %li
+    %label Model
+    %span.model= @item.model
+  %li
+    %label Manufacturer
+    %span.manufacturer= @item.manufacturer
+  %li
+    %label Serial number
+    %span.serial_number= @item.serial_number
+  - if @item.item
+    %li
+      %label Relates to
+      %span.relates_to= @item.item.name
+  %li
+    %label Price
+    %span.price= @item.price
+  %li
+    %label Date of purchase
+    %span.date_of_purchase= @item.date_of_purchase
+
+%h3 Comments
+
+%table{border: 1}
+  %thead
+    %tr
+      %th Date
+      %th Author
+      %th Comment
+  %tbody
+    - @item.item_comments.each do |comment|
+      %tr
+        %td= comment.created_at
+        %td= comment.author
+        %td= comment.comment
