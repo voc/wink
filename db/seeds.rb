@@ -40,6 +40,26 @@ Item.create(
 )
 
 Item.create(
+  name: "Encoding Cube",
+  case: Case.find(3),
+  price: 1000,
+  date_of_purchase: Date.parse("2014-05-01"),
+  serial_number: "54348a31-e4da-4930-b36b-411c2f25655a",
+  broken: true
+)
+
+Item.create(
+  name: "TouchMix",
+  manufacturer: "QSC",
+  model: "TouchMix-16",
+  case: Case.find(2),
+  price: 666,
+  date_of_purchase: Date.parse("2017-05-23"),
+  serial_number: "3be4f2e4-494d-4f2f-918d-f880f51af0c6",
+  broken: false
+)
+
+Item.create(
   name: "Mixer Notebook",
   manufacturer: "Lenovo",
   model: "T420 L",

@@ -1,8 +1,10 @@
 class CreateItemComments < ActiveRecord::Migration[5.2]
   def change
-    create_table :comment_item_associations do |t|
-      t.belongs_to :event
+    create_table :item_comments do |t|
+      t.belongs_to :item
       t.text :comment
+      t.string :author
+
       t.timestamps
     end
   end

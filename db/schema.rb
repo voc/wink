@@ -36,14 +36,6 @@ ActiveRecord::Schema.define(version: 2018_08_15_222326) do
     t.index ["case_type_id"], name: "index_cases_on_case_type_id"
   end
 
-  create_table "comment_item_associations", force: :cascade do |t|
-    t.integer "event_id"
-    t.text "comment"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["event_id"], name: "index_comment_item_associations_on_event_id"
-  end
-
   create_table "events", force: :cascade do |t|
     t.string "name"
     t.date "start_date"
@@ -53,6 +45,15 @@ ActiveRecord::Schema.define(version: 2018_08_15_222326) do
     t.string "location"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "item_comments", force: :cascade do |t|
+    t.integer "item_id"
+    t.text "comment"
+    t.string "author"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["item_id"], name: "index_item_comments_on_item_id"
   end
 
   create_table "items", force: :cascade do |t|
