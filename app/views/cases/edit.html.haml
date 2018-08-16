@@ -1,0 +1,12 @@
+%h2= "Edit '#{@case.name}' (#{@case.acronym})"
+
+- if @case.errors.any?
+  %ul
+    - @case.errors.each do |message|
+      %li
+        = message
+
+= form_for(@case, as: :case, url: case_path(@case), method: 'PUT') do |f|
+  = render partial: 'form', locals: {f: f}, object: @case
+
+  = f.submit "Edit"

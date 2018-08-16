@@ -3,4 +3,8 @@ class Case < ActiveRecord::Base
 
   has_many :events
   has_many :items
+
+  validates :name, presence: true
+  validates :acronym, presence: true
+  validates :case_type, presence: true
 end
