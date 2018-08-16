@@ -9,15 +9,14 @@
         %th Action
     %tbody
       - items.each do |item|
-        - if item.broken
-          %tr{bgcolor: "red"}
+        %tr
+          - if item.missing
+            %td.missing{bgcolor: "blue"}= item.name
+          - elsif item.broken
+            %td.broken{bgcolor: "red"}= item.name
+          - else
             %td= item.name
-            %td
-              %a{href: item_path(item)} show
-              %a{href: edit_item_path(item)} edit
-        - else
-          %tr
-            %td= item.name
-            %td
-              %a{href: item_path(item)} show
-              %a{href: edit_item_path(item)} edit
+
+          %td
+            %a{href: item_path(item)} show
+            %a{href: edit_item_path(item)} edit

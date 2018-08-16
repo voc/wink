@@ -89,6 +89,7 @@ Item.create(
 Item.create(
   name: "DisplayPort → HDMI-Adapter",
   case: Case.first,
+  missing: true,
   item: Item.find_by(case: Case.first, name: "Speaker-Adapter")
 )
 
