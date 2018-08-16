@@ -12,15 +12,6 @@
 
 ActiveRecord::Schema.define(version: 2018_08_15_222326) do
 
-  create_table "case_event_associations", force: :cascade do |t|
-    t.integer "event_id"
-    t.integer "case_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["case_id"], name: "index_case_event_associations_on_case_id"
-    t.index ["event_id"], name: "index_case_event_associations_on_event_id"
-  end
-
   create_table "case_types", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
@@ -34,6 +25,15 @@ ActiveRecord::Schema.define(version: 2018_08_15_222326) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["case_type_id"], name: "index_cases_on_case_type_id"
+  end
+
+  create_table "event_cases", force: :cascade do |t|
+    t.integer "event_id"
+    t.integer "case_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["case_id"], name: "index_event_cases_on_case_id"
+    t.index ["event_id"], name: "index_event_cases_on_event_id"
   end
 
   create_table "events", force: :cascade do |t|
@@ -67,6 +67,7 @@ ActiveRecord::Schema.define(version: 2018_08_15_222326) do
     t.decimal "price"
     t.string "serial_number"
     t.boolean "broken", default: false
+    t.boolean "missing", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["case_id"], name: "index_items_on_case_id"
