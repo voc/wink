@@ -1,8 +1,10 @@
 %p
   %label{for: 'name'}= "Name:"
+  %label.hint Mixer Notebook
   = f.text_field :name
 %p
   %label{for: 'model'}= "Model:"
+  %label.hint T420
   = f.text_field :model
 %p
   %label{for: 'description'}= "Description:"
@@ -12,6 +14,7 @@
   = f.text_field :serial_number
 %p
   %label{for: 'price'}= "Price:"
+  %label.hint gross in EURO
   = f.text_field :price
 %p
   %label{for: 'date_of_purchase'}= "Date of purchase:"

@@ -46,7 +46,7 @@ class CasesController < ApplicationController
 
   def destroy
     @case.destroy
-    redirect_to articles_path
+    redirect_to cases_path
   end
 
   private
