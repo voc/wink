@@ -12,6 +12,9 @@ class CreateTransports < ActiveRecord::Migration[5.2]
       t.text :pickup_contact
       t.text :delivery_contact
 
+      t.boolean :quotation, default: false
+      t.boolean :ordered, default: false
+
       t.column :destination_event, :event
       t.column :source_event, :event
     end
