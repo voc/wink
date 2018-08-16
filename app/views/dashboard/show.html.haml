@@ -1,7 +1,30 @@
-%h1 Dashboard
+%h2 Dashboard
 
 
-%h2 Upcoming transports
+%h3 Upcoming transports
 
 
 %h3 Upcoming events
+
+%h3 Broken items
+
+- if @broken_items.count == 0
+  %p no broken items \o/
+- else
+  %table{border: 1}
+    %thead
+      %tr
+        %th Name
+        %th Case
+        %th Last comment
+        %th Actions
+    %tbody
+    - @broken_items.each do |bitem|
+      %tr
+        %td= bitem.name
+        %td= bitem.case.name
+        - if bitem.item_comments.count == 0
+          %td
+        - else
+          %td= bitem.item_comments.last.comment
+        %td

@@ -1,7 +1,7 @@
 !!!
 %html
   %head
-    %title WINK
+    %title (W)o (i)st mei(n)e Winke(k)atze?
 
     = stylesheet_link_tag    "application", :media => "all"
     = javascript_include_tag "application"
@@ -9,6 +9,9 @@
 
 
 %body
+  #header
+    %h1
+      %a{href: root_path, style: "text-decoration: none; color: black;"} WINK
   #alarms
     %p.notice
       = notice

@@ -1,18 +1,47 @@
-%h1= @case.name
+%h2= @case.name
 
-%table{border: 1}
-  %tbody
+%ol.properties
+  %li
+    %label Name
+    %span.name= @case.name
+  %li
+    %label Case type
+    %span.case_type= @case.case_type.name
+  %li
+    %label Acronym
+    %span.acronym= @case.acronym
+  %li
+    %label Actions
+    %span.actions
+      %a{href: edit_case_path(@case)} edit
+      %a{href: delete_case_path(@case)} delete
+
+
+%h2 Items
+
+%table{border:1}
+  %thead
     %tr
       %th Name
-      %td= @case.name
-    %tr
-      %th Type
-      %td= @case.case_type.name
-    %tr
-      %th Number
-      %td= @case.number
-    %tr
+      %th Relates to
+      %th Serial number
+      %th Price ()€)
       %th Actions
-      %td
-        %a{href: edit_case_path(@case)} edit
-        %a{href: delete_case_path(@case)} delete
+
+  %tbody
+    - @case.items.each do |item|
+      %tr
+        %td= item.name
+        - if item.item
+          %td= item.item.name
+        - else
+          %td
+        %td= item.serial_number
+        %td= item.price
+
+        %td
+          %a{href: ""} show
+          %a{href: ""} edit
+          %a{href: ""} delete
+
+%a{href: ""} add new item

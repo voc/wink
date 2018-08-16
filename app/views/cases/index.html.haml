@@ -1,4 +1,4 @@
-%h1 Cases
+%h2 Cases
 
 - @cases.each do |type, cases|
   %h2= type
@@ -6,13 +6,15 @@
     %thead
       %tr
         %th.name Name
-        %th.number Number
+        %th.number Acronym
+        %th.items Items
         %th.actions Actions
     %tbody
       - cases.each do |c|
         %tr
           %td= c.name
-          %td= c.number
+          %td= c.acronym
+          %td= c.items.count
           %td
             %a{href: case_path(c)} show
             %a{href: edit_case_path(c)} edit

@@ -13,3 +13,23 @@
  *= require_tree .
  *= require_self
  */
+
+ ol.properties {
+     list-style: none;
+     display: table;
+ }
+
+ ol.properties li {
+     display: table-row;
+ }
+
+ ol.properties li label {
+     display: table-cell;
+     width: 50%;
+     font-weight: bold;
+ }
+
+ ol.properties li span {
+     display: table-cell;
+     width: 50%;
+ }

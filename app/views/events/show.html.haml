@@ -1,18 +1,28 @@
-%h1= @event.name
+%h2= @event.name
 
-%table{border: 1}
-  %tbody
-    %tr
-      %th Name
-      %td= @event.name
-    %tr
-      %th Type
-      %td= @event.event_type.name
-    %tr
-      %th Number
-      %td= @event.number
-    %tr
-      %th Actions
-      %td
-        %a{href: edit_event_path(@event)} edit
-        %a{href: delete_event_path(@event)} delete
+%ol.properties
+  %li
+    %label Event name
+    %span.about= @event.name
+  %li
+    %label Location
+    %span.location= @event.location
+  %li
+    %label Start date
+    %span.start_date= @event.start_date
+  %li
+    %label End date
+    %span.end_date= @event.end_date
+  %li
+    %label Buildup
+    %span.buildup= @event.buildup
+  %li
+    %label Removel
+    %span.removel= @event.removel
+  %li
+    %label Actions
+    %span.actions
+      %a{href: edit_event_path(@event)} edit
+      %a{href: delete_event_path(@event)} delete
+
+%h3 Transports

@@ -3,6 +3,7 @@ class CasesController < ApplicationController
   before_action :find_case, except: [:index, :create, :new]
 
   def show
+    @items = @case.items
   end
 
   def index
@@ -13,8 +14,6 @@ class CasesController < ApplicationController
         @cases[type.name] << c
       end
     end
-
-    p @cases
   end
 
   private
