@@ -1,0 +1,30 @@
+%p
+  %label{for: 'name'}= "Name:"
+  = f.text_field :name
+%p
+  %label{for: 'model'}= "Model:"
+  = f.text_field :model
+%p
+  %label{for: 'description'}= "Description:"
+  = f.text_area :description
+%p
+  %label{for: 'serial_number'}= "Serial number:"
+  = f.text_field :serial_number
+%p
+  %label{for: 'price'}= "Price:"
+  = f.text_field :price
+%p
+  %label{for: 'date_of_purchase'}= "Date of purchase:"
+  = f.text_field :date_of_purchase
+%p
+  %label{for: 'item_id'}= "Relates to:"
+  = f.collection_select :item_id, Item.where(case_id: @item.case).order(:name), :id, :name, include_blank: true
+%p
+  %label{for: 'case_id'}= "Case:"
+  = f.collection_select :case_id, Case.order(:name), :id, :name, include_blank: false
+%p
+  %label{for: 'broken'}= "Broken:"
+  = f.check_box :broken
+%p
+  %label{for: 'missing'}= "Missing:"
+  = f.check_box :missing

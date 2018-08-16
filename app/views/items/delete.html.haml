@@ -1,0 +1,7 @@
+%form{action: case_path(@item), method: 'POST'}
+  %input{type: 'hidden', name: '_method', value: 'DELETE'}
+
+  %p= "Delete item '#{@item.name}' in case '#{@item.case.name}'?"
+
+  %input{type: 'submit', value: "Delete"}
+  = link_to 'Cancel', items_path

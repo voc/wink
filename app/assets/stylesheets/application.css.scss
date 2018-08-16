@@ -14,6 +14,9 @@
  *= require_self
  */
 
+
+
+// property lists
  ol.properties {
      list-style: none;
      display: table;
@@ -33,3 +36,18 @@
      display: table-cell;
      width: 50%;
  }
+
+// forms
+input[type=text], textarea {
+   width: 550px;
+}
+
+label { display: block; }
+
+// links
+#h1 {
+  a {
+      text-decoration: none;
+      color: black;
+  }
+}

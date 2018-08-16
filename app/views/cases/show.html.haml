@@ -40,8 +40,8 @@
         %td= item.price
 
         %td
-          %a{href: ""} show
-          %a{href: ""} edit
-          %a{href: ""} delete
+          %a{href: item_path(item)} show
+          %a{href: edit_item_path(item)} edit
+          %a{href: delete_item_path(item)} delete
 
 %a{href: ""} add new item

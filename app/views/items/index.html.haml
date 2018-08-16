@@ -1,1 +1,23 @@
 %h2 Items
+
+- @items.group_by{|i| i.case.name}.each do |key,items|
+  %h3= key
+  %table{border: 1}
+    %thead
+      %tr
+        %th Name
+        %th Action
+    %tbody
+      - items.each do |item|
+        - if item.broken
+          %tr{bgcolor: "red"}
+            %td= item.name
+            %td
+              %a{href: item_path(item)} show
+              %a{href: edit_item_path(item)} edit
+        - else
+          %tr
+            %td= item.name
+            %td
+              %a{href: item_path(item)} show
+              %a{href: edit_item_path(item)} edit

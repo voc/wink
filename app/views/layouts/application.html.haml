@@ -12,11 +12,6 @@
   #header
     %h1
       %a{href: root_path, style: "text-decoration: none; color: black;"} WINK
-  #alarms
-    %p.notice
-      = notice
-    %p.alert
-      = alert
 
   #menu
     %ul.menu
@@ -28,6 +23,8 @@
         %a{href: transports_path} transports
       %li
         %a{href: cases_path} cases
+      %li
+        %a{href: items_path} items
 
   #main
     = yield
