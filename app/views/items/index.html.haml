@@ -11,9 +11,9 @@
       - items.each do |item|
         %tr
           - if item.missing
-            %td.missing{bgcolor: "blue"}= item.name
+            %td.missing{title: "missing"}= item.name
           - elsif item.broken
-            %td.broken{bgcolor: "red"}= item.name
+            %td.broken{title: "broken"}= item.name
           - else
             %td= item.name
 

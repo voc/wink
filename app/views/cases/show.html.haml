@@ -31,6 +31,12 @@
   %tbody
     - @case.items.each do |item|
       %tr
+        - if item.missing
+          %td.missing{title: "missing"}= item.name
+        - elsif item.broken
+          %td.broken{title: "broken"}= item.name
+        - else
+          %td= item.name
         %td= item.name
         - if item.item
           %td= item.item.name

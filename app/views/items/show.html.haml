@@ -23,6 +23,17 @@
   %li
     %label Date of purchase
     %span.date_of_purchase= @item.date_of_purchase
+  %li
+    %label Broken
+    %span.broken= @item.broken
+  %li
+    %label Missing
+    %span.missing= @item.missing
+  %li
+    %label Actions
+    %span.actions
+      %a{href: edit_item_path(@item)} edit
+      %a{href: delete_item_path(@item)} delete
 
 %h3 Comments
 

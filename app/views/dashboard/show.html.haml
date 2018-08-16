@@ -6,10 +6,10 @@
 
 %h3 Upcoming events
 
-%h3 Broken items
+%h3 Broken or missing items
 
-- if @broken_items.count == 0
-  %p no broken items \o/
+- if @broken_or_missing_items.count == 0
+  %p no broken or missing items \o/
 - else
   %table{border: 1}
     %thead
@@ -17,9 +17,10 @@
         %th Name
         %th Case
         %th Last comment
+        %th State
         %th Actions
     %tbody
-    - @broken_items.each do |bitem|
+    - @broken_or_missing_items.each do |bitem|
       %tr
         %td= bitem.name
         %td= bitem.case.name
@@ -27,4 +28,10 @@
           %td
         - else
           %td= bitem.item_comments.last.comment
+        - if bitem.missing
+          %td.missing{title: "missing"} missing
+        - else
+          %td.broken{title: "broken"} broken
         %td
+          %a{href: item_path(bitem)} show
+          %a{href: edit_item_path(bitem)} edit
