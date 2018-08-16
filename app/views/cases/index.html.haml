@@ -1,5 +1,7 @@
 %h2 Cases
 
+%a{href: new_case_path} create new case
+
 - @cases.each do |type, cases|
   %h2= type
   %table{border: 1}
@@ -18,6 +20,3 @@
           %td
             %a{href: case_path(c)} show
             %a{href: edit_case_path(c)} edit
-
-
-%a{href: new_case_path} create new case

@@ -19,6 +19,8 @@
 
 %h2 Items
 
+%a{href: new_item_path(case_id: @case.id)} add new item
+
 %table{border:1}
   %thead
     %tr
@@ -37,7 +39,6 @@
           %td.broken{title: "broken"}= item.name
         - else
           %td= item.name
-        %td= item.name
         - if item.item
           %td= item.item.name
         - else
@@ -49,5 +50,3 @@
           %a{href: item_path(item)} show
           %a{href: edit_item_path(item)} edit
           %a{href: delete_item_path(item)} delete
-
-%a{href: new_item_path(case_id: @case.id)} add new item

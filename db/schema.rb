@@ -74,7 +74,20 @@ ActiveRecord::Schema.define(version: 2018_08_15_222326) do
     t.index ["item_id"], name: "index_items_on_item_id"
   end
 
-# Could not dump table "transports" because of following StandardError
-#   Unknown type 'event' for column 'destination_event'
+  create_table "transports", force: :cascade do |t|
+    t.text "source_address"
+    t.text "destination_address"
+    t.datetime "pickup_time"
+    t.datetime "delivery_time"
+    t.integer "pickup_timeframe"
+    t.integer "delivery_timeframe"
+    t.text "pickup_contact"
+    t.text "delivery_contact"
+    t.boolean "quotation", default: false
+    t.boolean "ordered", default: false
+    t.string "carrier"
+    t.integer "destination_event"
+    t.integer "source_event"
+  end
 
 end

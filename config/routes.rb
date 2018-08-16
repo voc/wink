@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     end
   end
 
+  get '/events/import', to: 'events#import_events'
   resources :events do
     member do
       get :delete

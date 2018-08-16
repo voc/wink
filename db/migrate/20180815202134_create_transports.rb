@@ -17,8 +17,8 @@ class CreateTransports < ActiveRecord::Migration[5.2]
 
       t.string :carrier
 
-      t.column :destination_event, :event
-      t.column :source_event, :event
+      t.integer :destination_event # event_id
+      t.integer :source_event      # event_id
     end
   end
 end
