@@ -13,7 +13,7 @@ end
 
 # Cases
 [1,2,3,4,5,6].each do |number|
-  Case.create(name: "Case #{number}", acronym: "#{number}",
+  Case.create(name: "Case #{number}", acronym: "S#{number}",
     case_type: CaseType.find_by(name: "Room case"))
 
   Case.create(name: "Audio case #{number}", acronym: "A#{number}",
