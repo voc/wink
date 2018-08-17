@@ -1,6 +1,13 @@
 %h2 Items
 
-- @items.group_by{|i| i.case.name}.each do |key,items|
+.page_navigation
+  %ul
+    - @items.group_by{|i| i.case.name}.sort.each do |key,items|
+      %li
+        %a{href: "\##{key.gsub(' ', '')}"}= key
+
+- @items.group_by{|i| i.case.name}.sort.each do |key,items|
+  %a{name: "#{key.gsub(' ', '')}"}
   %h3= key
   %table{border: 1}
     %thead
