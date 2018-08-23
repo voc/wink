@@ -1,13 +1,43 @@
+require 'csv'
+
 class ItemsController < ApplicationController
 
-  before_action :find_item, except: [:index, :create, :new]
+  before_action :find_item, except: [:index, :create, :new, :export]
 
   def show
     @subitems = Item.where(item: @item)
   end
 
   def index
-    @items = Item.all
+    if params["commit"] == "Export"
+      redirect_to controller: 'items', action: 'index', format: :csv, export: params["export"].permit!
+    end
+
+
+    respond_to do |format|
+      format.html do
+        @items = Item.all
+      end
+
+      format.csv do
+        if params["export"]
+          cases = params["export"]["cases"].reject(&:empty?)
+        else
+          cases = []
+        end
+
+        if cases.count > 0
+          @items = []
+
+          cases.each do |c|
+            Item.where("case_id = #{c} and price >= #{params['export']['price']}").each{ |i| @items << i }
+          end
+          p @items
+        else
+          @items = Item.all
+        end
+      end
+    end
   end
 
 
@@ -42,6 +72,10 @@ class ItemsController < ApplicationController
   def destroy
     @item.destroy
     redirect_to items_path
+  end
+
+  def export
+    @cases = Case.all
   end
 
   private

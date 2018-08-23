@@ -21,6 +21,7 @@ Rails.application.routes.draw do
     end
   end
 
+  get '/items/export', to: 'items#export'
   resources :items do
     member do
       get :delete

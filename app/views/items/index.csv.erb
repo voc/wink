@@ -1,0 +1,4 @@
+<%= CSV.generate_line Item.attribute_names -%>
+<%- @items.each do |i| -%>
+<%= CSV.generate_line(Item.attribute_names.map{|n| i.send(n) } )  -%>
+<%- end -%>
