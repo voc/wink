@@ -49,7 +49,7 @@ class ItemsController < ApplicationController
     @item = Item.new(item_params)
 
     if @item.save
-      redirect_to items_path
+      redirect_to case_path(@item.case)
     else
       render action: 'new'
     end
