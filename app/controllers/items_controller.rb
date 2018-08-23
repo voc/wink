@@ -83,7 +83,7 @@ class ItemsController < ApplicationController
     item.name = "Copy of #{item.name}"
 
     if item.save
-      redirect_to item_path(item)
+      redirect_to edit_item_path(@item)
     else
       redirect_to item_path(Item.find(params[:id]))
     end
