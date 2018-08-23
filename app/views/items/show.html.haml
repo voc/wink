@@ -21,7 +21,7 @@
       %span.relates_to= @item.item.name
   %li
     %label Price
-    %span.price= @item.price
+    %span.price= number_to_currency(@item.price, unit: "€", format: "%n %u")
   %li
     %label Date of purchase
     %span.date_of_purchase= @item.date_of_purchase

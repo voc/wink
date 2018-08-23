@@ -49,7 +49,7 @@
         %th Model
         %th Relates to
         %th Serial number
-        %th Price ()€)
+        %th Price
         %th Actions
 
     %tbody
@@ -68,7 +68,7 @@
           - else
             %td
           %td= item.serial_number
-          %td= item.price
+          %td= number_to_currency(item.price, unit: "€", format: "%n %u")
 
           %td
             %a{href: item_path(item)} show
