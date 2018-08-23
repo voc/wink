@@ -1,3 +1,5 @@
+- content_for :title, "Edit #{@case.acronym} - "
+
 %h2= "Edit '#{@case.name}' (#{@case.acronym})"
 
 - if @case.errors.any?
