@@ -53,7 +53,7 @@
         %th Actions
 
     %tbody
-      - items.each do |item|
+      - items.sort_by{ |i| i.name }.each do |item|
         %tr
           - if item.missing
             %td.missing{title: "missing"}= item.name
