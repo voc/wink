@@ -24,6 +24,12 @@
     %label Date of purchase
     %span.date_of_purchase= @item.date_of_purchase
   %li
+    %label Type
+    - if @item.item_type
+      %span.item_type= @item.item_type.name
+    - else
+      %span.item_type
+  %li
     %label Broken
     %span.broken= @item.broken
   %li

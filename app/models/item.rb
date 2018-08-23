@@ -4,6 +4,7 @@ class Item < ActiveRecord::Base
 
   belongs_to :case
   belongs_to :item, optional: true
+  belongs_to :item_type, optional: true
 
   validates :name, presence: true
   validates :case, presence: true

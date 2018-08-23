@@ -24,6 +24,9 @@
   %label{for: 'date_of_purchase'}= "Date of purchase:"
   = f.text_field :date_of_purchase
 %p
+  %label{for: 'Type'}= "Type:"
+  = f.collection_select :item_type_id, ItemType.all.order(:name), :id, :name, include_blank: true
+%p
   %label{for: 'item_id'}= "Relates to:"
   = f.collection_select :item_id, Item.where(case_id: @item.case).order(:name), :id, :name, include_blank: true
 %p

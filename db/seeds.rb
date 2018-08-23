@@ -30,6 +30,13 @@ Event.create(
   removel: DateTime.parse("2018-08-26 18:00")
 )
 
+
+["Netzteil", "Kabel", "Adapter", "Device", "Meshbag"].each do |type|
+  ItemType.create(
+    name: type
+  )
+end
+
 # Items
 Item.create(
   name: "Encoding Cube",

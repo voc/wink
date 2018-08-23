@@ -60,7 +60,7 @@ class ItemsController < ApplicationController
 
   def update
     if @item.update_attributes(item_params)
-      redirect_to items_path
+      redirect_to case_path(@item.case)
     else
       render action: 'edit'
     end
@@ -87,7 +87,8 @@ class ItemsController < ApplicationController
   def item_params
     params.require(:item).permit(:name, :description, :manufacturer, :model,
                                  :item_id, :case_id, :date_of_purchase,
-                                 :price, :serial_number, :broken, :missing)
+                                 :price, :serial_number, :broken, :missing,
+                                 :item_type_id)
   end
 
 end

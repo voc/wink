@@ -4,6 +4,10 @@ class CasesController < ApplicationController
 
   def show
     @items = @case.items
+
+    @grouped_items = @items.group_by do |i|
+      i.item_type
+    end
   end
 
   def index
