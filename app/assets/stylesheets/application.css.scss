@@ -45,6 +45,25 @@ input[type=text], textarea {
 
 label { display: block; }
 
+// export form
+.export_cases {
+  input[type=checkbox] + label {
+    display: inline;
+    style: none;
+
+  }
+  input[type=checkbox]:checked + label {
+    display: inline;
+    font-style: normal;
+    background: black;
+    color: #28c3ab;
+  }
+  label:after {
+    content: '\A';
+    white-space: pre;
+  }
+}
+
 // links
 h1 {
   a,
@@ -109,7 +128,6 @@ table {
 
 
 .page_navigation {
-
   float: right;
   border: 1px solid black;
   padding-left: 0px;

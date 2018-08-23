@@ -5,7 +5,7 @@
     %label{for: 'format'}= "Format:"
     = f.select(:format, options_for_select(["csv"]), {}, class: "item_format")
 
-  %p
+  %p.export_cases
     %label{for: "cases"}= "Cases:"
     = f.collection_check_boxes(:cases, Case.all.order(:name), :id, :name)
 
@@ -16,8 +16,3 @@
 
   = f.submit "Export"
   = link_to 'Cancel', items_path
-
-:scss
-  input[type='checkbox'] {
-    float: left;
-  }
