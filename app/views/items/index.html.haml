@@ -15,6 +15,8 @@
     %thead
       %tr
         %th Name
+        %th Manufacturer
+        %th Model
         %th Action
     %tbody
       - items.each do |item|
@@ -26,6 +28,8 @@
           - else
             %td= item.name
 
+          %td= item.manufacturer
+          %td= item.model
           %td
             %a{href: item_path(item)} show
             %a{href: edit_item_path(item)} edit

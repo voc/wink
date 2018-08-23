@@ -25,6 +25,8 @@
   %thead
     %tr
       %th Name
+      %th Manufacturer
+      %th Model
       %th Relates to
       %th Serial number
       %th Price ()€)
@@ -39,6 +41,8 @@
           %td.broken{title: "broken"}= item.name
         - else
           %td= item.name
+        %td= item.manufacturer
+        %td= item.model
         - if item.item
           %td= item.item.name
         - else
