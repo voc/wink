@@ -1,5 +1,14 @@
 %h2= @case.name
 
+.page_navigation
+  %ul
+    - @grouped_items.each do |t,items|
+      %li
+        - if t.nil?
+          %a{href: "\#notypedefined"} no type defined
+        - else
+          %a{href: "\##{t.name.gsub(' ', '')}"}= t.name
+
 %ol.properties
   %li
     %label Name
@@ -24,8 +33,10 @@
 - @grouped_items.each do |t,items|
 
   - if t.nil?
-    %h3= "no type defined "
+    %a{name: "notypedefined"}
+    %h3= "no type defined"
   - else
+    %a{name: "#{t.name.gsub(' ', '')}"}
     %h3= t.name
 
   %table{border:1}
