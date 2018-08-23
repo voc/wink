@@ -78,6 +78,17 @@ class ItemsController < ApplicationController
     @cases = Case.all
   end
 
+  def clone
+    item = Item.find(params[:id]).dup
+    item.name = "Copy of #{item.name}"
+
+    if item.save
+      redirect_to item_path(item)
+    else
+      redirect_to item_path(Item.find(params[:id]))
+    end
+  end
+
   private
 
   def find_item

@@ -25,6 +25,7 @@ Rails.application.routes.draw do
   resources :items do
     member do
       get :delete
+      get :clone
     end
   end
 

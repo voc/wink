@@ -41,6 +41,7 @@
     %label Actions
     %span.actions
       %a{href: edit_item_path(@item)} edit
+      %a{href: clone_item_path(@item)} clone
       %a{href: delete_item_path(@item)} delete
 
 - if @subitems.count != 0
