@@ -81,6 +81,7 @@ class ItemsController < ApplicationController
   def clone
     item = Item.find(params[:id]).dup
     item.name = "Copy of #{item.name}"
+    item.serial_number = ""
 
     if item.save
       redirect_to edit_item_path(@item)
