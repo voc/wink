@@ -64,7 +64,7 @@
 
 
 - if @item.item_type && ItemType::LOCATIONS.include?(@item.item_type.name)
-  %h3 Location for
+  %h3 Location of
   %ul
     - Item.where("location_item_id = #{@item.id}").each do |item|
       %li
