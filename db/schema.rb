@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_24_155731) do
+ActiveRecord::Schema.define(version: 2018_08_24_203922) do
 
   create_table "case_types", force: :cascade do |t|
     t.string "name"
@@ -42,14 +42,10 @@ ActiveRecord::Schema.define(version: 2018_08_24_155731) do
   end
 
   create_table "check_lists", force: :cascade do |t|
-    t.integer "case_id"
-    t.integer "event_id"
     t.text "comment"
     t.string "advisor"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["case_id"], name: "index_check_lists_on_case_id"
-    t.index ["event_id"], name: "index_check_lists_on_event_id"
   end
 
   create_table "event_cases", force: :cascade do |t|
@@ -58,7 +54,9 @@ ActiveRecord::Schema.define(version: 2018_08_24_155731) do
     t.integer "transport_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "check_list_id"
     t.index ["case_id"], name: "index_event_cases_on_case_id"
+    t.index ["check_list_id"], name: "index_event_cases_on_check_list_id"
     t.index ["event_id"], name: "index_event_cases_on_event_id"
     t.index ["transport_id"], name: "index_event_cases_on_transport_id"
   end

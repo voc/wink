@@ -1,6 +1,7 @@
 class Event < ActiveRecord::Base
   has_many :event_cases
   has_many :cases, through: :event_cases
+  has_many :check_lists, through: :event_cases
 
   validates :name, uniqueness: true
   validates :start_date, presence: true
