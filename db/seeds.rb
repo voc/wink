@@ -27,7 +27,8 @@ Event.create(
   start_date: Date.parse("2018-08-25"),
   end_date: Date.parse("2018-08-26"),
   buildup: DateTime.parse("2018-08-24 10:00"),
-  removel: DateTime.parse("2018-08-26 18:00")
+  removel: DateTime.parse("2018-08-26 18:00"),
+  case_ids: [1,5,6]
 )
 
 
