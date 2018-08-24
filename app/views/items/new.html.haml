@@ -11,7 +11,7 @@
   = render partial: 'form', locals: {f: f}, object: @item
 
   = f.submit "Create"
-  = link_to 'Cancel', items_path
+  = link_to 'Cancel', case_path(@item.case)
 
 
 :javascript

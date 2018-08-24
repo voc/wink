@@ -4,4 +4,4 @@
   %p= "Delete item '#{@item.name}' in case '#{@item.case.name}'?"
 
   %input{type: 'submit', value: "Delete"}
-  = link_to 'Cancel', items_path
+  = link_to 'Cancel', case_path(@item.case)
