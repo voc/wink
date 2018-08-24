@@ -1,6 +1,6 @@
 - content_for :title, "New item - "
 
-%h2 Create new item
+%h2= "Create new item for '#{@item.case.name}'"
 - if @item.errors.any?
   %ul
     - @item.errors.each do |message|
