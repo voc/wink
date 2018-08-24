@@ -15,6 +15,10 @@
   %li
     %label Serial number
     %span.serial_number= @item.serial_number
+  %li
+    %label Case
+    %span.case
+      %a{href: case_path(@item.case)}= @item.case.name
   - if @item.location
     %li
       %label Location

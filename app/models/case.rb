@@ -8,6 +8,8 @@ class Case < ActiveRecord::Base
   validates :acronym, presence: true
   validates :case_type, presence: true
 
+  LOCATIONS = ["Meshbag", "Fach"]
+
   def locations
     Item.where("case_id = #{self.id} and \
       (item_type_id = #{ItemType.find_by(name: "Meshbag").id} or

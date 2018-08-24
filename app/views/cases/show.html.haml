@@ -47,7 +47,6 @@
         %th Name
         %th Manufacturer
         %th Model
-        %th Relates to
         %th Serial number
         %th Price
         %th Actions
@@ -56,19 +55,22 @@
       - items.sort_by{ |i| i.name }.each do |item|
         %tr
           - if item.missing
-            %td.missing{title: "missing"}= item.name
+            %td.missing{title: "missing"}
+              %a{href: item_path(item)}= item.name
           - elsif item.broken
-            %td.broken{title: "broken"}= item.name
+            %td.broken{title: "broken"}
+              %a{href: item_path(item)}= item.name
           - else
-            %td= item.name
-          %td= item.manufacturer
-          %td= item.model
-          - if item.item
-            %td= item.item.name
-          - else
-            %td
-          %td= item.serial_number
-          %td= number_to_currency(item.price, unit: "€", format: "%n %u")
+            %td.no_color
+              %a{href: item_path(item)}= item.name
+          %td.no_color
+            %a{href: item_path(item)}= item.manufacturer
+          %td.no_color
+            %a{href: item_path(item)}= item.model
+          %td.no_color
+            %a{href: item_path(item)}= item.serial_number
+          %td.no_color
+            %a{href: item_path(item)}= number_to_currency(item.price, unit: "€", format: "%n %u")
 
           %td
             %a{href: item_path(item)} show

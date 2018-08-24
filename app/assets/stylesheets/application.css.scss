@@ -91,10 +91,36 @@ table {
 
   .broken {
     background-color: red;
+
+    a,
+    a:hover,
+    a:focus {
+      text-decoration: none;
+      background-color: red;
+      color: black;
+    }
   }
   .missing {
     background-color: blue;
     color: white;
+
+    a,
+    a:hover,
+    a:focus {
+      text-decoration: none;
+      background-color: blue;
+      color: white;
+    }
+  }
+
+  .no_color {
+    a,
+    a:hover,
+    a:focus {
+      text-decoration: none;
+      color: black;
+      background-color: white;
+    }
   }
 }
 

@@ -16,9 +16,12 @@
     %tbody
       - cases.each do |c|
         %tr
-          %td= c.name
-          %td= c.acronym
-          %td= c.items.count
+          %td.no_color
+            %a{href: case_path(c)}= c.name
+          %td.no_color
+            %a{href: case_path(c)}= c.acronym
+          %td.no_color
+            %a{href: case_path(c)}= c.items.count
           %td
             %a{href: case_path(c)} show
             %a{href: edit_case_path(c)} edit

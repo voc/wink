@@ -29,12 +29,18 @@
     %tbody
     - events.each do |event|
       %tr
-        %td= event.name
-        %td= event.location
-        %td= event.start_date
-        %td= event.end_date
-        %td= event.buildup
-        %td= event.removel
+        %td.no_color
+          %a{href: event_path(event)}= event.name
+        %td.no_color
+          %a{href: event_path(event)}= event.location
+        %td.no_color
+          %a{href: event_path(event)}= event.start_date
+        %td.no_color
+          %a{href: event_path(event)}= event.end_date
+        %td.no_color
+          %a{href: event_path(event)}= event.buildup
+        %td.no_color
+          %a{href: event_path(event)}= event.removel
         %td
         %td
           %a{href: event_path(event)} show
