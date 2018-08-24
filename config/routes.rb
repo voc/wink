@@ -29,5 +29,11 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :item_types do
+    member do
+      get :delete
+    end
+  end
+
   root :to => 'root#show'
 end

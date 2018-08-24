@@ -9,6 +9,7 @@
         %a{href: "\##{key.gsub(' ', '')}"}= key
 
 %a{href: items_export_path} create csv export
+%a{href: item_types_path} create item type
 
 - @items.group_by{|i| i.case.name}.sort.each do |key,items|
   %a{name: "#{key.gsub(' ', '')}"}

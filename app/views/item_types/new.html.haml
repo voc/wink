@@ -1,0 +1,25 @@
+- content_for :title, "New item type - "
+
+%h2 Create new item type
+- if @item_type.errors.any?
+  %ul
+    - @item_type.errors.each do |message|
+      %li
+        = message
+
+= form_for(@item_type, as: :item) do |f|
+  = render partial: 'form', locals: {f: f}, object: @item_type
+
+  %h3 existing item types
+  %ul
+    - ItemType.all.each do |type|
+      %li= type.name
+
+  = f.submit "Create"
+  = link_to 'Cancel', item_types_path
+
+
+:javascript
+  $(function() {
+    $('#item_date_of_purchase').datepicker({ dateFormat: 'dd-mm-yy' }).val();
+  });

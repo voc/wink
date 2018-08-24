@@ -1,0 +1,21 @@
+- content_for :title, "#{@item_type.name} - "
+
+%h2= "#{@item_type.name}"
+
+%ol.properties
+  %li
+    %label Name
+    %span.name= @item_type.name
+  %li
+    %label Name
+    %span.location
+      - if  ItemType::LOCATIONS.include?(@item_type.name)
+        true
+      - else
+        false
+
+  %li
+    %label Actions
+    %span.actions
+      %a{href: edit_item_type_path(@item_type)} edit
+      %a{href: delete_item_type_path(@item_type)} delete
