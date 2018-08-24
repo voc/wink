@@ -2,7 +2,9 @@ class Case < ActiveRecord::Base
   belongs_to :case_type
   belongs_to :event_case, optional: true
 
-  has_many :events
+  has_many :event_cases
+  has_many :events, through: :event_cases
+
   has_many :items
 
   validates :name, presence: true
