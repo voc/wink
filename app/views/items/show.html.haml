@@ -22,11 +22,13 @@
   - if @item.location
     %li
       %label Location
-      %span.location= @item.location.name
+      %span.location
+        %a{href: item_path(@item.location)}= @item.location.name
   - if @item.item
     %li
       %label Relates to
-      %span.relates_to= @item.item.name
+      %span.relates_to
+        %a{href: item_path(@item)}= @item.item.name
   %li
     %label Price
     %span.price= number_to_currency(@item.price, unit: "€", format: "%n %u")
@@ -52,12 +54,22 @@
       %a{href: clone_item_path(@item)} clone
       %a{href: delete_item_path(@item)} delete
 
+
 - if @subitems.count != 0
   %h3 Subitems
   %ul
     - @subitems.each do |subitem|
       %li
         %a{href: item_path(subitem)}= subitem.name
+
+
+- if @item.item_type && ItemType::LOCATIONS.include?(@item.item_type.name)
+  %h3 Location for
+  %ul
+    - Item.where("location_item_id = #{@item.id}").each do |item|
+      %li
+        %a{href: item_path(item)}= item.name
+
 
 %h3 Comments
 
