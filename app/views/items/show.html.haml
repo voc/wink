@@ -28,7 +28,7 @@
     %li
       %label Relates to
       %span.relates_to
-        %a{href: item_path(@item)}= @item.item.name
+        %a{href: item_path(@item.item)}= @item.item.name
   %li
     %label Price
     %span.price= number_to_currency(@item.price, unit: "€", format: "%n %u")
