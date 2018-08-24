@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_24_100014) do
+ActiveRecord::Schema.define(version: 2018_08_24_155731) do
 
   create_table "case_types", force: :cascade do |t|
     t.string "name"
@@ -25,6 +25,31 @@ ActiveRecord::Schema.define(version: 2018_08_24_100014) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["case_type_id"], name: "index_cases_on_case_type_id"
+  end
+
+  create_table "check_list_items", force: :cascade do |t|
+    t.integer "check_list_id"
+    t.integer "item_id"
+    t.integer "case_id"
+    t.boolean "broken"
+    t.boolean "missing"
+    t.text "comment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["case_id"], name: "index_check_list_items_on_case_id"
+    t.index ["check_list_id"], name: "index_check_list_items_on_check_list_id"
+    t.index ["item_id"], name: "index_check_list_items_on_item_id"
+  end
+
+  create_table "check_lists", force: :cascade do |t|
+    t.integer "case_id"
+    t.integer "event_id"
+    t.text "comment"
+    t.string "advisor"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["case_id"], name: "index_check_lists_on_case_id"
+    t.index ["event_id"], name: "index_check_lists_on_event_id"
   end
 
   create_table "event_cases", force: :cascade do |t|
