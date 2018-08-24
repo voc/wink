@@ -3,10 +3,13 @@ class CasesController < ApplicationController
   before_action :find_case, except: [:index, :create, :new]
 
   def show
-    @items = @case.items
+    shelfs = @case.locations
 
-    @grouped_items = @items.group_by do |i|
-      i.item_type
+    @items =
+    @items_without_shelfs = @case.items - shelfs
+
+    @grouped_items = @items_without_shelfs.group_by do |i|
+      i.location
     end
   end
 

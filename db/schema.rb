@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_23_190714) do
+ActiveRecord::Schema.define(version: 2018_08_24_100014) do
 
   create_table "case_types", force: :cascade do |t|
     t.string "name"
@@ -79,6 +79,7 @@ ActiveRecord::Schema.define(version: 2018_08_23_190714) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "item_type_id"
+    t.integer "location_item_id"
     t.index ["case_id"], name: "index_items_on_case_id"
     t.index ["item_id"], name: "index_items_on_item_id"
     t.index ["item_type_id"], name: "index_items_on_item_type_id"

@@ -15,6 +15,10 @@
   %li
     %label Serial number
     %span.serial_number= @item.serial_number
+  - if @item.location
+    %li
+      %label Location
+      %span.location= @item.location.name
   - if @item.item
     %li
       %label Relates to

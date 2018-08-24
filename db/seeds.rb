@@ -31,13 +31,32 @@ Event.create(
 )
 
 
-["Netzteil", "Kabel", "Adapter", "Device", "Meshbag"].each do |type|
+["Netzteil", "Kabel", "Adapter", "Device", "Meshbag", "Fach"].each do |type|
   ItemType.create(
     name: type
   )
 end
 
 # Items
+Item.create(
+  name: "Fach vorne links",
+  case: Case.first,
+  item_type: ItemType.find_by(name: "Fach")
+)
+
+Item.create(
+  name: "Fach hinten rechts",
+  case: Case.first,
+  item_type: ItemType.find_by(name: "Fach")
+)
+
+Item.create(
+  name: "Meshbag Speaker-Adapter",
+  case: Case.first,
+  item_type: ItemType.find_by(name: "Meshbag"),
+  location: Item.find_by(name: "Fach vorne links")
+)
+
 Item.create(
   name: "Encoding Cube",
   case: Case.first,
@@ -73,38 +92,39 @@ Item.create(
   case: Case.first,
   price: 800,
   date_of_purchase: Date.parse("2014-05-01"),
-  serial_number: "7d9dc4bf-d9c6-4818-8ebd-138428b27a62"
+  serial_number: "7d9dc4bf-d9c6-4818-8ebd-138428b27a62",
+  location: Item.find_by(name: "Notebook-Fach")
 )
 
 Item.create(
   name: "Netzteil Mixer Notebook",
   case: Case.first,
-  item: Item.find_by(case: Case.first, name: "Mixer Notebook")
-)
-
-Item.create(
-  name: "Speaker-Adapter",
-  case: Case.first
+  item_type: ItemType.find_by(name: "Netzteil"),
+  item: Item.find_by(case: Case.first, name: "Mixer Notebook"),
+  location: Item.find_by(name: "Fach hinten rechts")
 )
 
 Item.create(
   name: "VGA → HDMI-Adapter",
   case: Case.first,
-  item: Item.find_by(case: Case.first, name: "Speaker-Adapter")
+  item_type: ItemType.find_by(name: "Adapter"),
+  location: Item.find_by(name: "Meshbag Speaker-Adapter")
 )
 
 Item.create(
   name: "DisplayPort → HDMI-Adapter",
   case: Case.first,
   missing: true,
-  item: Item.find_by(case: Case.first, name: "Speaker-Adapter")
+  item_type: ItemType.find_by(name: "Adapter"),
+  location: Item.find_by(name: "Meshbag Speaker-Adapter")
 )
 
 Item.create(
   name: "USBC → HDMI-Adapter",
   case: Case.first,
   broken: true,
-  item: Item.find_by(case: Case.first, name: "Speaker-Adapter")
+  item_type: ItemType.find_by(name: "Adapter"),
+  location: Item.find_by(name: "Meshbag Speaker-Adapter")
 )
 
 # Transports

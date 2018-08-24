@@ -43,6 +43,7 @@ class ItemsController < ApplicationController
 
   def new
     @item = Item.new(case: Case.find(params[:case_id]))
+    @locations = ItemType.where(case_id: @item.case).order(:name)
   end
 
   def create
@@ -100,7 +101,7 @@ class ItemsController < ApplicationController
     params.require(:item).permit(:name, :description, :manufacturer, :model,
                                  :item_id, :case_id, :date_of_purchase,
                                  :price, :serial_number, :broken, :missing,
-                                 :item_type_id)
+                                 :item_type_id, :location_item_id)
   end
 
 end

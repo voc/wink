@@ -4,12 +4,12 @@
 
 .page_navigation
   %ul
-    - @grouped_items.each do |t,items|
+    - @grouped_items.each do |l,items|
       %li
-        - if t.nil?
-          %a{href: "\#notypedefined"} no type defined
+        - if l.nil?
+          %a{href: "\#nolocation"} no location
         - else
-          %a{href: "\##{t.name.gsub(' ', '')}"}= t.name
+          %a{href: "\##{l.name.gsub(' ', '')}"}= l.name
 
 %ol.properties
   %li
@@ -32,14 +32,14 @@
 
 %a{href: new_item_path(case_id: @case.id)} add new item
 
-- @grouped_items.each do |t,items|
+- @grouped_items.each do |l,items|
 
-  - if t.nil?
-    %a{name: "notypedefined"}
-    %h3= "no type defined"
+  - if l.nil?
+    %a{name: "nolocation"}
+    %h3= "no location"
   - else
-    %a{name: "#{t.name.gsub(' ', '')}"}
-    %h3= t.name
+    %a{name: "#{l.name.gsub(' ', '')}"}
+    %h3= l.name
 
   %table{border:1}
     %thead

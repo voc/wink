@@ -27,6 +27,9 @@
   %label{for: 'Type'}= "Type:"
   = f.collection_select :item_type_id, ItemType.all.order(:name), :id, :name, include_blank: true
 %p
+  %label{for: 'location_item_id'}= "Location:"
+  = f.collection_select :location_item_id, @item.case.locations, :id, :name, include_blank: true
+%p
   %label{for: 'item_id'}= "Relates to:"
   = f.collection_select :item_id, Item.where(case_id: @item.case).order(:name), :id, :name, include_blank: true
 %p
