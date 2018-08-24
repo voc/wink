@@ -8,6 +8,8 @@
       %li
         = message
 
+%a{href: new_item_path(case_id: @item.case)} new item
+
 = form_for(@item, as: :item, url: item_path(@item), method: 'PUT') do |f|
   = render partial: 'form', locals: {f: f}, object: @item
 
