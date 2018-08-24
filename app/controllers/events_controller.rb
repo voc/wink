@@ -77,8 +77,11 @@ class EventsController < ApplicationController
   end
 
   def event_params
-    params.require(:event).permit(:name, :start_date, :end_date, :buildup,
-                                  :removel, :location)
+    params.require(:event).permit(:name, :start_date, :end_date,
+                                  :removel, :location, :buildup,
+                                  :case_ids).tap do |whitelisted|
+      whitelisted[:case_ids] = params[:event][:case_ids]
+    end
   end
 
 end

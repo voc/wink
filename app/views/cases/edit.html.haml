@@ -11,5 +11,5 @@
 = form_for(@case, as: :case, url: case_path(@case), method: 'PUT') do |f|
   = render partial: 'form', locals: {f: f}, object: @case
 
-  = f.submit "Edit"
+  = f.submit "Save"
   = link_to 'Cancel', cases_path

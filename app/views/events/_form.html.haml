@@ -22,3 +22,7 @@
   %label{for: 'removel'}= "Removel start timestemp:"
   %label.hint Conference teardown start
   = f.text_field :removel
+
+%p.export_cases
+  %label{for: "cases"}= "Cases:"
+  = f.collection_check_boxes(:case_ids, Case.all.order(:name), :id, :name)

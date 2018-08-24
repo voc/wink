@@ -13,7 +13,7 @@
 = form_for(@item, as: :item, url: item_path(@item), method: 'PUT') do |f|
   = render partial: 'form', locals: {f: f}, object: @item
 
-  = f.submit "Edit"
+  = f.submit "Save"
   = link_to 'Cancel', case_path(@item.case)
 
 :javascript
