@@ -18,7 +18,7 @@ class ItemTypesController < ApplicationController
     @item_type = ItemType.new(item_params)
 
     if @item_type.save
-      redirect_to case_path(@item_type.case)
+      redirect_to item_type_path(@item_type)
     else
       render action: 'new'
     end
