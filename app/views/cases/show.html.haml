@@ -4,7 +4,7 @@
 
 .page_navigation
   %ul
-    - @grouped_items.each do |l,items|
+    - @grouped_items.sort_by{|l,items| "#{l}" }.each do |l,items|
       %li
         - if l.nil?
           %a{href: "\#nolocation"} no location
@@ -32,7 +32,7 @@
 
 %a{href: new_item_path(case_id: @case.id)} add new item
 
-- @grouped_items.each do |l,items|
+- @grouped_items.sort_by{|l,items| "#{l}"}.each do |l,items|
 
   - if l.nil?
     %a{name: "nolocation"}
