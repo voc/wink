@@ -52,7 +52,7 @@
     %span.actions
       %a{href: edit_item_path(@item)} edit
       %a{href: clone_item_path(@item)} clone
-      %a{href: delete_item_path(@item)} delete
+      = link_to 'delete', item_path(@item), data: {:confirm => "Delete #{@item.name} (#{@item.case.acronym})"}, method: :delete
 
 
 - if @subitems.count != 0
