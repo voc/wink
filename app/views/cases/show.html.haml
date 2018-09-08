@@ -4,12 +4,12 @@
 
 .page_navigation
   %ul
-    - @grouped_items.sort_by{|l,items| "#{l.name}" unless l.nil? }.each do |l,items|
+    - @grouped_items.sort_by{|l,items| "#{l}" }.each do |l,items|
       %li
-        - if l.nil?
+        - if l.empty?
           %a{href: "\#nolocation"} no location
         - else
-          %a{href: "\##{l.name.gsub(' ', '')}"}= l.name
+          %a{href: "\##{l.gsub(' ', '')}"}= l
 
 %ol.properties
   %li
@@ -32,14 +32,14 @@
 
 %a{href: new_item_path(case_id: @case.id)} add new item
 
-- @grouped_items.sort_by{|l,items| "#{l.name}" unless l.nil? }.each do |l,items|
+- @grouped_items.sort_by{|l,items| "#{l}" }.each do |l,items|
 
-  - if l.nil?
+  - if l.empty?
     %a{name: "nolocation"}
     %h3= "no location"
   - else
-    %a{name: "#{l.name.gsub(' ', '')}"}
-    %h3= l.name
+    %a{name: "#{l.gsub(' ', '')}"}
+    %h3= l
 
   %table{border:1}
     %thead

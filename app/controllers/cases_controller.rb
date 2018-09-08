@@ -9,7 +9,11 @@ class CasesController < ApplicationController
     @items_without_shelfs = @case.items - shelfs
 
     @grouped_items = @items_without_shelfs.group_by do |i|
-      i.location
+      if i.location.nil?
+        ""
+      else
+        "#{i.location.name}"
+      end
     end
   end
 
