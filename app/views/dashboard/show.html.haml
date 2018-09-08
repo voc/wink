@@ -32,6 +32,7 @@
         %th End date
         %th Location
         %th Transports
+        %th Cases
     %tbody
     - events.each do |event|
       %tr
@@ -40,6 +41,14 @@
         %td= event.end_date
         %td= event.location
         %td
+          %ul
+          - event.transports.each do |c|
+            %li
+              %a{href: case_path(c)}= c.name
+        %td 
+          %span.cases
+            - event.cases.each do |c|
+              %a{href: case_path(c)}= c.acronym
 
 %a{name: "items"}
 %h3 Broken or missing items
