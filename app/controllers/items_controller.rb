@@ -71,8 +71,8 @@ class ItemsController < ApplicationController
   end
 
   def destroy
-    @item.destroy
-    redirect_to items_path
+    @item.destroy()
+    redirect_to case_path(@item.case)
   end
 
   def export
