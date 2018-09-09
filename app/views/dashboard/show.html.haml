@@ -72,13 +72,17 @@
           %td.missing{title: "missing"} missing
         - else
           %td.broken{title: "broken"} broken
-        %td= bitem.name
-        %td= bitem.model
-        %td= bitem.case.name
+        %td.no_color
+          %a{href: item_path(bitem)}= bitem.name
+        %td.no_color
+          %a{href: item_path(bitem)}= bitem.model
+        %td.no_color
+          %a{href: case_path(bitem)}= bitem.case.name
         - if bitem.item_comments.count == 0
           %td
         - else
-          %td= bitem.item_comments.last.comment
+          %td.no_color
+            %a{href: item_path(bitem)}= bitem.item_comments.last.comment
         %td
           %a{href: item_path(bitem)} show
           %a{href: edit_item_path(bitem)} edit
