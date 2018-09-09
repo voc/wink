@@ -1,0 +1,15 @@
+- content_for :title, "Edit #{@check_list.name}"
+
+%h2= "Edit '#{@check_list.name}'"
+
+- if @check_list.errors.any?
+  %ul
+    - @check_list.errors.each do |message|
+      %li
+        = message
+
+= form_for(@check_list, as: :check_list, url: event_path(@check_list), method: 'PUT') do |f|
+  = render partial: 'form', locals: {f: f}, object: @check_list
+
+  = f.submit "Save"
+  = link_to 'Cancel', events_path

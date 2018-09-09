@@ -1,0 +1,26 @@
+- content_for :title, "Create #{@event_case.case.name} (#{@event_case.event.name}) checklist  - "
+
+%h2= "Create '#{@event_case.case.name}' (#{@event_case.event.name}) checklist "
+- if @event_case.check_list.errors.any?
+  %ul
+    - @event_case.check_list.errors.each do |message|
+      %li
+        = message
+
+= form_for(@event_case.check_list, as: :check_list) do |f|
+  = render partial: 'form', locals: {f: f}, object: @event_case.check_list
+
+  = f.hidden_field :event_case, value: @event_case.id
+
+
+  %p
+    In the next step, all
+    = "'#{@event_case.case.name}'"
+    %a{href: case_path(@event_case.case)} items
+    are linked in the current state. If you have any known missing
+    items, please
+    %a{href: case_path(@event_case.case)} add
+    them to the envent case, before creating checklist.
+
+  = f.submit "Create"
+  = link_to 'Cancel', event_path(@event_case.event)

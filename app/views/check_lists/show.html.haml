@@ -1,0 +1,14 @@
+- content_for :title, "Checklist #{@check_list.case.name} - (#{@check_list.event.name}) - "
+
+%h2= "Checklist #{@check_list.case.name} - (#{@check_list.event.name})"
+
+
+%ul
+- @check_list.check_list_items.each do |i|
+  %li= i.item.name
+
+= form_for(@check_list.check_list_items, as: :check_list_items, url: check_list_path(@check_list), method: 'PUT') do |f|
+  = render partial: 'form_check_item', locals: {f: f}, object: @check_list_item
+
+  = f.submit "Save"
+  = link_to 'Cancel', check_list_path(@check_list)

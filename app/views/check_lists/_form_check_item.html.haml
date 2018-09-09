@@ -1,0 +1,3 @@
+%p.export_cases
+  %label{for: "cases"}= "Cases:"
+  = f.collection_check_boxes(:case_ids, @check_list_items, :id, :name, disabled: @event.check_lists.map{ |l| l.case.id } )

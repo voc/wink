@@ -1,0 +1,51 @@
+- content_for :title, "Events - "
+
+
+%h2 Events
+
+%a{href: new_event_path} create new event
+%a{href: events_import_path} import events
+
+.page_navigation
+  %ul
+    - @events.group_by{|e| e.start_date.year}.each do |year,events|
+      %li
+        %a{href: "\##{year}"}= year
+
+- @events.group_by{|e| e.start_date.year}.each do |year,events|
+  %a{name: year}
+  %h3= "#{year} (#{events.count})"
+  %table
+    %thead
+      %tr
+        %th.name Name
+        %th.location Location
+        %th.start_date Start date
+        %th.end_date End date
+        %th.buildup Buildup
+        %th.removel Removel
+        %th.cases Cases
+        %th.actions Actions
+    %tbody
+    - events.each do |event|
+      %tr
+        %td.no_color
+          %a{href: event_path(event)}= event.name
+        %td.no_color
+          %a{href: event_path(event)}= event.location
+        %td.no_color
+          %a{href: event_path(event)}= event.start_date
+        %td.no_color
+          %a{href: event_path(event)}= event.end_date
+        %td.no_color
+          %a{href: event_path(event)}= event.buildup
+        %td.no_color
+          %a{href: event_path(event)}= event.removel
+        %td.no_color
+          - if event.cases.count == 0
+            no cases assined
+          - else
+            %a{href: event_path(event)}= event.cases.map{|c| c.acronym }.join(", ")
+        %td
+          %a{href: event_path(event)} show
+          %a{href: edit_event_path(event)} edit
