@@ -61,6 +61,7 @@
       %tr
         %th State
         %th Name
+        %th Model
         %th Case
         %th Last comment
         %th Actions
@@ -72,6 +73,7 @@
         - else
           %td.broken{title: "broken"} broken
         %td= bitem.name
+        %td= bitem.model
         %td= bitem.case.name
         - if bitem.item_comments.count == 0
           %td
