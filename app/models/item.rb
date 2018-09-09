@@ -22,4 +22,14 @@ class Item < ActiveRecord::Base
       "#{name} (#{model})"
     end
   end
+
+  def shelf?
+    return false if self.item_type.nil?
+
+    if ItemType::LOCATIONS.include?(self.item_type.name)
+      true
+    else
+      false
+    end
+  end
 end
