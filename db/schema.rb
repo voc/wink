@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_08_24_203922) do
+ActiveRecord::Schema.define(version: 2018_09_09_184408) do
 
   create_table "case_types", force: :cascade do |t|
     t.string "name"
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 2018_08_24_203922) do
     t.text "comment"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "checked"
     t.index ["case_id"], name: "index_check_list_items_on_case_id"
     t.index ["check_list_id"], name: "index_check_list_items_on_check_list_id"
     t.index ["item_id"], name: "index_check_list_items_on_item_id"
