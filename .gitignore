@@ -34,3 +34,7 @@ seriennummern.csv
 
 *~
 *autosave
+
+.sass-cache/
+
+*.patch
