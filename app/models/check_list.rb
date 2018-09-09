@@ -22,4 +22,10 @@ class CheckList < ActiveRecord::Base
 
     true
   end
+
+  def locations
+    self.check_list_items.map do |cli|
+      cli if cli.item.shelf?
+    end.compact
+  end
 end

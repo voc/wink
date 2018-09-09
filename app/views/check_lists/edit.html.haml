@@ -1,6 +1,6 @@
-- content_for :title, "Edit #{@check_list.name}"
+- content_for :title, "Checklist #{@check_list.case.name} - (#{@check_list.event.name}) - "
 
-%h2= "Edit '#{@check_list.name}'"
+%h2= "Checklist #{@check_list.case.name} - (#{@check_list.event.name})"
 
 - if @check_list.errors.any?
   %ul
@@ -8,8 +8,17 @@
       %li
         = message
 
-= form_for(@check_list, as: :check_list, url: event_path(@check_list), method: 'PUT') do |f|
-  = render partial: 'form', locals: {f: f}, object: @check_list
+.page_navigation
+  %ul
+    - @grouped_items.sort_by{|l,items| "#{l}" }.each do |l,cli|
+      %li
+        - if l.empty?
+          %a{href: "\#nolocation"} no location
+        - else
+          %a{href: "\##{l.gsub(' ', '')}"}= l
+
+= form_for(@check_list.check_list_items, as: :check_list_items, url: check_list_path(@check_list), method: 'PUT') do |f|
+  = render partial: 'form_check_item', locals: {f: f}, object: @check_list_item
 
   = f.submit "Save"
-  = link_to 'Cancel', events_path
+  = link_to 'Cancel', check_list_path(@check_list)

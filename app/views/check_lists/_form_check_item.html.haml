@@ -1,3 +1,12 @@
-%p.export_cases
-  %label{for: "cases"}= "Cases:"
-  = f.collection_check_boxes(:case_ids, @check_list_items, :id, :name, disabled: @event.check_lists.map{ |l| l.case.id } )
+- @grouped_items.sort_by{|l,items| "#{l}" }.each do |l,items|
+  - if l.empty?
+    %a{name: "nolocation"}
+    %h3= "no location"
+  - else
+    %a{name: "#{l.gsub(' ', '')}"}
+    %h3= l
+
+  %p.export_cases
+    - items.each do |cli|
+      = check_box_tag("check_list_item_#{cli.id}", cli.id, cli.checked, { name: "check_list_items[]"})
+      %label{ for: "check_list_item_#{cli.id}" }= "#{cli.item.name_with_model}"

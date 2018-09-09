@@ -33,9 +33,24 @@ class CheckListsController < ApplicationController
   end
 
   def edit
+    shelfs = @check_list.locations
+    @check_list_items = @check_list.check_list_items - shelfs
+
+    @grouped_items = @check_list_items.group_by do |cli|
+      next if cli.item.shelf?
+
+      if cli.item.location.nil?
+        ""
+      else
+        "#{cli.item.location.name}"
+      end
+    end
   end
 
   def update
+    p params
+    return
+
     if @check_list.update_attributes(check_list_params)
       redirect_to check_lists_path
     else
