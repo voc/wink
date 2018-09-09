@@ -25,4 +25,7 @@
 
 %p.export_cases
   %label{for: "cases"}= "Cases:"
-  = f.collection_check_boxes(:case_ids, Case.all.order(:name), :id, :name)
+  = f.collection_check_boxes(:case_ids, Case.all.order(:name), :id, :name, {checked: @event.cases.map{|c| c.id }, disabled: @event.check_lists.map{|e| e.case.id}, include_hidden: false })
+  - # stupid work around to include disabled but _checked_ cases into params
+  - @event.check_lists.map{|e| e.case.id}.each do |id|
+    %input{type: "hidden",  name: "event[case_ids][]", checked: "checked", value: "#{id}"}
