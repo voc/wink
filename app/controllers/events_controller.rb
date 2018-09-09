@@ -30,7 +30,7 @@ class EventsController < ApplicationController
 
   def update
     if @event.update_attributes(event_params)
-      redirect_to events_path
+      redirect_to event_path(@event)
     else
       render action: 'edit'
     end
