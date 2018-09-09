@@ -9,4 +9,17 @@ class Item < ActiveRecord::Base
 
   validates :name, presence: true
   validates :case, presence: true
+
+
+  def name_with_model
+    if model.empty?
+      if self.manufacturer.empty?
+        "#{name}"
+      else
+        "#{name} (#{manufacturer})"
+      end
+    else
+      "#{name} (#{model})"
+    end
+  end
 end
