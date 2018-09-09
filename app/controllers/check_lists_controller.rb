@@ -25,7 +25,7 @@ class CheckListsController < ApplicationController
 
     if @event_case.save!
       @event_case.check_list.copy_items!
-      
+
       redirect_to check_list_path(@event_case.check_list)
     else
       render action: 'new'
