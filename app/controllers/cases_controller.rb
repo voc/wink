@@ -4,8 +4,6 @@ class CasesController < ApplicationController
 
   def show
     shelfs = @case.locations
-
-    @items =
     @items_without_shelfs = @case.items - shelfs
 
     @grouped_items = @items_without_shelfs.group_by do |i|
