@@ -24,10 +24,16 @@
   %li
     %label Cases
     %span.cases
-      %ul
-        - @event.cases.each do |c|
+      - @event.cases.each do |c|
+        %ul
           %li
             %a{href: case_path(c)}= c.name
+          %li
+            - if c.check_list(@event)
+              %a{href: check_list_path(event: @event, case: c.id)}= "checklist"
+            - else
+              %a{href: new_check_list_path(event: @event, case: c.id)}= "create checklist"
+          %br
   %li
     %label Actions
     %span.actions

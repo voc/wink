@@ -3,7 +3,8 @@ class Case < ActiveRecord::Base
   belongs_to :event_case, optional: true
 
   has_many :event_cases
-  has_many :events, through: :event_cases
+  has_many :events,      through: :event_cases
+  has_many :check_lists, through: :event_cases
 
   has_many :items
 
@@ -16,5 +17,23 @@ class Case < ActiveRecord::Base
     Item.where("case_id = #{self.id} and \
       (item_type_id = #{ItemType.find_by(name: "Meshbag").id} or
       item_type_id = #{ItemType.find_by(name: "Fach").id})")
+  end
+
+  def check_list_exists?(event)
+    if check_list(event).nil?
+      false
+    else
+      true
+    end
+  end
+
+  def check_list(event)
+    ec = EventCase.find_by(event: event, case: self)
+
+    if ec.nil? || ec.check_list.nil?
+      nil
+    else
+      ec.check_list
+    end
   end
 end

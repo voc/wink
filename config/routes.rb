@@ -15,6 +15,9 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :check_lists do
+  end
+
   resources :transports do
     member do
       get :delete
