@@ -8,5 +8,5 @@
 
   %p.export_cases
     - items.each do |cli|
-      = check_box_tag("check_list_item_#{cli.id}", cli.id, cli.checked, { name: "check_list_items[]"})
-      %label{ for: "check_list_item_#{cli.id}" }= "#{cli.item.name_with_model}"
+      = check_box_tag("checked_check_list_items_#{cli.id}", cli.id, cli.checked, { name: "check_list[checked_check_list_items][]"})
+      %label{ for: "checked_check_list_items_#{cli.id}" }= "#{cli.item.name_with_model}"

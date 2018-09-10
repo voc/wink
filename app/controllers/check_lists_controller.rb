@@ -47,15 +47,23 @@ class CheckListsController < ApplicationController
     end
   end
 
+  # Check checklist.
   def update
-    p params
-    return
+    CheckList.find(params[:id]).check_list_items.each do |cli|
+      if checked_check_list_params[:checked_check_list_items].include?("#{cli.id}")
+        cli.checked = true
+      else
+        cli.checked = false
+      end
 
-    if @check_list.update_attributes(check_list_params)
-      redirect_to check_lists_path
-    else
-      render action: 'edit'
+      if cli.save!
+        next
+      else
+        render action: 'edit'
+      end
     end
+
+    redirect_to check_list_path(params[:id])
   end
 
   def delete
@@ -74,6 +82,10 @@ class CheckListsController < ApplicationController
 
   def check_list_params
     params.require(:check_list).permit(:comment, :advisor)
+  end
+
+  def checked_check_list_params
+    params.require(:check_list).permit(checked_check_list_items: [])
   end
 
   def event_case_params
