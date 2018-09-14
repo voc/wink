@@ -184,3 +184,12 @@ a:focus {
   text-decoration: none;
   color: #176e61;
 }
+
+
+// checklist filters
+.filters {
+  img {
+    // hide spinner and delete button on page load
+    visibility: hidden;
+  }
+}
