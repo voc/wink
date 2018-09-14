@@ -4,6 +4,13 @@
 
 %ul
   - @check_list.check_list_items.each do |ci|
-    %li= ci.item.name
+    - if ci.checked
+      %li= "#{ci.item.name} ✔"
+    - else
+      %li= ci.item.name
 
-= link_to 'check list', edit_check_list_path(@check_list)
+
+- if @check_list.checked
+  = "Checklist already checked!"
+- else
+  = link_to 'check list', edit_check_list_path(@check_list)

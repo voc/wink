@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_09_184408) do
+ActiveRecord::Schema.define(version: 2018_09_14_180301) do
 
   create_table "case_types", force: :cascade do |t|
     t.string "name"
@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(version: 2018_09_09_184408) do
     t.string "advisor"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "checked"
   end
 
   create_table "event_cases", force: :cascade do |t|

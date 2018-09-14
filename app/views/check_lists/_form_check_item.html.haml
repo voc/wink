@@ -10,3 +10,8 @@
     - items.each do |cli|
       = check_box_tag("checked_check_list_items_#{cli.id}", cli.id, cli.checked, { name: "check_list[checked_check_list_items][]"})
       %label{ for: "checked_check_list_items_#{cli.id}" }= "#{cli.item.name_with_model}"
+
+
+%p.export_cases
+  = check_box(:check_list, :checked, checked_value: true, unchecked_value: false)
+  %label{ for: "check_list_checked" }= "Checklist checked?"

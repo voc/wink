@@ -63,6 +63,14 @@ class CheckListsController < ApplicationController
       end
     end
 
+    if ActiveModel::Type::Boolean.new.cast(check_list_params[:checked])
+      @check_list.checked = true
+    else
+      @check_list.checked = false
+    end
+
+    @check_list.save!
+
     redirect_to check_list_path(params[:id])
   end
 
@@ -81,7 +89,7 @@ class CheckListsController < ApplicationController
   end
 
   def check_list_params
-    params.require(:check_list).permit(:comment, :advisor)
+    params.require(:check_list).permit(:comment, :advisor, :checked)
   end
 
   def checked_check_list_params
