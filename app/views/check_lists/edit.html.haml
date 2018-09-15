@@ -104,6 +104,7 @@
       var next_table = tables_after_h3_id[0];
       var next_check_box = $(next_table).find('input[type="checkbox"]')[0];
 
+      // invert check pending on first checkbox in group
       if (next_check_box.checked) {
         var checked = false;
       } else {

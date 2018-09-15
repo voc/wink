@@ -2,15 +2,46 @@
 
 %h2= "Checklist #{@check_list.case.name} - (#{@check_list.event.name})"
 
+%ol.properties
+  %li
+    %label Advisor:
+    %span.advisor= @check_list.advisor
+  - unless @check_list.comment.empty?
+    %li
+      %label Comment:
+      %span.comment= @check_list.comment
+  %br
+  %li
+    %label Event:
+    %span.event
+      %a{href: event_path(@check_list.event)}= @check_list.event.name
+  %li
+    %label Case:
+    %span.case
+      %a{href: case_path(@check_list.case)}= @check_list.case.name
+  %br
+  %li
+    %label Status:
+    %span.check_status
+      - if @check_list.checked
+        = "Checklist already checked!"
+      - else
+        = "Please finisch checking…"
+  - unless @check_list.checked
+    %li
+      %label Actions
+      %span.actions
+        %a{href: edit_check_list_path(@check_list)} Check me!
+
 %ul
-  - @check_list.check_list_items.each do |ci|
-    - if ci.checked
-      %li= "#{ci.item.name} ✔"
+  - @check_list.check_list_items.group_by{ |ci| ci.checked }.each do |status,items|
+    - if status == true
+      %h3 Checked
     - else
-      %li= ci.item.name
+      %h3 Missing
 
-
-- if @check_list.checked
-  = "Checklist already checked!"
-- else
-  = link_to 'check list', edit_check_list_path(@check_list)
+    - items.each do |ci|
+      - if ci.checked
+        %li= "#{ci.item.name} ✔"
+      - else
+        %li= ci.item.name
