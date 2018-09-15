@@ -39,9 +39,9 @@
       $('.new_check_list_items').each(function() {
         var shown_count = 0;
 
-        $(this).find('.export_cases').each(function() {
+        $(this).find('.noborder').each(function() {
           // debugger;
-          if ($(this).find('label').text().match(pattern)) {
+          if ($(this).find('td').text().match(pattern)) {
             $(this).show();
             shown_count += 1;
           } else {
@@ -91,5 +91,25 @@
       $(this).css('visibility', 'hidden');
       $('#item_filter').val('');
       item_filter_action();
+    });
+  });
+
+
+  // Select all items in headline group, when clicking on the headline.
+  $(document).ready(function() {
+    $('h3').click(function() {
+      // TODO: »Syntax error, unrecognized expression« when id has special
+      //       characters.
+      var tables_after_h3_id = $('#' + this.id).nextAll().addClass( "after" ).find('table');
+      var next_table = tables_after_h3_id[0];
+      var next_check_box = $(next_table).find('input[type="checkbox"]')[0];
+
+      if (next_check_box.checked) {
+        var checked = false;
+      } else {
+        var checked = true;
+      }
+
+      $(next_table).find('input[type="checkbox"]').prop('checked', checked);
     });
   });
