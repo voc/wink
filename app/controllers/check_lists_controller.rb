@@ -27,6 +27,7 @@ class CheckListsController < ApplicationController
       @event_case.check_list.copy_items!
 
       redirect_to check_list_path(@event_case.check_list)
+      # TODO: Send mqtt message, when checklist was created.
     else
       render action: 'new'
     end
@@ -65,6 +66,10 @@ class CheckListsController < ApplicationController
 
     if ActiveModel::Type::Boolean.new.cast(check_list_params[:checked])
       @check_list.checked = true
+      # TODO: Copy broken and missing states to items and create
+      #       a comment containing the event and checklist number.
+      #
+      # TODO: Send mqtt message, when checklist is finished.
     else
       @check_list.checked = false
     end
@@ -78,6 +83,7 @@ class CheckListsController < ApplicationController
   end
 
   def destroy
+    # TODO: Disable checklist deletion in views.
     @check_list.destroy
     redirect_to check_lists_path
   end
