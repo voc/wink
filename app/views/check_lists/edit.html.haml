@@ -98,8 +98,6 @@
   // Select all items in headline group, when clicking on the headline.
   $(document).ready(function() {
     $('h3').click(function() {
-      // TODO: »Syntax error, unrecognized expression« when id has special
-      //       characters.
       var tables_after_h3_id = $('#' + this.id).nextAll().addClass( "after" ).find('table');
       var next_table = tables_after_h3_id[0];
       var next_check_box = $(next_table).find('input[type="checkbox"]')[0];

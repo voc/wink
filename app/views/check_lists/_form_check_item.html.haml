@@ -1,11 +1,11 @@
 - @grouped_items.sort_by{|l,items| "#{l}" }.each do |l,items|
   - if l.empty?
-    %a{name: "nolocation"}
+    %a{name: Digest::MD5.hexdigest("nolocation")}
     %h3= "no location"
   - else
     %p.export_cases
-      %a{name: "#{l.gsub(' ', '')}"}
-      %h3{id: l.gsub(' ', '')}= l
+      %a{name: "#{Digest::MD5.hexdigest(l)}"}
+      %h3{id: Digest::MD5.hexdigest(l)}= l
 
       .noborder
         %table
