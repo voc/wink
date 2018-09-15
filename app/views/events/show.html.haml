@@ -30,7 +30,7 @@
             %a{href: case_path(c)}= c.name
           %li
             - if c.check_list(@event)
-              %a{href: check_list_path(event: @event, case: c.id)}= "checklist"
+              %a{href: check_list_path(c.check_list(@event))}= "checklist"
             - else
               %a{href: new_check_list_path(event: @event, case: c.id)}= "create checklist"
           %br
