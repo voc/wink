@@ -60,8 +60,10 @@
 
       if ($('#item_filter').val() != '') {
         $('#item_filter_clear').css('visibility', 'visible');
+        $('h3').css('display', 'none');
       } else {
         $('#item_filter_clear').css('visibility', 'hidden');
+        $('h3').css('display', 'block');
       }
 
       $('.spinner').css('visibility', 'hidden');
