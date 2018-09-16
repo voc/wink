@@ -12,8 +12,8 @@ class Item < ActiveRecord::Base
 
 
   def name_with_model
-    if model.empty?
-      if self.manufacturer.empty?
+    if self.model.nil? || self.model.empty?
+      if self.manufacturer.nil? || self.manufacturer.empty?
         "#{name}"
       else
         "#{name} (#{manufacturer})"
