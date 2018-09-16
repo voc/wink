@@ -50,7 +50,7 @@ class ItemsController < ApplicationController
     @item = Item.new(item_params)
 
     if @item.save
-      redirect_to case_path(@item.case)
+      redirect_to case_path(@item.case), notice: "Created item #{@item.name}"
     else
       render action: 'new'
     end
@@ -61,7 +61,7 @@ class ItemsController < ApplicationController
 
   def update
     if @item.update_attributes(item_params)
-      redirect_to case_path(@item.case)
+      redirect_to case_path(@item.case), notice: "Updated '#{@item.name}'"
     else
       render action: 'edit'
     end
@@ -71,8 +71,7 @@ class ItemsController < ApplicationController
   end
 
   def destroy
-    @item.destroy()
-    redirect_to case_path(@item.case)
+    redirect_to case_path(@item.case), notice: "Disabled '#{@item.name}' in case '#{@item.case.acronym}'"
   end
 
   def export
