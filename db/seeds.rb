@@ -121,11 +121,29 @@ Item.create(
 )
 
 Item.create(
+  name: "DisplayPort → HDMI-Adapter",
+  case: Case.first,
+  missing: true,
+  item_type: ItemType.find_by(name: "Adapter"),
+  location: Item.find_by(name: "Meshbag Speaker-Adapter"),
+  deleted: true
+)
+
+Item.create(
   name: "USBC → HDMI-Adapter",
   case: Case.first,
   broken: true,
   item_type: ItemType.find_by(name: "Adapter"),
   location: Item.find_by(name: "Meshbag Speaker-Adapter")
+)
+
+Item.create(
+  name: "USBC → HDMI-Adapter",
+  case: Case.first,
+  broken: true,
+  item_type: ItemType.find_by(name: "Adapter"),
+  location: Item.find_by(name: "Meshbag Speaker-Adapter"),
+  deleted: true
 )
 
 # Transports
