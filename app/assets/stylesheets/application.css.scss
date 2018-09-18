@@ -173,6 +173,14 @@ table {
   li a:hover {
     background-color: #176e61;
   }
+
+  a {
+    color: #28c3ab;
+    -webkit-transition: all .2s ease-in-out;
+    -moz-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;
+    background-color: black;
+  }
 }
 
 
@@ -195,17 +203,19 @@ table {
 
 
 a {
-  color: #28c3ab;
+  color: white;
   -webkit-transition: all .2s ease-in-out;
   -moz-transition: all .2s ease-in-out;
   transition: all .2s ease-in-out;
   background-color: black;
+  text-decoration: none;
 }
 
 a:hover,
 a:focus {
+  background-color: #28c3ab;
   text-decoration: none;
-  color: #176e61;
+  color: black;
 }
 
 
