@@ -48,11 +48,16 @@
     %label Missing
     %span.missing= @item.missing
   %li
+    %label Deleted
+    %span.deleted= @item.deleted
+  %li
     %label Actions
     %span.actions
-      %a{href: edit_item_path(@item)} edit
+      - if @item.deleted == false
+        %a{href: edit_item_path(@item)} edit
+        = link_to 'delete', item_path(@item), data: {:confirm => "Delete #{@item.name} (#{@item.case.acronym})"}, method: :delete
+
       %a{href: clone_item_path(@item)} clone
-      = link_to 'delete', item_path(@item), data: {:confirm => "Delete #{@item.name} (#{@item.case.acronym})"}, method: :delete
 
 
 - if @subitems.count != 0
@@ -73,7 +78,8 @@
 
 %h3 Comments
 
-%a{href: ""} create new comment
+- unless @item.deleted
+  %a{href: ""} create new comment
 
 %table{border: 1}
   %thead

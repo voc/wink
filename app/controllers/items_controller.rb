@@ -57,6 +57,9 @@ class ItemsController < ApplicationController
   end
 
   def edit
+    if @item.deleted == true
+      redirect_to item_path(@item), notify: "Item is still deleted!"
+    end
   end
 
   def update
@@ -71,6 +74,7 @@ class ItemsController < ApplicationController
   end
 
   def destroy
+    @item.update_attribute(:deleted, true)
     redirect_to case_path(@item.case), notice: "Disabled '#{@item.name}' in case '#{@item.case.acronym}'"
   end
 
@@ -93,7 +97,7 @@ class ItemsController < ApplicationController
   private
 
   def find_item
-    @item = Item.find(params[:id])
+    @item = Item.unscoped.find(params[:id])
   end
 
   def item_params

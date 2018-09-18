@@ -13,6 +13,8 @@ class CasesController < ApplicationController
         "#{i.location.name}"
       end
     end
+
+    @deleted_items = Item.unscoped.where(case: @case, deleted: true)
   end
 
   def index
