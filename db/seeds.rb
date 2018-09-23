@@ -146,4 +146,16 @@ Item.create(
   deleted: true
 )
 
+# Item comments
+ItemComment.create(
+  author: "meise",
+  comment: "defekt",
+  item_id: Item.last.id
+)
+
+ItemComment.create(
+  author: "Peter Lustig",
+  comment: "wieder ganz",
+  item_id: Item.last.id
+)
 # Transports
