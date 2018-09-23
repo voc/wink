@@ -34,7 +34,7 @@
         %a{href: edit_check_list_path(@check_list)} Check me!
 
 %ul
-  - @check_list.check_list_items.group_by{ |ci| ci.checked }.each do |status,items|
+  - @check_list.items_without_shelfs.group_by{ |ci| ci.checked }.each do |status,items|
     - if status == true
       %h3 Checked
     - else

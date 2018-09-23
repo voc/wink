@@ -28,4 +28,12 @@ class CheckList < ActiveRecord::Base
       cli if cli.item.shelf?
     end.compact
   end
+
+  def items
+    self.check_list_items
+  end
+
+  def items_without_shelfs
+    self.check_list_items - self.locations
+  end
 end
