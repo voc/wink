@@ -17,7 +17,8 @@ module Wink
     # the framework and any gems in your application.
     config.time_zone = 'Berlin'
 
+    # il8n config
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '*.{rb,yml}').to_s]
-    config.i18n.default_locale = :en
+    config.i18n.default_locale = :de
   end
 end

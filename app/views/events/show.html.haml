@@ -11,16 +11,20 @@
     %span.location= @event.location
   %li
     %label Start date
-    %span.start_date= @event.start_date
+    %span.start_date= l @event.start_date
   %li
     %label End date
-    %span.end_date= @event.end_date
+    %span.end_date= l @event.end_date
   %li
     %label Buildup
-    %span.buildup= @event.buildup
+    %span.buildup
+      - if @event.buildup
+        = l @event.buildup
   %li
     %label Removel
-    %span.removel= @event.removel
+    %span.removel
+      - if @event.removel
+        = l @event.removel
   %li
     %label Cases
     %span.cases
