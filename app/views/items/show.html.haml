@@ -76,20 +76,23 @@
         %a{href: item_path(item)}= item.name
 
 
-%h3 Comments
+%h3= "Comments (#{@item.item_comments.count})"
 
 - unless @item.deleted
-  %a{href: ""} create new comment
+  %a{href: new_item_comment_path(@item)} create new comment
 
-%table{border: 1}
+%table
   %thead
     %tr
       %th Date
       %th Author
       %th Comment
+      %th Actions
   %tbody
     - @item.item_comments.each do |comment|
       %tr
-        %td= comment.created_at
+        %td= l comment.created_at
         %td= comment.author
         %td= comment.comment
+        %td
+          %a{href: item_comment_path(id: comment, item_id: @item)} show

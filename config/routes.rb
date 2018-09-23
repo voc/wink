@@ -30,6 +30,9 @@ Rails.application.routes.draw do
       get :delete
       get :clone
     end
+    
+    resources :comments, controller: :item_comments do
+    end
   end
 
   resources :item_types do

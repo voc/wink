@@ -1,0 +1,16 @@
+- content_for :title, "Edit comment from #{@item_comment.created_at} - "
+
+%h2= "Edit '#{@item.name}' comment from '#{@item_comment.created_at}'"
+
+- if @item_comment.errors.any?
+  %ul
+    - @item_comment.errors.each do |message|
+      %li
+        = message
+
+
+= form_for @item_comment do |f|
+  = render partial: 'form', locals: {f: f}, object: @item_comment
+
+  = f.submit "Save"
+  = link_to 'Cancel', item_path(@item)
