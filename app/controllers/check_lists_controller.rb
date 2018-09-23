@@ -66,8 +66,8 @@ class CheckListsController < ApplicationController
 
     if ActiveModel::Type::Boolean.new.cast(check_list_params[:checked])
       @check_list.checked = true
-      # TODO: Copy broken and missing states to items and create
-      #       a comment containing the event and checklist number.
+      # Mark items as missing and add comment.
+      mark_missing_items(@check_list)
       #
       # TODO: Send mqtt message, when checklist is finished.
     else
@@ -106,4 +106,23 @@ class CheckListsController < ApplicationController
     params.require(:check_list).permit(:event_case)
   end
 
+  def mark_missing_items(checklist)
+    checklist.items_without_shelfs.each do |checklist_item|
+      # Mark items as missing when checklist is finished and items on list are
+      # not checked.
+      if checklist_item.checked == false
+        item = checklist_item.item
+        item.missing = true
+        item.save!
+
+        ItemComment.create(
+          author: "WINK",
+          comment: "Item marked as missing by '#{checklist.advisor}' during '#{checklist.event.name}'.",
+          item_id: checklist_item.item.id
+        )
+      end
+    end
+    # TODO: Copy broken state to items and create
+    #       a comment containing the event and checklist number.
+  end
 end
