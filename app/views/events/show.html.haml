@@ -9,6 +9,7 @@
   %li
     %label Location
     %span.location= @event.location
+  %br
   %li
     %label Start date
     %span.start_date= l @event.start_date
@@ -38,6 +39,7 @@
             - else
               %a{href: new_check_list_path(event: @event, case: c.id)}= "create checklist"
           %br
+  %br
   %li
     %label Actions
     %span.actions
