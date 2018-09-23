@@ -40,7 +40,7 @@
 
 // forms
 input[type=text], textarea {
-   width: 150px;
+   width: 250px;
 }
 
 label { display: block; }
@@ -224,5 +224,8 @@ a:focus {
   img {
     // hide spinner and delete button on page load
     visibility: hidden;
+  }
+  input[type=text], textarea {
+     width: 150px;
   }
 }
