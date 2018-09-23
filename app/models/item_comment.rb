@@ -7,4 +7,12 @@ class ItemComment < ActiveRecord::Base
 
   default_scope { order(created_at: :desc) }
 
+
+  def item
+    Item.find(self.item_id)
+  end
+
+  def abstract
+    self.comment[0..10]
+  end
 end
