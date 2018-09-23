@@ -70,6 +70,7 @@ class CheckListsController < ApplicationController
       mark_missing_items(@check_list)
       #
       # TODO: Send mqtt message, when checklist is finished.
+      Wink::MqttClient.send_message("'#{@check_list.advisor}' finished '#{@check_list.event.name}' checklist for '#{@check_list.case.name}'")
     else
       @check_list.checked = false
     end
