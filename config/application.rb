@@ -20,6 +20,11 @@ module Wink
     # il8n config
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '*.{rb,yml}').to_s]
     config.i18n.default_locale = :de
+
+    # set the application name and slogan
+    config.application_name = 'WINK'
+    config.application_slogan = '(W)o (i)st mei(n)e Winke(k)atze?'
+
     config.mqtt = config_for(:mqtt)
 
   end
