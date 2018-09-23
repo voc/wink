@@ -14,7 +14,7 @@
     %span.manufacturer= @item.manufacturer
   %li
     %label Price
-    %span.price= number_to_currency(@item.price, unit: "€", format: "%n %u")
+    %span.price= number_to_currency(@item.price, locale: :de)
   %li
     %label Date of purchase
     %span.date_of_purchase

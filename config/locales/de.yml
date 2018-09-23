@@ -8,3 +8,11 @@ de:
   time:
     formats:
       default: "%d.%m.%Y %H:%M"
+  number:
+    currency:
+      format:
+        unit: '€'
+        delimiter: '.'
+        separator: ','
+        precision: 2
+        format: '%n %u'

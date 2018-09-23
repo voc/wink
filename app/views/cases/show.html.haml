@@ -75,7 +75,7 @@
           %td.no_color
             %a{href: item_path(item)}= item.serial_number
           %td.no_color
-            %a{href: item_path(item)}= number_to_currency(item.price, unit: "€", format: "%n %u")
+            %a{href: item_path(item)}= number_to_currency(item.price, locale: :de)
 
           %td
             %a{href: item_path(item)} show
@@ -114,7 +114,7 @@
         %td.no_color
           %a{href: item_path(item)}= item.serial_number
         %td.no_color
-          %a{href: item_path(item)}= number_to_currency(item.price, unit: "€", format: "%n %u")
+          %a{href: item_path(item)}= number_to_currency(item.price, locale: :de)
         %td
           %a{href: item_path(item)} show
           %a{href: clone_item_path(item)} clone
