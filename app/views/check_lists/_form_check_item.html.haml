@@ -1,13 +1,13 @@
 - p @grouped_items
-- @grouped_items.sort_by{|l,items| "#{l}" }.each do |l,items|
+- @grouped_items.sort_by{|location,items| "#{location}" }.each do |location,items|
   %p.export_cases
-    - if l.empty?
+    - if location.empty?
       %a{name: Digest::MD5.hexdigest("nolocation")}
       %h3{id: Digest::MD5.hexdigest("nolocation")}= "no location"
     - else
       %p.export_cases
-        %a{name: "#{Digest::MD5.hexdigest(l)}"}
-        %h3{id: Digest::MD5.hexdigest(l)}= l
+        %a{name: "#{Digest::MD5.hexdigest(location)}"}
+        %h3{id: Digest::MD5.hexdigest(location)}= "#{location} (#{items.count})"
 
     .noborder
       %table
