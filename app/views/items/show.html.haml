@@ -13,8 +13,15 @@
     %label Manufacturer
     %span.manufacturer= @item.manufacturer
   %li
+    %label Price
+    %span.price= number_to_currency(@item.price, unit: "€", format: "%n %u")
+  %li
+    %label Date of purchase
+    %span.date_of_purchase= @item.date_of_purchase
+  %li
     %label Serial number
     %span.serial_number= @item.serial_number
+  %br
   %li
     %label Case
     %span.case
@@ -30,17 +37,12 @@
       %span.relates_to
         %a{href: item_path(@item.item)}= @item.item.name
   %li
-    %label Price
-    %span.price= number_to_currency(@item.price, unit: "€", format: "%n %u")
-  %li
-    %label Date of purchase
-    %span.date_of_purchase= @item.date_of_purchase
-  %li
     %label Type
     - if @item.item_type
       %span.item_type= @item.item_type.name
     - else
       %span.item_type
+  %br
   %li
     %label Broken
     %span.broken= @item.broken
@@ -50,6 +52,7 @@
   %li
     %label Deleted
     %span.deleted= @item.deleted
+  %br
   %li
     %label Actions
     %span.actions
