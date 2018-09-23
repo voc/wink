@@ -17,7 +17,9 @@
     %span.price= number_to_currency(@item.price, unit: "€", format: "%n %u")
   %li
     %label Date of purchase
-    %span.date_of_purchase= l @item.date_of_purchase
+    %span.date_of_purchase
+      - if @item.date_of_purchase
+        = l @item.date_of_purchase
   %li
     %label Serial number
     %span.serial_number= @item.serial_number
