@@ -1,0 +1,10 @@
+development: &DEFAULT                                    
+  host: mqtt.server.local.test
+  username: mqttuser
+  password: mqttpassword
+
+test:
+  <<: *DEFAULT
+
+production:
+  <<: *DEFAULT

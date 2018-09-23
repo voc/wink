@@ -112,6 +112,7 @@ GEM
     mini_racer (0.2.0)
       libv8 (>= 6.3)
     minitest (5.11.3)
+    mqtt (0.5.0)
     msgpack (1.2.4)
     multi_json (1.13.1)
     nio4r (2.3.1)
@@ -216,6 +217,7 @@ DEPENDENCIES
   jquery-ui-rails
   listen (>= 3.0.5, < 3.2)
   mini_racer
+  mqtt (= 0.5.0)
   puma (~> 3.11)
   rails (~> 5.2.1)
   sass-rails (~> 5.0)

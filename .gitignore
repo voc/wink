@@ -38,3 +38,5 @@ seriennummern.csv
 .sass-cache/
 
 *.patch
+
+config/mqtt.yml

@@ -20,5 +20,7 @@ module Wink
     # il8n config
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '*.{rb,yml}').to_s]
     config.i18n.default_locale = :de
+    config.mqtt = config_for(:mqtt)
+
   end
 end
