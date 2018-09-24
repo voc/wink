@@ -21,7 +21,7 @@
           %td.no_color
             %a{href: case_path(c)}= c.acronym
           %td.no_color
-            %a{href: case_path(c)}= c.items.count
+            %a{href: case_path(c)}= c.items.where(deleted: false).count
           %td
             %a{href: case_path(c)} show
             %a{href: edit_case_path(c)} edit
