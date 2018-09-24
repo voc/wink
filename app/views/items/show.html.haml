@@ -56,6 +56,14 @@
     %span.deleted= @item.deleted
   %br
   %li
+    %label Created at
+    %span.created_at= l @item.created_at
+  - unless @item.created_at == @item.updated_at
+    %li
+      %label Updated at
+      %span.updated_at= l @item.updated_at
+  %br
+  %li
     %label Actions
     %span.actions
       - if @item.deleted == false
