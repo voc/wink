@@ -229,3 +229,12 @@ a:focus {
      width: 150px;
   }
 }
+
+.mark.missing {
+  background-color: blue;
+  color: white;
+}
+
+.mark.broken {
+  background-color: red;
+}

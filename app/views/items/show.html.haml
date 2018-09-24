@@ -47,10 +47,16 @@
   %br
   %li
     %label Broken
-    %span.broken= @item.broken
+    - if @item.broken
+      %span.mark.broken= @item.broken
+    - else
+      %span.broken= @item.broken
   %li
     %label Missing
-    %span.missing= @item.missing
+    - if @item.missing
+      %span.mark.missing= @item.missing
+    - else
+      %span.missing= @item.missing
   %li
     %label Deleted
     %span.deleted= @item.deleted
