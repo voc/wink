@@ -86,7 +86,7 @@
           %td
         - else
           %td.no_color
-            %a{href: item_path(bitem)}= bitem.item_comments.last.comment
+            %a{href: item_path(bitem)}= bitem.item_comments.first.comment
         %td
           %a{href: item_path(bitem)} show
           %a{href: edit_item_path(bitem)} edit
