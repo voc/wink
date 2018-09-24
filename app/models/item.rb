@@ -10,8 +10,6 @@ class Item < ActiveRecord::Base
   validates :name, presence: true
   validates :case, presence: true
 
-  default_scope {where(deleted: false)}
-
 
   def name_with_model
     if self.model.nil? || self.model.empty?

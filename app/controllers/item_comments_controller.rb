@@ -48,7 +48,7 @@ class ItemCommentsController < ApplicationController
   private
 
   def find_item
-    @item = Item.unscoped.find(params[:item_id])
+    @item = Item.find(params[:item_id])
   end
 
   def find_item_comment

@@ -3,8 +3,8 @@ class CasesController < ApplicationController
   before_action :find_case, except: [:index, :create, :new]
 
   def show
-    shelfs = @case.locations
-    @items_without_shelfs = @case.items - shelfs
+    shelfs = @case.locations.where(deleted: false)
+    @items_without_shelfs = @case.items.where(deleted: false) - shelfs
 
     @grouped_items = @items_without_shelfs.group_by do |i|
       if i.location.nil?
@@ -14,7 +14,7 @@ class CasesController < ApplicationController
       end
     end
 
-    @deleted_items = Item.unscoped.where(case: @case, deleted: true)
+    @deleted_items = Item.where(case: @case, deleted: true)
   end
 
   def index

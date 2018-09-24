@@ -16,7 +16,7 @@ class ItemsController < ApplicationController
 
     respond_to do |format|
       format.html do
-        @items = Item.all
+        @items = Item.all.where(deleted: false)
       end
 
       format.csv do
@@ -30,11 +30,11 @@ class ItemsController < ApplicationController
           @items = []
 
           cases.each do |c|
-            Item.where("case_id = #{c} and price >= #{params['export']['price']}").each{ |i| @items << i }
+            Item.where("case_id = #{c} and price >= #{params['export']['price']}").where(deleted: false).each{ |i| @items << i }
           end
           p @items
         else
-          @items = Item.all
+          @items = Item.all.where(deleted: false)
         end
       end
     end
