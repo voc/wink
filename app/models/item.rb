@@ -43,4 +43,8 @@ class Item < ActiveRecord::Base
   def destroy
     self.update_attribute(:deleted, true)
   end
+
+  def md5_sum
+    Digest::MD5.hexdigest(self.to_json)
+  end
 end

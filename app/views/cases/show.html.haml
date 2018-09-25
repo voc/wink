@@ -12,7 +12,7 @@
           - if l.empty?
             %a{href: "\#nolocation"} no location
           - else
-            %a{href: "\##{l.gsub(' ', '')}"}= l
+            %a{href: "\##{Digest::MD5.hexdigest(l)}"}= l
     %li
       %a{href: "\#deleteditems"} Deleted items
 
@@ -43,7 +43,7 @@
     %a{name: "nolocation"}
     %h4= "no location"
   - else
-    %a{name: "#{l.gsub(' ', '')}"}
+    %a{name: "#{Digest::MD5.hexdigest(l)}"}
     %h4= l
 
   %table{border:1}
