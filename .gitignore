@@ -40,3 +40,5 @@ seriennummern.csv
 *.patch
 
 config/mqtt.yml
+
+coverage
