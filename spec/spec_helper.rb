@@ -17,6 +17,10 @@ require 'simplecov'
 SimpleCov.start 'rails'
 
 RSpec.configure do |config|
+  # Seed database
+  config.before(:suite) do
+    Rails.application.load_seed # loading seeds
+  end
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.
