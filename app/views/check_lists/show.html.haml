@@ -36,10 +36,12 @@
 %ul
   -# TODO: Move items select to controller
   - items = @check_list.items_without_shelfs.group_by{ |ci| ci.checked }
-  %h3= "Missing (#{items[false].count})"
-  - items[false].each do |ci|
-    %li= ci.item.name
+  - if items[false]
+    %h3= "Missing (#{items[false].count})"
+    - items[false].each do |ci|
+      %li= ci.item.name
 
-  %h3= "Checked (#{items[true].count})"
-  - items[true].each do |ci|
-    %li= "#{ci.item.name} ✔"
+  - if items[true]
+    %h3= "Checked (#{items[true].count})"
+    - items[true].each do |ci|
+      %li= "#{ci.item.name} ✔"
