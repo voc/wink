@@ -9,10 +9,10 @@
     %ul
       - @grouped_items.sort_by{|l,items| "#{l}" }.each do |l,items|
         %li
-          - if l.empty?
+          - if l.nil?
             %a{href: "\#nolocation"} no location
           - else
-            %a{href: "\##{Digest::MD5.hexdigest(l)}"}= l
+            %a{href: "\##{Digest::MD5.hexdigest(l.name)}"}= l.name
     %li
       %a{href: "\#deleteditems"} Deleted items
 
@@ -39,12 +39,14 @@
 
 - @grouped_items.sort_by{|l,items| "#{l}" }.each do |l,items|
 
-  - if l.empty?
+  - if l.nil?
     %a{name: "nolocation"}
     %h4= "no location"
   - else
-    %a{name: "#{Digest::MD5.hexdigest(l)}"}
-    %h4= l
+    %a{name: "#{Digest::MD5.hexdigest(l.name)}"}
+    %h4= l.name
+    %a{href: new_item_path(case_id: @case.id, location: l.id)} add new item
+    %a{href: edit_item_path(l)} edit location 
 
   %table{border:1}
     %thead

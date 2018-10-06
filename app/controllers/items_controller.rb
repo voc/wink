@@ -43,6 +43,9 @@ class ItemsController < ApplicationController
 
   def new
     @item = Item.new(case: Case.find(params[:case_id]))
+    if params[:location]
+      @item.location_item_id = params[:location]
+    end
     @locations = ItemType.where(case_id: @item.case).order(:name)
   end
 

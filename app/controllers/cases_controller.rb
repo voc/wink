@@ -7,11 +7,7 @@ class CasesController < ApplicationController
     @items_without_shelfs = @case.items.where(deleted: false) - shelfs
 
     @grouped_items = @items_without_shelfs.group_by do |i|
-      if i.location.nil?
-        ""
-      else
-        "#{i.location.name}"
-      end
+      i.location
     end
 
     @deleted_items = Item.where(case: @case, deleted: true)
