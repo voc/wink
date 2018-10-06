@@ -80,8 +80,9 @@
             %a{href: item_path(item)} show
             %a{href: edit_item_path(item)} edit
             %a{href: clone_item_path(item)} clone
-  %a{href: edit_item_path(l)} edit location 
-  %a{href: new_item_path(case_id: @case.id, location: l.id)} add new item
+  - unless l.nil?
+    %a{href: edit_item_path(l)} edit location 
+    %a{href: new_item_path(case_id: @case.id, location: l.id)} add new item
   
 
 %a{name: "deleteditems"}
