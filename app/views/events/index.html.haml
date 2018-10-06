@@ -47,7 +47,7 @@
             %a{href: event_path(event)}= l event.removel
         %td.no_color
           - if event.cases.count == 0
-            no cases assined
+            no cases assigned
           - else
             %a{href: event_path(event)}= event.cases.map{|c| c.acronym }.join(", ")
         %td
