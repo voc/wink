@@ -23,6 +23,11 @@
   %li
     %label Serial number
     %span.serial_number= @item.serial_number
+  - unless @item.description.empty?
+    %br
+    %li
+      %label Description
+      %span.description= @item.description
   %br
   %li
     %label Case
