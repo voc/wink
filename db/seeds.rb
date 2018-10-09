@@ -159,3 +159,9 @@ ItemComment.create(
   item_id: Item.last.id
 )
 # Transports
+
+
+# Checklists
+event_case = EventCase.first
+event_case.check_list = CheckList.new(advisor: 'Peter Lustig', comment: 'foobar, möp möp 23')
+event_case.save
