@@ -10,7 +10,11 @@ class Wink::MqttClient
     message['level'] = 'info'
     message['msg'] = text
 
-    client.publish('/voc/alert', message.to_json)
+    if ENV['RAILS_ENV'] == 'production'
+      client.publish('/voc/alert', message.to_json)
+    else
+      puts "MQTT: #{message}"
+    end
   end
 
   private
