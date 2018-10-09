@@ -29,6 +29,19 @@ Run application
  bin/rails server
 ```
 
+## API
+
+A real API is not implemented yet. Nevertheless you cann call `.json` to some of
+the views to get an JSON output:
+
+```
+GET /check_lists.json
+GET /check_lists/:id.json
+```
+
+`events`, `items` and `cases` are also ready for this.
+
+
 ## Deployment
 
 It is highly recommended to deploy this application with passenger or comparable webservers.
