@@ -11,6 +11,11 @@ class CasesController < ApplicationController
     end
 
     @deleted_items = Item.where(case: @case, deleted: true)
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @case.to_json }
+    end
   end
 
   def index
@@ -20,6 +25,11 @@ class CasesController < ApplicationController
       Case.where(case_type: type).each do |c|
         @cases[type.name] << c
       end
+    end
+
+    respond_to do |format|
+      format.html
+      format.json { render json: Case.all.to_json }
     end
   end
 

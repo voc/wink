@@ -5,10 +5,19 @@ class EventsController < ApplicationController
   before_action :find_event, except: [:index, :create, :new, :import_events]
 
   def show
+    respond_to do |format|
+      format.html
+      format.json { render :json => @event.to_json }
+    end
   end
 
   def index
     @events = Event.all.order(start_date: :desc)
+
+    respond_to do |format|
+      format.html
+      format.json { render :json => @events.to_json }
+    end
   end
 
   def new

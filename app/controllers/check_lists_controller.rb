@@ -3,10 +3,19 @@ class CheckListsController < ApplicationController
   before_action :find_check_list, except: [:index, :create, :new]
 
   def show
+    respond_to do |format|
+      format.html
+      format.json { render json: @check_list.to_json }
+    end
   end
 
   def index
     @check_lists = CheckList.all
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @check_lists.to_json }
+    end
   end
 
   def new
@@ -24,6 +33,7 @@ class CheckListsController < ApplicationController
     @event_case.check_list = CheckList.new(check_list_params)
 
     if @event_case.save!
+      # TODO: move that into the model
       @event_case.check_list.copy_items!
 
       redirect_to check_list_path(@event_case.check_list)

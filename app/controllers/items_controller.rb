@@ -6,6 +6,11 @@ class ItemsController < ApplicationController
 
   def show
     @subitems = Item.where(item: @item)
+
+    respond_to do |format|
+      format.html
+      format.json { render :json => @item.to_json }
+    end
   end
 
   def index
@@ -17,6 +22,12 @@ class ItemsController < ApplicationController
     respond_to do |format|
       format.html do
         @items = Item.all.where(deleted: false)
+      end
+
+      format.json do
+        @items = Item.all.where(deleted: false)
+
+        render json: @items
       end
 
       format.csv do
