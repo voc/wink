@@ -3,7 +3,9 @@ require 'rails_helper'
 RSpec.describe Item, type: :model do
 
   before do
-    @item = Item.new(name: 'my item', model: 'foobar')
+    @case = Case.new(name: "möp", acronym: "bla")
+
+    @item = Item.new(name: 'my item', model: 'foobar', case: @case)
     @item.item_type = ItemType.new(name: 'Fach')
   end
 
@@ -43,6 +45,30 @@ RSpec.describe Item, type: :model do
 
     it "should return md5 sum" do
       expect(@item.md5_sum).to eq Digest::MD5.hexdigest(@item.to_json)
+    end
+  end
+
+  context "#move_sub_items" do
+
+    before do
+      @new_case = Case.new(name: "new_case", acronym: "nc")
+      @sub_item = Item.new(name: "sub_item", case: @case)
+
+      @item.items << @sub_item
+      @item.save
+    end
+
+    it "should move all subitems to the same case" do
+      expect(@item.case).to eq @sub_item.case
+      expect(@item.items.count).to eq 1
+
+      @item.case = @new_case
+      @item.save
+
+      expect(@item.case).not_to eq @sub_item.case
+
+      @item.move_sub_items
+      expect(@item.case).to eq @sub_item.case
     end
   end
 

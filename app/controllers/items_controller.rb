@@ -78,6 +78,9 @@ class ItemsController < ApplicationController
 
   def update
     if @item.update_attributes(item_params)
+      # move subitems to same case
+      @item.move_sub_items
+
       redirect_to case_path(@item.case), notice: "Updated '#{@item.name}'"
     else
       render action: 'edit'

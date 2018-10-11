@@ -47,4 +47,16 @@ class Item < ActiveRecord::Base
   def md5_sum
     Digest::MD5.hexdigest(self.to_json)
   end
+
+  # Move all suitems to the same case.
+  #
+  # TODO: show message in view before save
+  def move_sub_items
+    self.items.each do |sub_item|
+      if self.case != sub_item.case
+        sub_item.case = self.case
+        sub_item.save!
+      end
+    end
+  end
 end
