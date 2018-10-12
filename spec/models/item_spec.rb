@@ -5,7 +5,8 @@ RSpec.describe Item, type: :model do
   before do
     @case = Case.new(name: "möp", acronym: "bla")
 
-    @item = Item.new(name: 'my item', model: 'foobar', case: @case)
+    @item = Item.new(name: 'my item', model: 'foobar', case: @case,
+                     serial_number: "1337")
     @item.item_type = ItemType.new(name: 'Fach')
   end
 
@@ -89,6 +90,41 @@ RSpec.describe Item, type: :model do
       item.delete
 
       expect(item.deleted).to be true
+    end
+  end
+
+  context "#clone_item" do
+    it "should clone item" do
+      new_item = @item.clone_item
+
+      expect(new_item).not_to eq @item
+      expect(new_item.name).to eq "Copy of my item"
+    end
+
+    it "should not copy serialnumber" do
+      new_item = @item.clone_item
+
+      expect(new_item.serial_number).not_to eq @item.serial_number
+      expect(new_item.serial_number).to eq ""
+    end
+
+    it "should copy sub items" do
+      item     = Item.create(name: "my item")
+      sub_item = Item.create(name: "sub_item", case: @case)
+      item.items << sub_item
+
+      new_item = item.clone_item
+
+      expect(new_item.items.count).to eq item.items.count
+      expect(new_item.items.first.name).to eq "Copy of sub_item"
+      expect(new_item).not_to eq item
+    end
+
+    it "should return new item clone" do
+      new_item = @item.clone_item
+
+      expect(new_item).not_to eq @item
+      expect(new_item).not_to eq nil
     end
   end
 end

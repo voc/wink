@@ -77,6 +77,11 @@ class ItemsController < ApplicationController
   end
 
   def update
+    if @item.case_id != item_params[:case_id]
+      @item.location = nil
+      @item.save
+    end
+
     if @item.update_attributes(item_params)
       # move subitems to same case
       @item.move_sub_items
@@ -100,12 +105,9 @@ class ItemsController < ApplicationController
   end
 
   def clone
-    item = Item.find(params[:id]).dup
-    item.name = "Copy of #{item.name}"
-    item.serial_number = ""
-
-    if item.save
-      redirect_to edit_item_path(item)
+    new_item = @item.clone_item
+    if new_item
+      redirect_to edit_item_path(new_item)
     else
       redirect_to item_path(Item.find(params[:id]))
     end

@@ -55,8 +55,25 @@ class Item < ActiveRecord::Base
     self.items.each do |sub_item|
       if self.case != sub_item.case
         sub_item.case = self.case
+        sub_item.location = nil
         sub_item.save!
       end
     end
   end
+
+  def clone_item
+    new_item = self.dup
+    new_item.name = "Copy of #{self.name}"
+    new_item.serial_number = ""
+    new_item.items = []
+
+    self.items.each do |sub_item|
+      new_item.items << sub_item.clone_item
+    end
+
+    new_item.save
+    new_item
+  end
+
+
 end
