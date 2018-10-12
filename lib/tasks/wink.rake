@@ -15,4 +15,9 @@ namespace :wink do
       Wink::MqttClient.send_message("See https://c3voc.de/wink/dashboard#items for more details.")
     end
   end
+
+  desc "listen for mqtt wink events"
+  task listen_for_mqtt_events: :environment do
+    Wink::MqttClient.listen
+  end
 end

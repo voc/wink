@@ -17,6 +17,17 @@ class Wink::MqttClient
     end
   end
 
+  def self.listen
+    client = Wink::MqttClient.connect
+    return if client.nil?
+
+    puts "Listen to /voc/wink…"
+    client.get('/voc/wink') do |topic,message|
+      hash = JSON.parse(message)
+      p hash
+    end
+  end
+
   private
 
   def self.connect
