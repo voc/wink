@@ -24,7 +24,38 @@ class Wink::MqttClient
     puts "Listen to /voc/wink…"
     client.get('/voc/wink') do |topic,message|
       hash = JSON.parse(message)
-      p hash
+      msg = hash['msg']
+
+      command = msg.split(' ')
+
+      case command[0]
+      when /help/
+        help =<<END
+viri wink commands:
+  * help
+  * show (broken|missing) items
+More on https://c3voc.de/wink/
+END
+
+      help.each_line do |l|
+        Wink::MqttClient.send_message(l.chomp)
+      end
+      when /show|list/
+        items = nil
+
+        case command[1]
+        when /broken/
+          items = Item.all.where('deleted = ? and broken = ?', false, true)
+        when /missing/
+          items = Item.all.where('deleted = ? and missing = ?', false, true)
+        end
+
+        items.each do |i|
+          Wink::MqttClient.send_message("#{i.case.name}: '#{i.name}' is #{command[1]}")
+        end
+
+        Wink::MqttClient.send_message("See https://c3voc.de/wink/dashboard#items for more details.")
+      end
     end
   end
 
