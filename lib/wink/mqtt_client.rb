@@ -52,6 +52,8 @@ END
 
         items.each do |i|
           Wink::MqttClient.send_message("#{i.case.name}: '#{i.name}' is #{command[1]}")
+          # to avoid flooding errors
+          sleep([0.1,0.2,0.3,0.4,0.5].sample)
         end
 
         Wink::MqttClient.send_message("See https://c3voc.de/wink/dashboard#items for more details.")
