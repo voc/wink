@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_16_172311) do
+ActiveRecord::Schema.define(version: 2018_10_15_201620) do
 
   create_table "case_types", force: :cascade do |t|
     t.string "name"
@@ -106,9 +106,31 @@ ActiveRecord::Schema.define(version: 2018_09_16_172311) do
     t.integer "item_type_id"
     t.integer "location_item_id"
     t.boolean "deleted", default: false
+    t.integer "product_id"
     t.index ["case_id"], name: "index_items_on_case_id"
     t.index ["item_id"], name: "index_items_on_item_id"
     t.index ["item_type_id"], name: "index_items_on_item_type_id"
+    t.index ["product_id"], name: "index_items_on_product_id"
+  end
+
+  create_table "product_vendor_links", force: :cascade do |t|
+    t.integer "product_id"
+    t.integer "vendor_id"
+    t.string "order_link"
+    t.string "order_number"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_product_vendor_links_on_product_id"
+    t.index ["vendor_id"], name: "index_product_vendor_links_on_vendor_id"
+  end
+
+  create_table "products", force: :cascade do |t|
+    t.string "name"
+    t.string "description"
+    t.string "product_number"
+    t.string "product_link"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "transports", force: :cascade do |t|
@@ -125,6 +147,15 @@ ActiveRecord::Schema.define(version: 2018_09_16_172311) do
     t.string "carrier"
     t.integer "destination_event"
     t.integer "source_event"
+  end
+
+  create_table "vendors", force: :cascade do |t|
+    t.string "name"
+    t.string "account_name"
+    t.string "customer_id"
+    t.boolean "on_account"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

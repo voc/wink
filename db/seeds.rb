@@ -158,10 +158,46 @@ ItemComment.create(
   comment: "wieder ganz",
   item_id: Item.last.id
 )
-# Transports
-
 
 # Checklists
 event_case = EventCase.first
 event_case.check_list = CheckList.new(advisor: 'Peter Lustig', comment: 'foobar, möp möp 23')
 event_case.save
+
+# Products
+Product.create(
+  name: "T420",
+  description: "Lenovo Notebook, sehr gutes Teil!",
+  product_number: "1337-23-42",
+  product_link: "example.com/t420"
+)
+
+Vendor.create(
+  name: "amazon",
+  account_name: "voc@c3voc.de",
+  on_account: false
+)
+
+Vendor.create(
+  name: "reichelt elektronik GmbH & Co. KG",
+  account_name: "foobar account",
+  on_account: true
+)
+
+ProductVendorLink.create(
+  product: Product.find_by(name: "T420"),
+  vendor: Vendor.find_by(name: "amazon"),
+  order_number: "4223",
+  order_link: "https://xitra24.de/eshop.php?action=article_detail&rid=gh&s_supplier_aid=5372893"
+)
+
+ProductVendorLink.create(
+  product: Product.find_by(name: "T420"),
+  vendor: Vendor.find_by(name: "reichelt elektronik GmbH & Co. KG"),
+  order_number: "42-1337-42",
+  order_link: "https://www.reichelt.com/de/en/c-k-power-paint-mixer-420mm-ck-t1881-p168807.html?&trstct=pos_0"
+)
+
+item = Item.find_by(name: "Mixer Notebook")
+item.product = Product.find_by(name: "T420")
+item.save
