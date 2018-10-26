@@ -1,0 +1,21 @@
+- content_for :title, "Products - "
+
+%h2 Products
+
+%a{href: new_product_path} create new product
+%table{border: 1}
+  %thead
+    %tr
+      %th.name Description
+      %th.number Acronym
+      %th.actions Actions
+  %tbody
+    - @products.each do |product|
+      %tr
+        %td.no_color
+          %a{href: product_path(product)}= product.name
+        %td.no_color
+          %a{href: product_path(product)}= product.description
+        %td
+          %a{href: product_path(product)} show
+          %a{href: edit_product_path(product)} edit

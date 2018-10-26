@@ -1,0 +1,14 @@
+- content_for :title, "New product - "
+
+%h2 Create new product
+- if @product.errors.any?
+  %ul
+    - @case.errors.each do |message|
+      %li
+        = message
+
+= form_for(@product, as: :product) do |f|
+  = render partial: 'form', locals: {f: f}, object: @product
+
+  = f.submit "Create"
+  = link_to 'Cancel', products_path
