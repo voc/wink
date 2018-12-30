@@ -25,7 +25,7 @@ class CheckList < ActiveRecord::Base
 
   def locations
     self.check_list_items.map do |cli|
-      cli if cli.item.shelf?
+      cli if cli.item&.shelf?
     end.compact
   end
 
