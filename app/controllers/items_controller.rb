@@ -31,17 +31,22 @@ class ItemsController < ApplicationController
       end
 
       format.csv do
+        filter = ''
         if params["export"]
           cases = params["export"]["cases"].reject(&:empty?)
         else
           cases = []
         end
 
+        unless params['export']['price'].empty?
+          filter = " and price >= #{params['export']['price']}"
+        end
+
         if cases.count > 0
           @items = []
 
           cases.each do |c|
-            Item.where("case_id = #{c} and price >= #{params['export']['price']}").where(deleted: false).each{ |i| @items << i }
+            Item.where("case_id = #{c}" + filter).where(deleted: false).each{ |i| @items << i }
           end
           p @items
         else
