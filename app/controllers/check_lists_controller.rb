@@ -77,6 +77,8 @@ class CheckListsController < ApplicationController
 
     if ActiveModel::Type::Boolean.new.cast(check_list_params[:checked])
       @check_list.checked = true
+      # Mark previous missing items as found and add comment.
+      unmark_missing_items(@check_list)
       # Mark items as missing and add comment.
       mark_missing_items(@check_list)
       #
@@ -116,6 +118,24 @@ class CheckListsController < ApplicationController
 
   def event_case_params
     params.require(:check_list).permit(:event_case)
+  end
+
+  def unmark_missing_items(checklist)
+    checklist.items_without_shelfs.each do |checklist_item|
+      # Unmark previously missing items
+      # when checklist is finished and item on list is checked.
+      item = checklist_item.item
+      if item.missing == true and checklist_item.checked == true
+        item.missing = false
+        item.save!
+
+        ItemComment.create(
+          author: "WINK",
+          comment: "Item was found by '#{checklist.advisor}' during '#{checklist.event.name}'.",
+          item_id: checklist_item.item.id
+        )
+      end
+    end
   end
 
   def mark_missing_items(checklist)
