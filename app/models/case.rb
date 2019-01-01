@@ -14,9 +14,19 @@ class Case < ActiveRecord::Base
 
 
   def locations
-    Item.where("case_id = #{self.id} and \
+    Item.where("case_id = #{self.id} AND \
+      deleted = 0 AND
       (item_type_id = #{ItemType.find_by(name: "Meshbag").id} or
       item_type_id = #{ItemType.find_by(name: "Fach").id})")
+  end
+
+  def active_items
+    Item.where("case_id = #{self.id} AND \
+      deleted = 0 AND
+      item_type_id NOT IN(
+        #{ItemType.find_by(name: "Meshbag").id}, 
+        #{ItemType.find_by(name: "Fach").id}
+      )")
   end
 
   def check_list_exists?(event)

@@ -46,7 +46,7 @@ class CheckListsController < ApplicationController
   def edit
     shelfs = @check_list.locations
     @check_list_items = @check_list.check_list_items - shelfs
-    @check_list_items = @check_list_items.select { |cli| !cli.item.deleted? }
+    @check_list_items = @check_list_items.select { |cli| !cli.item.is_deleted? }
 
     @grouped_items = @check_list_items.group_by do |cli|
       next if cli.item.shelf?

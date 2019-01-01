@@ -110,7 +110,7 @@ class ItemsController < ApplicationController
   end
 
   def destroy
-    @item.update_attribute(:deleted, true)
+    @item.destroy
     redirect_to case_path(@item.case), notice: "Disabled '#{@item.name}' in case '#{@item.case.acronym}'"
   end
 

@@ -1,5 +1,5 @@
 class Item < ActiveRecord::Base
-  attr_accessor :deleted
+  #attr_accessor :is_deleted?
 
   has_many :item_comments
   has_many :items
@@ -46,7 +46,7 @@ class Item < ActiveRecord::Base
     self.update_attribute(:deleted, true)
   end
 
-  def deleted?
+  def is_deleted?
     self.read_attribute(:deleted)
   end
 
