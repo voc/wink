@@ -32,8 +32,44 @@
       %a{href: edit_case_path(@case)} edit
       %a{href: delete_case_path(@case)} delete
 
+
+%h3 Missing items
+%table{border:1}
+  %thead
+    %tr
+      %th Name
+      %th Model
+      %th Last comment
+      %th Actions
+
+  %tbody
+    - @missing_items.sort_by{ |i| i.name }.each do |item|
+      %tr
+        - if item.missing
+          %td.missing{title: "missing"}
+            %a{href: item_path(item)}= item.name
+        - elsif item.broken
+          %td.broken{title: "broken"}
+            %a{href: item_path(item)}= item.name
+        - else
+          %td.no_color
+            %a{href: item_path(item)}= item.name
+        %td.no_color
+          %a{href: item_path(item)}= item.model
+        - if item.item_comments.count == 0
+          %td
+        - else
+          %td.no_color
+            %a{href: item_path(item)}
+              = "#{item.item_comments.first.author}: #{item.item_comments.first.comment}"
+
+        %td
+          %a{href: item_path(item)} show
+          %a{href: edit_item_path(item)} edit
+  
+
 %a{name: "items"}
-%h3 Items
+%h3 All items
 
 %a{href: new_item_path(case_id: @case.id)} add new item
 

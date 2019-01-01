@@ -10,6 +10,7 @@ class CasesController < ApplicationController
       i.location
     end
 
+    @missing_items = Item.where(case: @case, missing: true, deleted: false)
     @deleted_items = Item.where(case: @case, deleted: true)
 
     respond_to do |format|
