@@ -1,4 +1,4 @@
-<%= CSV.generate_line Item.attribute_names -%>
+<%= CSV.generate_line(['case_name', 'case'] + Item.attribute_names + ['url']) -%>
 <%- @items.each do |i| -%>
-<%= CSV.generate_line(Item.attribute_names.map{|n| i.send(n) } )  -%>
+<%= CSV.generate_line([i.case.name, i.case.acronym] + Item.attribute_names.map{|n| i.send(n) }  + ["https://c3voc.de/wink/items/#{i.id}"]).html_safe -%>
 <%- end -%>

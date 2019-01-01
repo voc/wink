@@ -15,6 +15,10 @@
     %label{for: "price"}= "Price over:"
     = f.text_field :price, value: "100"
 
+  %p
+    %label{for: 'format'}= "Item Types:"
+    = f.collection_select(:item_type_id, ItemType.all.order(:name), :id, :name, {}, {multiple: true})
 
-  = f.submit "Export"
+  = f.submit 'Preview'
+  = f.submit 'Download'
   = link_to 'Cancel', items_path

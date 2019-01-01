@@ -14,8 +14,8 @@ class ItemsController < ApplicationController
   end
 
   def index
-    if params["commit"] == "Export"
-      redirect_to controller: 'items', action: 'index', format: :csv, export: params["export"].permit!
+    if params['commit'].in?(['Export', 'Download', 'Preview'])
+      redirect_to controller: 'items', action: 'index', format: :csv, export: params['export'].permit!, download: params['commit'] == 'Download'
     end
 
 
@@ -32,6 +32,11 @@ class ItemsController < ApplicationController
 
       format.csv do
         filter = ''
+        if params['download']
+          headers["Content-Type"] ||= 'text/csv'
+          headers["Content-Disposition"] = "attachment; filename=\"export.csv\"" 
+        end
+
         if params["export"]
           cases = params["export"]["cases"].reject(&:empty?)
         else
@@ -39,7 +44,11 @@ class ItemsController < ApplicationController
         end
 
         unless params['export']['price'].empty?
-          filter = " and price >= #{params['export']['price']}"
+          filter += " and price >= #{params['export']['price']}"
+        end
+
+        unless params['export']['item_type_id'].empty?
+          filter += " and item_type_id IN(#{params['export']['item_type_id'].reject { |c| c.empty? }.join(',')})"
         end
 
         if cases.count > 0
