@@ -77,7 +77,7 @@
   %li
     %label Actions
     %span.actions
-      - if @item.deleted == false
+      - unless @item.deleted
         %a{href: edit_item_path(@item)} edit
         = link_to 'delete', item_path(@item), data: {:confirm => "Delete #{@item.name} (#{@item.case.acronym})"}, method: :delete
 
