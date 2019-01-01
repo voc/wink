@@ -98,6 +98,7 @@
     - Item.where("location_item_id = #{@item.id}").each do |item|
       %li
         %a{href: item_path(item)}= item.name
+        = item.model
 
 
 %h3= "Comments (#{@item.item_comments.count})"

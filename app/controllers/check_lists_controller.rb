@@ -38,6 +38,7 @@ class CheckListsController < ApplicationController
 
       redirect_to check_list_path(@event_case.check_list)
       # TODO: Send mqtt message, when checklist was created.
+      Wink::MqttClient.send_message("'#{@event_case.check_list.advisor}' created '#{@event_case.event.name}' checklist for '#{@event_case.case.name}'")
     else
       render action: 'new'
     end
@@ -62,7 +63,7 @@ class CheckListsController < ApplicationController
   # Check checklist.
   def update
     CheckList.find(params[:id]).check_list_items.each do |cli|
-      if checked_check_list_params[:checked_check_list_items].include?("#{cli.id}")
+      if checked_check_list_params[:checked_check_list_items]&.include?("#{cli.id}")
         cli.checked = true
       else
         cli.checked = false
