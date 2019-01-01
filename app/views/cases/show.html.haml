@@ -31,7 +31,14 @@
     %span.actions
       %a{href: edit_case_path(@case)} edit
       %a{href: delete_case_path(@case)} delete
-
+  %li
+    %label Checklists
+    %span.events
+      - @upcoming_events.each do |e|
+        - if @case.check_list(e)
+          %a{href: check_list_path(@case.check_list(e))}= e.name
+        - else
+          %a{href: new_check_list_path(event: e, case: @case.id)}= e.name + " (create)"
 
 %h3 Missing items
 %table{border:1}

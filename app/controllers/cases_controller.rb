@@ -13,6 +13,8 @@ class CasesController < ApplicationController
     @missing_items = Item.where(case: @case, missing: true, deleted: false)
     @deleted_items = Item.where(case: @case, deleted: true)
 
+    @upcoming_events = Event.where(end_date: Date.today-2..4.weeks.after).order(:start_date)
+
     respond_to do |format|
       format.html
       format.json { render json: @case.to_json }
