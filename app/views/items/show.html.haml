@@ -97,7 +97,12 @@
   %ul
     - Item.where("location_item_id = #{@item.id}").each do |item|
       %li
-        %a{href: item_path(item)}= item.name
+        - if item.missing
+          %a.mark.missing{href: item_path(item)}= item.name
+        - elsif item.broken
+          %a.mark.broken{href: item_path(item)}= item.name
+        - else 
+          %a{href: item_path(item)}= item.name
         = item.model
 
 
