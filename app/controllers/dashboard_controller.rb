@@ -1,8 +1,8 @@
 class DashboardController < ApplicationController
 
   def show
-    @broken_or_missing_items = Item.where(broken: true).where(deleted: false) + Item.where(missing: true).where(deleted: false)
-    @grouped_items = @broken_or_missing_items.group_by do |i|
+    @broken_or_missing_items = (Item.where(broken: true).where(deleted: false) + Item.where(missing: true).where(deleted: false)).sort
+    @grouped_items = @broken_or_missing_items.sort_by{|i| i.case_id }.group_by do |i|
       i.case
     end
     @upcoming_events = Event.
