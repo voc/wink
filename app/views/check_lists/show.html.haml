@@ -38,8 +38,9 @@
   - items = @check_list.items_without_shelfs.group_by{ |ci| ci.checked }
   - if items[false]
     %h3= "Missing (#{items[false].count})"
-    - items[false].each do |ci|
-      %li= ci.item.name
+    - items[false].group_by{|ci| ci.item.name}.each do |name,citems|
+      - citems.each do |ci|
+        %li= "#{ci.item.name_with_model}"
 
   - if items[true]
     %h3= "Checked (#{items[true].count})"
