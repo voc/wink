@@ -43,5 +43,16 @@
 
   - if items[true]
     %h3= "Checked (#{items[true].count})"
-    - items[true].each do |ci|
-      %li= "#{ci.item.name} ✔"
+    %ul
+    - items[true].group_by{|ci| ci.item.name}.each do |name,citems|
+      %li
+        - if ( citems.count == 1 || citems.group_by{|ci| ci.item.model}.count == 1 )
+          = "#{name} " + ("✔" * citems.count)
+        - else
+          = "#{name}"
+          %ul
+            - citems.group_by{|ci| ci.item.model}.each do |model,instances|
+              %li
+                ="#{model}" 
+                - instances.each do |i|
+                  = "✔" 
