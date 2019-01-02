@@ -5,7 +5,9 @@
 .page_navigation
   %ul
     %li
-      %a{href: "\#items"} Items
+      %a{href: "\#flagged"} Missing or broken
+    %li
+      %a{href: "\#all"} All (active)
     %ul
       - @grouped_items.sort_by{|l,items| "#{l}" }.each do |l,items|
         %li
@@ -14,7 +16,7 @@
           - else
             %a{href: "\##{Digest::MD5.hexdigest(l.name)}"}= l.name
     %li
-      %a{href: "\#deleteditems"} Deleted items
+      %a{href: "\#deleted"} Deleted
 
 %ol.properties
   %li
@@ -40,7 +42,8 @@
         - else
           %a{href: new_check_list_path(event: e, case: @case.id)}= e.name + " (create)"
 
-%h3 Missing items
+%a{name: "flagged"}
+%h3 Missing or broken items
 %table{border:1}
   %thead
     %tr
@@ -50,7 +53,7 @@
       %th Actions
 
   %tbody
-    - @missing_items.sort_by{ |i| i.name }.each do |item|
+    - @flagged_items.sort_by{ |i| i.name }.each do |item|
       %tr
         - if item.missing
           %td.missing{title: "missing"}
@@ -76,8 +79,8 @@
           %a{href: new_item_comment_path(item)} comment
   
 
-%a{name: "items"}
-%h3 All items
+%a{name: "all"}
+%h3 All (active) items
 
 %a{href: new_item_path(case_id: @case.id)} add new item
 
@@ -129,7 +132,7 @@
     %a{href: new_item_path(case_id: @case.id, location: l.id)} add new item
   
 
-%a{name: "deleteditems"}
+%a{name: "deleted"}
 %h3 Deleted items
 
 %table.deleted

@@ -10,7 +10,7 @@ class CasesController < ApplicationController
       i.location
     end
 
-    @missing_items = Item.where(case: @case, missing: true, deleted: false)
+    @flagged_items = @case.flagged_items
     @deleted_items = Item.where(case: @case, deleted: true)
 
     @upcoming_events = Event.where(end_date: Date.today-2..4.weeks.after).order(:start_date)

@@ -29,6 +29,11 @@ class Case < ActiveRecord::Base
       )")
   end
 
+  def flagged_items
+    Item.where("case_id = #{self.id} AND 
+      deleted = 0 AND ( broken = 1 OR missing = 1 )")
+  end
+
   def check_list_exists?(event)
     if check_list(event).nil?
       false
