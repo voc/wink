@@ -15,7 +15,7 @@
           -# TODO: Mark missing items.
           -#
           -# TODO: Be able to mark broken items with comments.
-          - items.each do |cli|
+          - items.sort_by{|cli| "#{cli.item.name}" }.each do |cli|
             %tr
               %td
                 = check_box_tag("checked_check_list_items_#{cli.id}", cli.id, cli.checked, { name: "check_list[checked_check_list_items][]"})
