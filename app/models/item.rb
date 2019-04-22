@@ -69,7 +69,7 @@ class Item < ActiveRecord::Base
 
   def clone_item
     new_item = self.dup
-    new_item.name = "Copy of #{self.name}"
+    new_item.name = "#{self.name}"
     new_item.serial_number = ""
     new_item.items = []
 
