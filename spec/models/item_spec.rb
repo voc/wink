@@ -98,7 +98,7 @@ RSpec.describe Item, type: :model do
       new_item = @item.clone_item
 
       expect(new_item).not_to eq @item
-      expect(new_item.name).to eq "Copy of my item"
+      expect(new_item.name).to eq "my item"
     end
 
     it "should not copy serialnumber" do
@@ -116,7 +116,7 @@ RSpec.describe Item, type: :model do
       new_item = item.clone_item
 
       expect(new_item.items.count).to eq item.items.count
-      expect(new_item.items.first.name).to eq "Copy of sub_item"
+      expect(new_item.items.first.name).to eq "sub_item"
       expect(new_item).not_to eq item
     end
 
