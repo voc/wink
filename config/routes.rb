@@ -35,6 +35,8 @@ Rails.application.routes.draw do
     end
   end
 
+  get '/items/import', to: 'items#import'
+
   resources :item_types do
     member do
       get :delete

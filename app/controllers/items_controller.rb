@@ -140,4 +140,8 @@ class ItemsController < ApplicationController
                                  :item_type_id, :location_item_id)
   end
 
+  def import 
+    # TBD, require './importer2' ...
+
+  end
 end
