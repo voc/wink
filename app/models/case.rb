@@ -29,6 +29,10 @@ class Case < ActiveRecord::Base
       )")
   end
 
+  def not_deleted_items
+    Item.where("case_id = #{self.id} AND deleted = 0")
+  end
+
   def flagged_items
     Item.where("case_id = #{self.id} AND 
       deleted = 0 AND ( broken = 1 OR missing = 1 )")

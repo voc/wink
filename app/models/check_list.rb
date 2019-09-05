@@ -11,7 +11,7 @@ class CheckList < ActiveRecord::Base
   def copy_items!
     return false if check_list_items.count > 0
 
-    event_case.case.items.each do |ec_item|
+    event_case.case.not_deleted_items.each do |ec_item|
       cl_item = CheckListItem.new
       cl_item.item = ec_item
       cl_item.item.broken = ec_item.broken
