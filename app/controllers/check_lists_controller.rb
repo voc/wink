@@ -91,7 +91,11 @@ class CheckListsController < ApplicationController
 
     @check_list.save!
 
-    redirect_to check_list_path(params[:id])
+    if params[:return]
+      redirect_to check_list_path(params[:id])
+    else
+      redirect_to edit_check_list_path(@check_list)
+    end
   end
 
   def delete

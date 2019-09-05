@@ -1,6 +1,10 @@
 - content_for :title, "Checklist #{@check_list.case.name} - (#{@check_list.event.name}) - "
 
-%h2= "Checklist #{@check_list.case.name} - (#{@check_list.event.name})"
+%h2
+  Checklist 
+  %a{href: case_path(@check_list.case), target: '_blank'}= @check_list.case.name
+  at
+  %a{href: event_path(@check_list.event), target: '_blank'}= @check_list.event.name
 
 
 .filters
@@ -22,6 +26,7 @@
   = render partial: 'form_check_item', locals: {f: f}, object: @check_list_item
   %div.floating_form_actions
     = f.submit "Save"
+    = f.submit "Return", name: 'return'
     = link_to 'Cancel', check_list_path(@check_list)
 
 
