@@ -42,6 +42,16 @@
 input[type=text], textarea {
    width: 250px;
 }
+input[type=submit] {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  font-family: none;
+  font-size: 1em;
+  border: none;
+  padding: 0;
+}
 
 label { display: block; }
 
@@ -209,7 +219,7 @@ table {
 }
 
 
-a {
+a, input[type=submit] {
   color: white;
   -webkit-transition: all .2s ease-in-out;
   -moz-transition: all .2s ease-in-out;
@@ -218,8 +228,8 @@ a {
   text-decoration: none;
 }
 
-a:hover,
-a:focus {
+a:hover, a:focus,
+input[type=submit]:hover, input[type=submit]:focus {
   background-color: #28c3ab;
   text-decoration: none;
   color: black;
