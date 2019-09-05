@@ -255,3 +255,13 @@ input[type=submit]:hover, input[type=submit]:focus {
 .mark.broken {
   background-color: red;
 }
+
+.floating_form_actions {
+  position: fixed; 
+  bottom: 2em; 
+  right: 2em; 
+  background-color: #fff;
+  a, input[type=submit] {
+    font-size: 30px;
+  }
+}
