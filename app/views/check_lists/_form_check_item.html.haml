@@ -20,7 +20,7 @@
               -# indent checkbox when it is related to another item e.g. power bricks
               - if cli.item.item
                 %td 
-              %td
+              %td{width: 1}
                 = check_box_tag("checked_check_list_items_#{cli.id}", cli.id, cli.checked, { name: "check_list[checked_check_list_items][]"})
               %td{colspan: 2}
                 %label{ for: "checked_check_list_items_#{cli.id}" }= "#{cli.item.name_with_model}"
