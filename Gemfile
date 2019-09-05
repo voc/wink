@@ -36,6 +36,7 @@ gem 'jbuilder', '~> 2.5'
 
 gem "jquery-rails"
 gem 'jquery-ui-rails'
+gem 'active_link_to'
 
 gem 'mqtt', '=0.5.0'
 

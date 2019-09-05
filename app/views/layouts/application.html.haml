@@ -17,16 +17,23 @@
   #menu
     %ul.menu
       %li
-        %a{href: dashboard_path} dashboard
+        = active_link_to('dashboard', dashboard_path)
       %li
-        %a{href: events_path} events
+        = active_link_to('events', events_path)
       -# TODO: implement transport planing
       -#%li
-        %a{href: transports_path} transports
+        = active_link_to('transports', transports_path)
       %li
-        %a{href: cases_path} cases
+        = active_link_to('cases', cases_path)
       %li
-        %a{href: items_path} items
+        = active_link_to('items', items_path)
+
+    - if controller.controller_name == 'cases'
+      %ul.submenu
+        - Case.all.each do |c|
+          %li= active_link_to(c.acronym, case_path(c))
+      %br{clear: "all"}
+
 
   #main
     = yield
