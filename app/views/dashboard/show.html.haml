@@ -23,6 +23,7 @@
         %th Location
         %th Transports
         %th Cases
+        %th Checklists
     %tbody
     - events.each do |event|
       %tr
@@ -43,6 +44,10 @@
           %span.cases
             - event.cases.each do |c|
               %a{href: case_path(c)}= c.acronym
+        %td
+          %span
+            - event.check_lists.each do |cl|
+              %a{href: check_list_path(cl)}= cl.case.acronym
 
 %a{name: "items"}
 %h3 Broken or missing items
