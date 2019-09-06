@@ -35,12 +35,10 @@
       %a{href: delete_case_path(@case)} delete
   %li
     %label Checklists
-    %span.events
-      - @upcoming_events.each do |e|
-        - if @case.check_list(e)
-          %a{href: check_list_path(@case.check_list(e))}= e.name
-        - else
-          %a{href: new_check_list_path(event: e, case: @case.id)}= e.name + " (create)"
+    %ul.events
+      - @case.check_lists.reverse.each do |cl|
+        %li
+          %a{href: check_list_path(cl)}= "#{cl.created_at.strftime("%F")} #{cl.event.name}"
 
 %a{name: "flagged"}
 %h3 Missing or broken items

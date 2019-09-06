@@ -29,13 +29,17 @@
 
  ol.properties li label {
    display: table-cell;
-   width: 50%;
+   width: 10%;
    font-weight: bold;
  }
 
  ol.properties li span {
    display: table-cell;
-   width: 50%;
+   width: 80%;
+ }
+
+ ol.properties ul {
+   padding-inline-start: 0;
  }
 
 // forms
