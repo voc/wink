@@ -3,20 +3,31 @@
 %h2 Transports
 
 %a{href: new_transport_path} create new transport
+%a{href: transports_import_path} import K&amp;N transports
+
 
 %table
   %thead
     %tr
-      %th.name Source event
-      %th.type Destination event
+      %th.source{colspan: 3} Source 
+      %th.destination{colspan: 3} Destination 
       %th.number Cases
+      %th.state Delivery state
       %th.actions Actions
   %tbody
   - @transports.each do |t|
     %tr
       %td= t.source_event
+      %td~ t.source_address.gsub("\n", "<br/>").html_safe
+      %td= t.pickup_time.strftime('%F') unless t.pickup_time.nil?
       %td= t.destination_event
+      %td~ t.destination_address.gsub("\n", '<br/>').html_safe
+      %td= t.delivery_time.strftime('%F') unless t.delivery_time.nil?
       %td
+        
+      %td= t.delivery_state
       %td
         %a{href: transport_path(t)} show
         %a{href: edit_transport_path(t)} edit
+        %br
+        %a{href: t.tracking_url} tracking (#{t.carrier})

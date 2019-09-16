@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   resources :check_lists do
   end
 
+  get '/transports/import', to: 'transports#import_transports'
   resources :transports do
     member do
       get :delete
