@@ -21,7 +21,11 @@ class Item < ActiveRecord::Base
         "#{name} (#{manufacturer})"
       end
     else
-      "#{name} (#{model})"
+      if self.manufacturer.nil? || self.manufacturer.empty? || self.manufacturer == '-'
+        "#{name} (#{model})"
+      else
+        "#{name} (#{manufacturer} #{model})"
+      end
     end
   end
 
