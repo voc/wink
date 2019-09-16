@@ -101,17 +101,26 @@
         %th Actions
 
     %tbody
-      - items.sort_by{ |i| i.name }.each do |item|
+      - items.sort_by{ |i| "#{i.item&.name}#{i.name}.#{format('%05.1f', i.model.to_f)}" }.each do |item|
         %tr
           - if item.missing
-            %td.missing{title: "missing"}
-              %a{href: item_path(item)}= item.name
+            %td.left.missing{title: "missing"}
+              - if item.item
+                = ' &nbsp; &nbsp; '.html_safe
+              %a{href: item_path(item)}
+                = item.name
           - elsif item.broken
-            %td.broken{title: "broken"}
-              %a{href: item_path(item)}= item.name
+            %td.left.broken{title: "broken"}
+              - if item.item
+                = ' &nbsp; &nbsp; '.html_safe
+              %a{href: item_path(item)}
+                = item.name
           - else
-            %td.no_color
-              %a{href: item_path(item)}= item.name
+            %td.left.no_color
+              - if item.item
+                = ' &nbsp; &nbsp; '.html_safe
+              %a{href: item_path(item)}
+                = item.name
           %td.no_color
             %a{href: item_path(item)}= item.manufacturer
           %td.no_color

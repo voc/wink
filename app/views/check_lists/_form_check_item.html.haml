@@ -13,9 +13,8 @@
       %table
         %tbody
           -# TODO: Mark missing items.
-          -#
           -# TODO: Be able to mark broken items with comments.
-          - items.sort_by{|cli| "#{cli.item.item&.name}#{cli.item.name}" }.each do |cli|
+          - items.sort_by{|cli| "#{cli.item.item&.name}#{cli.item.name}.#{format('%05.1f', cli.item.model.to_f)}" }.each do |cli|
             %tr
               -# indent checkbox when it is related to another item e.g. power bricks
               - if cli.item.item
