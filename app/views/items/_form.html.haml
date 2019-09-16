@@ -31,7 +31,7 @@
   = f.collection_select :location_item_id, @item.case.locations.order(:name), :id, :name, include_blank: true
 %p
   %label{for: 'item_id'}= "Relates to:"
-  = f.collection_select :item_id, Item.where(case_id: @item.case, deleted: false).order(:name), :id, :name_with_model, include_blank: true
+  = f.collection_select :item_id, @item.case.relateable_items.order(:name), :id, :name_with_model, include_blank: true
 %p
   %label{for: 'case_id'}= "Case:"
   = f.collection_select :case_id, Case.order(:name), :id, :name, include_blank: false
