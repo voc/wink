@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_16_172311) do
+ActiveRecord::Schema.define(version: 2019_09_16_231648) do
 
   create_table "case_types", force: :cascade do |t|
     t.string "name"
@@ -123,8 +123,13 @@ ActiveRecord::Schema.define(version: 2018_09_16_172311) do
     t.boolean "quotation", default: false
     t.boolean "ordered", default: false
     t.string "carrier"
-    t.integer "destination_event"
-    t.integer "source_event"
+    t.integer "destination_event_id"
+    t.integer "source_event_id"
+    t.string "tracking_number"
+    t.integer "shipment_id"
+    t.string "delivery_state"
+    t.datetime "actual_pickup_time"
+    t.datetime "actual_delivery_time"
   end
 
 end

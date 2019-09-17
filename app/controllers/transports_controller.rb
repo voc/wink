@@ -60,6 +60,7 @@ class TransportsController < ApplicationController
         unless values['completionDate']['date'].nil?
           transport.delivery_time = Date.parse(values['completionDate']['date'])
         end
+        # TODO: https://onlineservices.kuehne-nagel.com/tracking/api/shipments/130686969
       end
 
       transport.delivery_state = values['milestone']
