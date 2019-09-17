@@ -27,8 +27,12 @@ class TransportsController < ApplicationController
     end
   end
 
+  def edit
+  end
+
   def update
     if @transport.update_attributes(transport_params)
+      @transport.save
       redirect_to transports_path
     else
       render action: 'edit'
@@ -77,7 +81,7 @@ class TransportsController < ApplicationController
   end
 
   def transport_params
-    params.require(:transport).permit(:source_event_id, :source_address, :destination_event_id, :destination_address)
+    params.require(:transport).permit(:source_event_id, :source_address, :pickup_time, :destination_event_id, :destination_address, :delivery_time)
   end
 
   def fetch_KN_token

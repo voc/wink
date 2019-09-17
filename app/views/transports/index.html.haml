@@ -3,7 +3,7 @@
 %h2 Transports
 
 %a{href: new_transport_path} create new transport
-%a{href: transports_import_path} import K&amp;N transports
+%a{href: transports_import_path} import/update K&amp;N transports
 
 
 %table
@@ -17,10 +17,10 @@
   %tbody
   - @transports.each do |t|
     %tr
-      %td= t.source_event
+      %td= t.source_event.name unless t.source_event.nil?
       %td~ t.source_address.gsub("\n", "<br/>").html_safe
       %td= t.pickup_time.strftime('%F') unless t.pickup_time.nil?
-      %td= t.destination_event
+      %td= t.destination_event.name unless t.destination_event.nil?
       %td~ t.destination_address.gsub("\n", '<br/>').html_safe
       %td= t.delivery_time.strftime('%F') unless t.delivery_time.nil?
       %td
