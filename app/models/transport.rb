@@ -13,4 +13,6 @@ class Transport < ActiveRecord::Base
     to = self.destination_event.nil? ? self.destination_address : self.destination_event.name
     return "#{from} → #{to}"
   end
+
+  alias name title
 end

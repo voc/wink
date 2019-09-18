@@ -9,6 +9,6 @@ class Event < ActiveRecord::Base
   validates :location, presence: true
 
   def transports
-    Transport.where("destination_event = #{self.id} or source_event = #{id}")
+    Transport.where("destination_event_id = #{self.id} or source_event_id = #{id}")
   end
 end
