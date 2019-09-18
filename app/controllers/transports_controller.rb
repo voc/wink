@@ -21,7 +21,7 @@ class TransportsController < ApplicationController
     @transport = Transport.new(transport_params)
 
     if @transport.save
-      redirect_to edit_transport_path
+      redirect_to edit_transport_path(@transport)
     else
       render action: 'new'
     end

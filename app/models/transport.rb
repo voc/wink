@@ -10,7 +10,7 @@ class Transport < ActiveRecord::Base
 
   def title
     from = self.source_event.nil? ? self.source_address : self.source_event.name
-    to = self.destination_event.nil? ? self.destination_address.split('\n')[-1] : self.destination_event.name
+    to = self.destination_event.nil? ? self.destination_address : self.destination_event.name
     return "#{from} → #{to}"
   end
 end

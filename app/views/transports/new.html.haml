@@ -10,10 +10,10 @@
 = form_for(@transport, as: :transport) do |f|
   %p
     %label{for: 'source_event_id'}= "From Event:"
-    = f.collection_select :source_event, Event.where(end_date: Date.today-10..4.weeks.after).order('start_date DESC'), :id, :name, {include_blank: false}, {:name => 'transport[source_event_id]'}
+    = f.collection_select :source_event_id, Event.where(end_date: Date.today-10..4.weeks.after).order('start_date DESC'), :id, :name, {include_blank: true}
   %p
     %label{for: 'destination_event_id'}= "Destination Event:"
-    = f.collection_select :destination_event, Event.where(end_date: Date.today-2..4.weeks.after).order(:start_date), :id, :name, {include_blank: false}, {:name => 'transport[destination_event_id]'}
+    = f.collection_select :destination_event_id, Event.where(end_date: Date.today-2..4.weeks.after).order(:start_date), :id, :name, {include_blank: true}
 
   = f.submit "Create"
   = link_to 'Cancel', transports_path
