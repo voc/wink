@@ -1,7 +1,7 @@
 
 %p
   %label{for: 'source_event_id'}= "From Event:"
-  = f.collection_select :source_event_id, Event.where(end_date: Date.today-5..4.weeks.after).order('start_date DESC'), :id, :name, {include_blank: true}
+  = f.collection_select :source_event_id, Event.where(end_date: Date.today-5..4.weeks.after).or(Event.where(id: @transport.source_event_id)).order('start_date DESC'), :id, :name, {include_blank: true}
 
 %p
   %label{for: 'source_address'}= "Address:"
@@ -14,7 +14,7 @@
 
 %p
   %label{for: 'destination_event_id'}= "Destination Event:"
-  = f.collection_select :destination_event_id, Event.where(end_date: Date.today-5..4.weeks.after).order(:start_date), :id, :name, {include_blank: true}
+  = f.collection_select :destination_event_id, Event.where(end_date: Date.today-5..4.weeks.after).or(Event.where(id: @transport.destination_event_id)).order(:start_date), :id, :name, {include_blank: true}
 
 %p
   %label{for: 'destination_address'}= "Address:"

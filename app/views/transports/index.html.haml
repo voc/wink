@@ -17,10 +17,22 @@
   %tbody
   - @transports.each do |t|
     %tr
-      %td= t.source_event.name unless t.source_event.nil?
+      %td
+        - if t.source_event.nil? 
+          - unless params[:event].nil? 
+            %a{href: edit_transport_path(t, :from => params[:event])} assign
+        - else
+          %a{href: event_path(t.source_event)} 
+            = t.source_event.name  
       %td~ t.source_address.gsub("\n", "<br/>").html_safe unless t.source_address.nil?
       %td= t.pickup_time.strftime('%F') unless t.pickup_time.nil?
-      %td= t.destination_event.name unless t.destination_event.nil?
+      %td
+        - if t.destination_event.nil? 
+          - unless params[:event].nil?
+            %a{href: edit_transport_path(t, :to => params[:event])} assign
+        - else
+          %a{href: event_path(t.destination_event)} 
+            = t.destination_event.name 
       %td~ t.destination_address.gsub("\n", '<br/>').html_safe unless t.destination_address.nil?
       %td= t.delivery_time.strftime('%F') unless t.delivery_time.nil?
       %td
@@ -30,4 +42,5 @@
         %a{href: transport_path(t)} show
         %a{href: edit_transport_path(t)} edit
         %br
-        %a{href: t.tracking_url} tracking (#{t.carrier})
+        - if t.carrier
+          %a{href: t.tracking_url} tracking (#{t.carrier})

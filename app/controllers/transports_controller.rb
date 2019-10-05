@@ -3,6 +3,7 @@ require 'json'
 
 class TransportsController < ApplicationController
   @@KN_token = nil
+  @@KN_token_fetched_at = nil
 
   before_action :find_transport, except: [:index, :create, :new, :import_transports]
 
@@ -10,7 +11,7 @@ class TransportsController < ApplicationController
   end
 
   def index
-    @transports = Transport.all.order('delivery_time IS NOT NULL, delivery_time DESC')
+    @transports = Transport.all.order(Arel.sql('delivery_time IS NOT NULL'), 'delivery_time DESC')
   end
 
   def new
@@ -28,6 +29,12 @@ class TransportsController < ApplicationController
   end
 
   def edit
+    unless params[:from].nil?
+      @transport.source_event_id = params[:from]
+    end
+    unless params[:to].nil?
+      @transport.destination_event_id = params[:to]
+    end
   end
 
   def update
@@ -46,7 +53,12 @@ class TransportsController < ApplicationController
       req = Net::HTTP::Get.new uri
       req['Cookie'] = "ecom_app_token=" + fetch_KN_token 
       res = http.request req # Net::HTTPResponse object
-      json = JSON.parse(res.body)
+      if res.kind_of? Net::HTTPSuccess
+        json = JSON.parse(res.body)
+      else
+        # token probably invalid, so clear it for next round
+        @@KN_token = nil
+      end
     end
 
     #puts JSON.pretty_generate(json["content"])
@@ -58,8 +70,8 @@ class TransportsController < ApplicationController
         transport.shipment_id = values['shipmentId']
         transport.tracking_number = values['trackingNumber']
         transport.ordered = 1
-        transport.source_address = "#{values['shipper']}\n#{values['from']}"
-        transport.destination_address = "#{values['consignee']}\n#{values['to']}"
+        transport.source_address = "#{values['shipper']}\n#{values['from'].capitalize}"
+        transport.destination_address = "#{values['consignee']}\n#{values['to'].capitalize}"
         transport.carrier = 'K&N'
         unless values['completionDate']['date'].nil?
           transport.delivery_time = Date.parse(values['completionDate']['date'])
@@ -85,7 +97,8 @@ class TransportsController < ApplicationController
   end
 
   def fetch_KN_token
-    if @@KN_token.nil?
+    # when token is nil –or– token is older than one hour (todo experiment with duration)
+    if @@KN_token.nil? or (DateTime.now - @@KN_token_fetched_at) > (1/24.0)
       uri = URI("https://sso.kuehne-nagel.com/RDIApplication/login")
       res = Net::HTTP.post_form(uri, 
         'user' => ENV['KN_USER'],
@@ -94,7 +107,10 @@ class TransportsController < ApplicationController
         'appname' => 'ECOM',
         'mode' => 'post'
       )
-      @@KN_token, = /name="appToken" value="(.+?)"/.match(res.body).captures
+      if res.kind_of? Net::HTTPSuccess
+        @@KN_token, = /name="appToken" value="(.+?)"/.match(res.body).captures
+        @@KN_token_fetched_at = DateTime.now 
+      end
     end
     return @@KN_token
   end

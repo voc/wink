@@ -12,7 +12,7 @@ class EventsController < ApplicationController
   end
 
   def index
-    @events = Event.all.order(start_date: :desc)
+    @events = Event.where('start_date <= ?', DateTime.now.end_of_year).order(start_date: :desc)
 
     respond_to do |format|
       format.html
