@@ -32,8 +32,8 @@ class ItemsController < ApplicationController
 
       format.csv do
         filter = ''
-        if params['download']
-          headers["Content-Type"] ||= 'text/csv'
+        headers["Content-Type"] ||= 'text/csv'
+        if params['download'].in?([true, 'true'])
           headers["Content-Disposition"] = "attachment; filename=\"export.csv\"" 
         end
 
@@ -47,7 +47,7 @@ class ItemsController < ApplicationController
           filter += " and price >= #{params['export']['price']}"
         end
 
-        unless params['export']['item_type_id'].empty?
+        unless params['export']['item_type_id'].empty? || params['export']['item_type_id'] == ['']
           filter += " and item_type_id IN(#{params['export']['item_type_id'].reject { |c| c.empty? }.join(',')})"
         end
 
