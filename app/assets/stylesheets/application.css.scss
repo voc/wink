@@ -272,3 +272,30 @@ input[type=submit]:hover, input[type=submit]:focus {
     font-size: 30px;
   }
 }
+.checklist_group {
+    input:checked + label {
+        background-color: #33dd00;
+    }
+    input[type=checkbox] {
+        display: none;
+    }
+}
+
+.checklist_item {
+    width: 300px;
+    max-width: 90%;
+    display: inline-block;
+    vertical-align: middle; 
+    margin:10px;    
+    padding:0;
+
+    label {
+        display:block;
+        min-height: 2em;
+        padding:5px;
+        border:1px solid black;
+        border-radius: 10px;
+        text-align:center;
+    }
+
+}

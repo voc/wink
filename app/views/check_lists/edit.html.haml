@@ -41,12 +41,12 @@
 
       var pattern = new RegExp($('#item_filter').val(), 'i');
 
-      $('.new_check_list_items').each(function() {
+      $('.noborder').each(function() {
         var shown_count = 0;
 
-        $(this).find('.noborder').each(function() {
+        $(this).find('.checklist_item').each(function() {
           // debugger;
-          if ($(this).find('td').text().match(pattern)) {
+          if ($(this).find('label').text().match(pattern)) {
             $(this).show();
             shown_count += 1;
           } else {
@@ -65,10 +65,10 @@
 
       if ($('#item_filter').val() != '') {
         $('#item_filter_clear').css('visibility', 'visible');
-        $('h3').css('display', 'none');
+        //$('h3').css('display', 'none');
       } else {
         $('#item_filter_clear').css('visibility', 'hidden');
-        $('h3').css('display', 'block');
+        //$('h3').css('display', 'block');
       }
 
       $('.spinner').css('visibility', 'hidden');
@@ -105,7 +105,7 @@
   // Select all items in headline group, when clicking on the headline.
   $(document).ready(function() {
     $('h3').click(function() {
-      var tables_after_h3_id = $('#' + this.id).nextAll().addClass( "after" ).find('table');
+      var tables_after_h3_id = $('#' + this.id).nextAll().addClass( "after" ).find('div');
       var next_table = tables_after_h3_id[0];
       var next_check_box = $(next_table).find('input[type="checkbox"]')[0];
 
