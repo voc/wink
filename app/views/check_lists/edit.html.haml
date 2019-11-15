@@ -105,17 +105,14 @@
   // Select all items in headline group, when clicking on the headline.
   $(document).ready(function() {
     $('h3').click(function() {
-      var tables_after_h3_id = $('#' + this.id).nextAll().addClass( "after" ).find('div');
-      var next_table = tables_after_h3_id[0];
-      var next_check_box = $(next_table).find('input[type="checkbox"]')[0];
-
-      // invert check pending on first checkbox in group
-      if (next_check_box.checked) {
+      inputs = $(this).parent().find('input[type="checkbox"]');
+      
+      if (inputs[0].checked) {
         var checked = false;
       } else {
         var checked = true;
       }
 
-      $(next_table).find('input[type="checkbox"]').prop('checked', checked);
+      $(inputs).prop('checked', checked);
     });
   });
