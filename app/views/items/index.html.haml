@@ -61,7 +61,7 @@
       $('table').each(function() {
         var shown_count = 0;
 
-        $(this).find('tr').each(function() {
+        $(this).find('tbody').find('tr').each(function() {
           //debugger;
           if ($(this).find('td').text().match(pattern)) {
             $(this).show();

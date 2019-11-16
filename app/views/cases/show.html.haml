@@ -48,7 +48,7 @@
 
 %a{name: "flagged"}
 %h3 Missing or broken items
-%table{border:1}
+%table.flagged{border:1}
   %thead
     %tr
       %th Name
@@ -87,64 +87,73 @@
 
 %a{href: new_item_path(case_id: @case.id)} add new item
 
+.floating_filters
+  %label{for: 'item_filter'}= 'Item filter:'
+  .value
+    %img.spinner{:src => asset_path('spinner.gif'), :alt => 'Loading...'}
+    %input#item_filter{:type => 'text'}
+    %img#item_filter_clear{:src => asset_path('icons/cross.png'), :alt => 'Clear'}
+
+
 - @grouped_items.sort_by{|l,items| "#{l.location.name unless l.nil? || l.location.nil?}#{l.name unless l.nil?}" }.each do |l,items|
-  - if l.nil?
-    %a{name: "nolocation"}
-    %h4= "no location"
-  - else
-    %a{name: "#{Digest::MD5.hexdigest(l.name)}"}
-    - if l.shelf_level == 0
-      %h4= l.name
+  .active_items
+    - if l.nil?
+      %a{name: "nolocation"}
+      %h4= "no location"
     - else
-      %h5= l.name
-  %table{border:1}
-    %thead
-      %tr
-        %th Name
-        %th Manufacturer
-        %th Model
-        %th Serial number
-        %th Price
-        %th Actions
-
-    %tbody
-      - items.sort_by{ |i| "#{i.item&.name}#{i.name}.#{format('%05.1f', i.model.to_f)}" }.each do |item|
+      %a{name: "#{Digest::MD5.hexdigest(l.name)}"}
+      - if l.shelf_level == 0
+        %h4= l.name
+      - else
+        %h5= l.name
+    %table{border:1}
+      %thead
         %tr
-          - if item.missing
-            %td.left.missing{title: "missing"}
-              - if item.item
-                = ' &nbsp; &nbsp; '.html_safe
-              %a{href: item_path(item)}
-                = item.name
-          - elsif item.broken
-            %td.left.broken{title: "broken"}
-              - if item.item
-                = ' &nbsp; &nbsp; '.html_safe
-              %a{href: item_path(item)}
-                = item.name
-          - else
-            %td.left.no_color
-              - if item.item
-                = ' &nbsp; &nbsp; '.html_safe
-              %a{href: item_path(item)}
-                = item.name
-          %td.no_color
-            %a{href: item_path(item)}= item.manufacturer
-          %td.no_color
-            %a{href: item_path(item)}= item.model
-          %td.no_color
-            %a{href: item_path(item)}= item.serial_number
-          %td.no_color
-            %a{href: item_path(item)}= number_to_currency(item.price, locale: :de)
+          %th Name
+          %th Manufacturer
+          %th Model
+          %th Serial number
+          %th Price
+          %th Actions
 
-          %td
-            %a{href: item_path(item)} show
-            %a{href: edit_item_path(item)} edit
-            %a{href: clone_item_path(item)} clone
-  - unless l.nil?
-    %a{href: edit_item_path(l)} edit location 
-    %a{href: new_item_path(case_id: @case.id, location: l.id)} add new item
-  
+      %tbody
+        - items.sort_by{ |i| "#{i.item&.name}#{i.name}.#{format('%05.1f', i.model.to_f)}" }.each do |item|
+          %tr
+            - if item.missing
+              %td.left.missing{title: "missing"}
+                - if item.item
+                  = ' &nbsp; &nbsp; '.html_safe
+                %a{href: item_path(item)}
+                  = item.name
+            - elsif item.broken
+              %td.left.broken{title: "broken"}
+                - if item.item
+                  = ' &nbsp; &nbsp; '.html_safe
+                %a{href: item_path(item)}
+                  = item.name
+            - else
+              %td.left.no_color
+                - if item.item
+                  = ' &nbsp; &nbsp; '.html_safe
+                %a{href: item_path(item)}
+                  = item.name
+            %td.no_color
+              %a{href: item_path(item)}= item.manufacturer
+            %td.no_color
+              %a{href: item_path(item)}= item.model
+            %td.no_color
+              %a{href: item_path(item)}= item.serial_number
+            %td.no_color
+              %a{href: item_path(item)}= number_to_currency(item.price, locale: :de)
+
+            %td
+              %a{href: item_path(item)} show
+              %a{href: edit_item_path(item)} edit
+              %a{href: clone_item_path(item)} clone
+    - unless l.nil?
+      %a{href: edit_item_path(l)} edit location 
+      %a{href: new_item_path(case_id: @case.id, location: l.id)} add new item
+    
 
 %a{name: "deleted"}
 %h3 Deleted items
@@ -182,3 +191,87 @@
         %td
           %a{href: item_path(item)} show
           %a{href: clone_item_path(item)} clone
+
+
+:javascript
+  var item_filter_timer;
+  var item_filter_value = '';
+
+  $(function() {
+    // Hide all items which do not match the given regular expression
+    // If all items are hidden in a shelf unit, the whole unit becomes hidden
+    var item_filter_action = function() {
+
+      var pattern = new RegExp($('#item_filter').val(), 'i');
+
+      $('.active_items').each(function() {
+        var shown_count = 0;
+
+        $(this).find('tbody').find('tr').each(function() {
+          // debugger;
+          if ($(this).find('td').text().match(pattern)) {
+            $(this).show();
+            shown_count += 1;
+          } else {
+            $(this).hide();
+          }
+        });
+
+        if (shown_count == 0) {
+          $(this).hide();
+        } else {
+          $(this).show();
+        }
+      });
+
+      item_filter_value = $('#item_filter').val();
+
+      if ($('#item_filter').val() != '') {
+        $('#item_filter_clear').css('visibility', 'visible');
+        $('.flagged').hide();
+        $('.deleted').hide();
+      } else {
+        $('#item_filter_clear').css('visibility', 'hidden');
+        $('.flagged').show();
+        $('.deleted').hide();
+      }
+
+      $('.spinner').css('visibility', 'hidden');
+    };
+
+
+    // Button shit
+
+    // Amount of milliseconds for the finish-typing-timeout
+    var item_filter_timeout = 500;
+
+    // When a key is released, a timeout for filtering is activated
+    $('#item_filter').keyup(function() {
+      if (item_filter_value != $('#item_filter').val()) {
+        item_filter_timer = setTimeout(item_filter_action, item_filter_timeout);
+        $('.spinner').css('visibility', 'visible');
+      }
+    });
+
+    // When a key is pressed, a running timeout for filtering gets stopped
+    $('#item_filter').keydown(function() {
+      clearTimeout(item_filter_timer);
+      $('.spinner').css('visibility', 'hidden');
+    });
+
+    $('#item_filter_clear').click(function() {
+      $(this).css('visibility', 'hidden');
+      $('#item_filter').val('');
+      item_filter_action();
+    });
+
+    window.onkeypress = function(e) {
+      if (e.metaKey && e.key == 'f') {
+        field = $('#item_filter');
+        if (!field.is(':focus')) {
+          field.focus();
+          e.preventDefault();
+        }
+      }
+    }
+  });
