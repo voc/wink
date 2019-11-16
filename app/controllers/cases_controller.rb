@@ -3,17 +3,15 @@ class CasesController < ApplicationController
   before_action :find_case, except: [:index, :create, :new]
 
   def show
-    shelfs = @case.locations.where(deleted: false)
-    @items_without_shelfs = @case.items.where(deleted: false) - shelfs
+    @grouped_shelfs = @case.locations.group_by { |i| i.location.nil? ? i.name : i.location.name }
 
-    @grouped_items = @items_without_shelfs.group_by do |i|
+    @items_without_sections = @case.items.where(deleted: false) - @case.sections
+    @grouped_items = @items_without_sections.group_by do |i|
       i.location
     end
 
     @flagged_items = @case.flagged_items
     @deleted_items = Item.where(case: @case, deleted: true)
-
-    @upcoming_events = Event.where(end_date: Date.today-2..4.weeks.after).order(:start_date)
 
     respond_to do |format|
       format.html

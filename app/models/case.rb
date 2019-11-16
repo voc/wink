@@ -20,6 +20,12 @@ class Case < ActiveRecord::Base
       item_type_id = #{ItemType.find_by(name: "Fach").id})")
   end
 
+  def sections
+    Item.where("case_id = #{self.id} AND \
+      deleted = 0 AND
+      item_type_id = #{ItemType.find_by(name: "Fach").id}")
+  end
+
   def relateable_items
     Item.where("case_id = #{self.id} AND \
       deleted = 0 AND

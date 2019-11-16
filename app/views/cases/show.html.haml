@@ -5,18 +5,24 @@
 .page_navigation
   %ul
     %li
-      %a{href: "\#flagged"} Missing or broken
+      %a{href: "\#flagged", 'data-turbolinks': 'false'} Missing or broken
     %li
-      %a{href: "\#all"} All (active)
+      %a{href: "\#all", 'data-turbolinks': 'false'} All (active)
     %ul
-      - @grouped_items.sort_by{|l,items| "#{l}" }.each do |l,items|
+      - @grouped_shelfs.sort_by{|g,s| "#{g}" }.each do |group,shelfs|
         %li
-          - if l.nil?
+          - if group.nil?
             %a{href: "\#nolocation"} no location
           - else
-            %a{href: "\##{Digest::MD5.hexdigest(l.name)}"}= l.name
+            %a{href: "\##{Digest::MD5.hexdigest(group)}", 'data-turbolinks': 'false'}= group
+            - if shelfs && shelfs.length > 2
+              %ul
+                - shelfs.each do |l|
+                  - if l.name != group
+                    %li
+                      %a{href: "\##{Digest::MD5.hexdigest(l.name)}", 'data-turbolinks': 'false'}= l.name
     %li
-      %a{href: "\#deleted"} Deleted
+      %a{href: "\#deleted", 'data-turbolinks': 'false'} Deleted
 
 %ol.properties
   %li
@@ -75,21 +81,22 @@
           %a{href: item_path(item)} show
           %a{href: edit_item_path(item)} edit
           %a{href: new_item_comment_path(item)} comment
-  
 
 %a{name: "all"}
 %h3 All (active) items
 
 %a{href: new_item_path(case_id: @case.id)} add new item
 
-- @grouped_items.sort_by{|l,items| "#{l}" }.each do |l,items|
-
+- @grouped_items.sort_by{|l,items| "#{l.location.name unless l.nil? || l.location.nil?}#{l.name unless l.nil?}" }.each do |l,items|
   - if l.nil?
     %a{name: "nolocation"}
     %h4= "no location"
   - else
     %a{name: "#{Digest::MD5.hexdigest(l.name)}"}
-    %h4= l.name
+    - if l.shelf_level == 0
+      %h4= l.name
+    - else
+      %h5= l.name
   %table{border:1}
     %thead
       %tr

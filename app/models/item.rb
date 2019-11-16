@@ -39,6 +39,11 @@ class Item < ActiveRecord::Base
     end
   end
 
+  def shelf_level
+    return false if self.item_type.nil?
+    ItemType::LOCATIONS.index { |x| self.item_type.name == x }
+  end
+
   # Overwrite default functions.
   #
   # Items should be only disabled instead of deleted!
