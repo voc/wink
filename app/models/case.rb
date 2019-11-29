@@ -15,20 +15,20 @@ class Case < ActiveRecord::Base
 
   def locations
     Item.where("case_id = #{self.id} AND \
-      deleted = 0 AND
+      deleted = false AND
       (item_type_id = #{ItemType.find_by(name: "Meshbag").id} or
       item_type_id = #{ItemType.find_by(name: "Fach").id})")
   end
 
   def sections
     Item.where("case_id = #{self.id} AND \
-      deleted = 0 AND
+      deleted = false AND
       item_type_id = #{ItemType.find_by(name: "Fach").id}")
   end
 
   def relateable_items
     Item.where("case_id = #{self.id} AND \
-      deleted = 0 AND
+      deleted = false AND
       item_type_id IN(
         #{ItemType.find_by(name: "Device").id}
       )")
@@ -36,7 +36,7 @@ class Case < ActiveRecord::Base
 
   def active_items
     Item.where("case_id = #{self.id} AND \
-      deleted = 0 AND
+      deleted = false AND
       item_type_id NOT IN(
         #{ItemType.find_by(name: "Meshbag").id}, 
         #{ItemType.find_by(name: "Fach").id}
@@ -44,12 +44,12 @@ class Case < ActiveRecord::Base
   end
 
   def not_deleted_items
-    Item.where("case_id = #{self.id} AND deleted = 0")
+    Item.where("case_id = #{self.id} AND deleted = false")
   end
 
   def flagged_items
     Item.where("case_id = #{self.id} AND 
-      deleted = 0 AND ( broken = 1 OR missing = 1 )")
+      deleted = false AND ( broken = false OR missing = false )")
   end
 
   def check_list_exists?(event)
