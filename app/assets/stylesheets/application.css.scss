@@ -82,12 +82,14 @@ label { display: block; }
 
 // links
 h1 {
+  line-height: 1em;
+  margin: 0;
+  padding: 10px 25px;
+  background-color: black;
+
   a, a:hover {
     text-decoration: none;
     color: #28c3ab;
-    background-color: black;
-    display: block;
-    padding: 5px 25px;
   }
 }
 
