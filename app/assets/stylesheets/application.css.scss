@@ -119,6 +119,7 @@ h1 {
 table {
   border-collapse: collapse;
   margin-top: 10px;
+  width: 100%;
 
   td, th, tr {
     border: 1px solid black;
@@ -127,10 +128,6 @@ table {
   }
   td.left {
     text-align: left;
-  }
-
-  td {
-    min-width: 250px;
   }
 
   .broken {
