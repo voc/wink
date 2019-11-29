@@ -80,11 +80,12 @@ label { display: block; }
 
 // links
 h1 {
-  a,
-  a:hover {
+  a, a:hover {
     text-decoration: none;
     color: #28c3ab;
     background-color: black;
+    display: block;
+    padding: 5px 25px;
   }
 }
 
