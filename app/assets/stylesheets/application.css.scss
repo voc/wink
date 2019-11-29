@@ -129,6 +129,10 @@ table {
     text-align: left;
   }
 
+  td {
+    min-width: 250px;
+  }
+
   .broken {
     background-color: red;
 
