@@ -107,9 +107,11 @@ h3 {
     margin-top: 0x;
     td, th, tr {
       border: none;
-      border-color: none;
       padding: 0px;
       text-align: left;
+    }
+    tr:hover{
+      background-color: #CCCCCC;
     }
     input[type='checkbox'] {
         -webkit-appearance:none;
@@ -137,6 +139,10 @@ table {
   }
   td.left {
     text-align: left;
+  }
+
+  tr:hover{
+    background-color: #CCCCCC;
   }
 
   .broken {
