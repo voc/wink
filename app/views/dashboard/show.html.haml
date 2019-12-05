@@ -15,7 +15,7 @@
 - @upcoming_events.group_by{|e| e.start_date.month}.each do |month,events|
   %h4= Date::MONTHNAMES[month]
   %table
-    %theader
+    %thead
       %tr
         %th Name
         %th Start date
