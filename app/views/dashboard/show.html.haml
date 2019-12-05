@@ -15,7 +15,7 @@
 - @upcoming_events.group_by{|e| e.start_date.month}.each do |month,events|
   %h4= Date::MONTHNAMES[month]
   %table
-    %thead
+    %theader
       %tr
         %th Name
         %th Start date
@@ -27,13 +27,13 @@
     %tbody
     - events.each do |event|
       %tr
-        %td
+        %td.no_color
           %a{href: event_path(event)}= event.name
-        %td
+        %td.no_color
           %a{href: event_path(event)}= l event.start_date
-        %td
+        %td.no_color
           %a{href: event_path(event)}= l event.end_date
-        %td
+        %td.no_color
           %a{href: event_path(event)}= event.location
         %td
           %ul
@@ -72,14 +72,14 @@
             %td.missing{title: "missing"} missing
           - else
             %td.broken{title: "broken"} broken
-          %td
+          %td.no_color
             %a{href: item_path(bitem)}= bitem.name
-          %td
+          %td.no_color
             %a{href: item_path(bitem)}= bitem.model
           - if bitem.item_comments.count == 0
             %td
           - else
-            %td
+            %td.no_color
               %a{href: item_path(bitem)}
                 = "#{bitem.item_comments.first.author}: #{bitem.item_comments.first.comment}"
           %td

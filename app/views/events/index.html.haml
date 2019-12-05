@@ -29,23 +29,23 @@
     %tbody
     - events.each do |event|
       %tr
-        %td
+        %td.no_color
           %a{href: event_path(event)}= event.name
-        %td
+        %td.no_color
           %a{href: event_path(event)}= event.location
-        %td
+        %td.no_color
           - if event.start_date
             %a{href: event_path(event)}= l event.start_date
-        %td
+        %td.no_color
           - if event.end_date
             %a{href: event_path(event)}= l event.end_date
-        %tdr
+        %td.no_color
           - if event.buildup
             %a{href: event_path(event)}= l event.buildup
-        %td
+        %td.no_color
           - if event.removel
             %a{href: event_path(event)}= l event.removel
-        %td
+        %td.no_color
           - if event.cases.count == 0
             no cases assigned
           - else
