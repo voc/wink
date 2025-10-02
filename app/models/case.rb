@@ -8,8 +8,8 @@ class Case < ActiveRecord::Base
 
   has_many :items
 
-  validates :name, presence: true
-  validates :acronym, presence: true
+  validates :name, presence: true, uniqueness: true
+  validates :acronym, presence: true, uniqueness: true
   validates :case_type, presence: true
 
 
@@ -38,7 +38,7 @@ class Case < ActiveRecord::Base
     Item.where("case_id = #{self.id} AND \
       deleted = false AND
       item_type_id NOT IN(
-        #{ItemType.find_by(name: "Meshbag").id}, 
+        #{ItemType.find_by(name: "Meshbag").id},
         #{ItemType.find_by(name: "Fach").id}
       )")
   end
@@ -48,7 +48,7 @@ class Case < ActiveRecord::Base
   end
 
   def flagged_items
-    Item.where("case_id = #{self.id} AND 
+    Item.where("case_id = #{self.id} AND
       deleted = false AND ( broken = true OR missing = true )")
   end
 

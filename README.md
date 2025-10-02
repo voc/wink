@@ -44,6 +44,10 @@ GET /check_lists/:id.json
 
 ## Deployment
 
+Init:
+```shell
+rails db:seed
+```
 
 Start server:
 ```shell

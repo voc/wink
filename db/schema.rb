@@ -108,6 +108,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_02_142829) do
     t.index ["case_id"], name: "index_items_on_case_id"
     t.index ["item_id"], name: "index_items_on_item_id"
     t.index ["item_type_id"], name: "index_items_on_item_type_id"
+    t.index ["location_item_id"], name: "index_items_on_location_item_id"
   end
 
   create_table "transports", force: :cascade do |t|

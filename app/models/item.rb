@@ -9,7 +9,7 @@ class Item < ActiveRecord::Base
   belongs_to :item_type, optional: true
   belongs_to :location, optional: true, :class_name => "Item", :foreign_key => "location_item_id"
 
-  validates :name, presence: true
+  validates :name, presence: true, uniqueness: { scope: [:case_id, :location_item_id, :item_id] }
   validates :case, presence: true
 
 
