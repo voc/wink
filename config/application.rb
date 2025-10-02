@@ -41,5 +41,6 @@ module Wink
 
     config.mqtt = config_for(:mqtt)
 
+    config.active_support.to_time_preserves_timezone = :zone
   end
 end
