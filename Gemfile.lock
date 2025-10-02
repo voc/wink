@@ -363,6 +363,9 @@ GEM
     tilt (2.6.1)
     timeout (0.4.3)
     tsort (0.2.0)
+    turbo-rails (2.0.17)
+      actionpack (>= 7.1.0)
+      railties (>= 7.1.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     uri (1.0.3)
@@ -427,6 +430,7 @@ DEPENDENCIES
   spring
   spring-watcher-listen
   sqlite3
+  turbo-rails
   tzinfo-data
   web-console
 

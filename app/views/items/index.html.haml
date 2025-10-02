@@ -10,7 +10,7 @@
   %label{for: 'item_filter'}= 'Item filter:'
   .value
     %img.spinner{:src => asset_path('spinner.gif'), :alt => 'Loading...'}
-    %input#item_filter{:type => 'text'}
+    %input#item_filter.item_index{:type => 'text'}
     %img#item_filter_clear{:src => asset_path('icons/cross.png'), :alt => 'Clear'}
 
 %table{border: 1}
@@ -46,72 +46,3 @@
         %td
           %a{href: item_path(item)} show
           %a{href: edit_item_path(item)} edit
-
-:javascript
-  var item_filter_timer;
-  var item_filter_value = '';
-
-  $(function() {
-    // Hide all items which do not match the given regular expression
-    // If all items are hidden in a shelf unit, the whole unit becomes hidden
-    var item_filter_action = function() {
-
-      var pattern = new RegExp($('#item_filter').val(), 'i');
-
-      $('table').each(function() {
-        var shown_count = 0;
-
-        $(this).find('tbody').find('tr').each(function() {
-          //debugger;
-          if ($(this).find('td').text().match(pattern)) {
-            $(this).show();
-            shown_count += 1;
-          } else {
-            $(this).hide();
-          }
-        });
-
-        if (shown_count == 0) {
-          $(this).hide();
-        } else {
-          $(this).show();
-        }
-      });
-
-      item_filter_value = $('#item_filter').val();
-
-      if ($('#item_filter').val() != '') {
-        $('#item_filter_clear').css('visibility', 'visible');
-      } else {
-        $('#item_filter_clear').css('visibility', 'hidden');
-      }
-
-      $('.spinner').css('visibility', 'hidden');
-    };
-
-
-    // Button shit
-
-    // Amount of milliseconds for the finish-typing-timeout
-    var item_filter_timeout = 500;
-
-    // When a key is released, a timeout for filtering is activated
-    $('#item_filter').keyup(function() {
-      if (item_filter_value != $('#item_filter').val()) {
-        item_filter_timer = setTimeout(item_filter_action, item_filter_timeout);
-        $('.spinner').css('visibility', 'visible');
-      }
-    });
-
-    // When a key is pressed, a running timeout for filtering gets stopped
-    $('#item_filter').keydown(function() {
-      clearTimeout(item_filter_timer);
-      $('.spinner').css('visibility', 'hidden');
-    });
-
-    $('#item_filter_clear').click(function() {
-      $(this).css('visibility', 'hidden');
-      $('#item_filter').val('');
-      item_filter_action();
-    });
-  });

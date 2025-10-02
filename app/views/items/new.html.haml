@@ -12,9 +12,3 @@
 
   = f.submit "Create"
   = link_to 'Cancel', case_path(@item.case)
-
-
-:javascript
-  $(function() {
-    $('#item_date_of_purchase').datepicker({ dateFormat: 'dd-mm-yy' }).val();
-  });

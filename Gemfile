@@ -28,6 +28,7 @@ gem 'jbuilder'
 # gem 'capistrano-rails', group: :development
 gem 'propshaft'
 gem 'importmap-rails'
+gem 'turbo-rails'
 
 gem 'active_link_to'
 gem 'mqtt'
