@@ -4,7 +4,6 @@ require "rails_helper"
 RSpec.describe ItemsController, :type => :controller do
   before do
     sign_in_as_test_user
-    @item = create(:item)
   end
 
   describe "GET index.json" do
@@ -17,7 +16,7 @@ RSpec.describe ItemsController, :type => :controller do
 
   describe "GET show.json" do
     it "should return item in json format" do
-      get :show, params: { id: @item.id }, format: :json
+      get :show, params: { id: Item.first.id }, format: :json
       expect(response).to have_http_status(:success)
       expect(response.media_type).to eq "application/json"
     end
