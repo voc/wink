@@ -6,7 +6,7 @@ ruby '> 2.3.0'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.1'
 # Use sqlite3 as the database for Active Record
-gem 'sqlite3'
+gem 'sqlite3', '~> 1.6.9'
 # Use postgresql as alternative
 gem 'pg'
 # Use Puma as the app server
@@ -65,9 +65,9 @@ end
 group :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '>= 2.15'
-  gem 'selenium-webdriver'
+  gem 'selenium-webdriver', '~> 4.8', '>= 4.8.6' # letzte Reihe mit Ruby >= 2.7
   # Easy installation and use of chromedriver to run system tests with Chrome
-  gem 'chromedriver-helper'
+  gem 'webdrivers'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
