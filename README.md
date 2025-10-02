@@ -48,7 +48,7 @@ GET /check_lists/:id.json
 export OIDC_ISSUER=https://accounts.google.com
 export OIDC_CLIENT_ID=YOUR_CLIENT_ID
 export OIDC_CLIENT_SECRET=YOUR_CLIENT_SECRET
-export OIDC_REDIRECT_URI=https://your-app-domain.com/auth/oidc/callback
+export OIDC_REDIRECT_URI=https://localhost:3000/auth/oidc/callback
 bin/rails s
 ```
 
