@@ -12,7 +12,6 @@
  *
  *= require_tree .
  *= require_self
- *= require jquery-ui
  */
 
 body {
@@ -272,9 +271,9 @@ input[type=submit]:hover, input[type=submit]:focus {
   }
 }
 .floating_filters {
-  position: fixed; 
-  top: 0.5em; 
-  right: 0.5em; 
+  position: fixed;
+  top: 0.5em;
+  right: 0.5em;
   background-color: #fff;
   padding: 3px;
 }
@@ -289,9 +288,9 @@ input[type=submit]:hover, input[type=submit]:focus {
 }
 
 .floating_form_actions {
-  position: fixed; 
-  bottom: 2em; 
-  right: 2em; 
+  position: fixed;
+  bottom: 2em;
+  right: 2em;
   background-color: #fff;
   a, input[type=submit] {
     font-size: 30px;
@@ -310,8 +309,8 @@ input[type=submit]:hover, input[type=submit]:focus {
     width: 300px;
     max-width: 90%;
     display: inline-block;
-    vertical-align: middle; 
-    margin:10px;    
+    vertical-align: middle;
+    margin:10px;
     padding:0;
 
     label {

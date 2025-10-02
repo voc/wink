@@ -34,8 +34,6 @@ gem 'jbuilder'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
-gem "jquery-rails"
-gem 'jquery-ui-rails'
 gem 'active_link_to'
 
 gem 'mqtt'
