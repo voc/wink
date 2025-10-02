@@ -12,15 +12,8 @@ gem 'pg'
 # Use Puma as the app server
 gem 'puma'
 # Use SCSS for stylesheets
-gem 'sassc-rails'
 gem 'haml'
-# Use Uglifier as compressor for JavaScript assets
-gem 'uglifier'
-# See https://github.com/rails/execjs#readme for more supported runtimes
-gem 'mini_racer', platforms: :ruby
 
-# Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
-gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder'
 # Use Redis adapter to run Action Cable in production
@@ -33,6 +26,8 @@ gem 'jbuilder'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+gem 'propshaft'
+gem 'importmap-rails'
 
 gem 'active_link_to'
 gem 'mqtt'
