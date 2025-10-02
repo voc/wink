@@ -57,7 +57,7 @@
       %th Actions
 
   %tbody
-    - @flagged_items.sort_by{ |i| i.name }.each do |item|
+    - @case.items.flagged.sort_by{ |i| i.name }.each do |item|
       %tr
         - if item.missing
           %td.missing{title: "missing"}
@@ -151,9 +151,9 @@
               %a{href: edit_item_path(item)} edit
               %a{href: clone_item_path(item)} clone
     - unless l.nil?
-      %a{href: edit_item_path(l)} edit location 
+      %a{href: edit_item_path(l)} edit location
       %a{href: new_item_path(case_id: @case.id, location: l.id)} add new item
-    
+
 
 %a{name: "deleted"}
 %h3 Deleted items
@@ -169,7 +169,7 @@
       %th Actions
 
   %tbody
-    - @deleted_items.each do |item|
+    - @case.items.deleted.each do |item|
       %tr
         - if item.missing
           %td.missing{title: "missing"}

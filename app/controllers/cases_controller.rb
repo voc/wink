@@ -10,9 +10,6 @@ class CasesController < ApplicationController
       i.location
     end
 
-    @flagged_items = @case.flagged_items
-    @deleted_items = Item.where(case: @case, deleted: true)
-
     respond_to do |format|
       format.html
       format.json { render json: @case.to_json }
