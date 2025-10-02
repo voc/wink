@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_02_133150) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_02_142829) do
   create_table "case_types", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: nil, null: false
@@ -129,5 +129,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_02_133150) do
     t.string "delivery_state"
     t.datetime "actual_pickup_time", precision: nil
     t.datetime "actual_delivery_time", precision: nil
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "provider"
+    t.string "uid"
+    t.string "email"
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["uid"], name: "index_users_on_uid"
   end
 end

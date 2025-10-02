@@ -35,10 +35,12 @@ gem 'jbuilder'
 # gem 'capistrano-rails', group: :development
 
 gem 'active_link_to'
-
 gem 'mqtt'
-
 gem 'csv'
+
+gem 'omniauth', '~> 1.0'
+gem "omniauth_openid_connect"
+gem "omniauth-rails_csrf_protection"
 
 
 # Reduces boot times through caching; required in config/boot.rb

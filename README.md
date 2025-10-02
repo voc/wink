@@ -44,7 +44,10 @@ GET /check_lists/:id.json
 
 ## Deployment
 
-It is highly recommended to deploy this application with passenger or comparable webservers.
+OIDC_ISSUER=https://accounts.google.com
+OIDC_CLIENT_ID=YOUR_CLIENT_ID
+OIDC_CLIENT_SECRET=YOUR_CLIENT_SECRET
+OIDC_REDIRECT_URI=https://your-app-domain.com/auth/oidc/callback
 
 ## License
 

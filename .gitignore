@@ -8,8 +8,7 @@
 /.bundle
 
 # Ignore the default SQLite database.
-/db/*.sqlite3
-/db/*.sqlite3-journal
+/db/*.sqlite3*
 
 # Ignore all logfiles and tempfiles.
 /log/*
@@ -42,3 +41,5 @@ seriennummern.csv
 config/mqtt.yml
 
 coverage
+
+.env
