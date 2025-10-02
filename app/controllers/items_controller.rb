@@ -34,7 +34,7 @@ class ItemsController < ApplicationController
         filter = ''
         headers["Content-Type"] ||= 'text/csv'
         if params['download'].in?([true, 'true'])
-          headers["Content-Disposition"] = "attachment; filename=\"export.csv\"" 
+          headers["Content-Disposition"] = "attachment; filename=\"export.csv\""
         end
 
         if params["export"]

@@ -44,6 +44,8 @@ GET /check_lists/:id.json
 
 ## Deployment
 
+
+Start server:
 ```shell
 export OIDC_ISSUER=https://accounts.google.com
 export OIDC_CLIENT_ID=YOUR_CLIENT_ID
@@ -51,6 +53,11 @@ export OIDC_CLIENT_SECRET=YOUR_CLIENT_SECRET
 export OIDC_REDIRECT_URI=https://localhost:3000/auth/oidc/callback
 bin/rails s
 ```
+Run tests
+```shell
+bin/rspec
+```
+
 
 ## License
 
