@@ -44,20 +44,19 @@ GET /check_lists/:id.json
 
 ## Deployment
 
-Init:
 ```shell
-rails db:seed
-```
-
-Start server:
-```shell
+rm db/development.sqlite3
+bin/rails db:migrate
+bin/rails db:seed
 export OIDC_ISSUER=https://accounts.google.com
 export OIDC_CLIENT_ID=YOUR_CLIENT_ID
 export OIDC_CLIENT_SECRET=YOUR_CLIENT_SECRET
 export OIDC_REDIRECT_URI=https://localhost:3000/auth/oidc/callback
 bin/rails s
 ```
-Run tests
+
+## Test
+
 ```shell
 bin/rspec
 ```
