@@ -13,11 +13,11 @@
   %li
     %label Item
     %span.item
-      %a{href: item_path(@item)}= @item.name
+      %a{href: item_path(@item_comment.item)}= @item_comment.item.name
   %li
     %label Case
     %span.case
-      %a{href: case_path(@item.case)}= @item.case.name
+      %a{href: case_path(@item_comment.item.case)}= @item_comment.item.case.name
   %br
   %li
     %label Created at
@@ -29,5 +29,5 @@
   %li
     %label Actions
     %span.actions
-      %a{href: edit_item_comment_path(@item, @item_comment)} edit
-      = link_to 'delete', item_comment_path(@item, @item_comment), data: {:confirm => "Delete comment '#{@item_comment.abstract}' from '#{@item_comment.author}'"}, method: :delete
+      %a{href: edit_item_comment_path(@item_comment)} edit
+      = link_to 'delete', item_comment_path(@item_comment), data: {:confirm => "Delete comment '#{@item_comment.abstract}' from '#{@item_comment.author}'"}, method: :delete

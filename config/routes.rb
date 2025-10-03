@@ -32,8 +32,7 @@ Rails.application.routes.draw do
       get :clone
     end
 
-    resources :comments, controller: :item_comments do
-    end
+    resources :item_comments, shallow: true
   end
 
   resources :item_types do

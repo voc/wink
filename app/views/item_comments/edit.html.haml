@@ -1,6 +1,6 @@
 - content_for :title, "Edit comment from #{@item_comment.created_at} - "
 
-%h2= "Edit '#{@item.name}' comment from '#{@item_comment.created_at}'"
+%h2= "Edit '#{@item_comment.item.name}' comment from '#{@item_comment.created_at}'"
 
 - if @item_comment.errors.any?
   %ul
@@ -13,4 +13,4 @@
   = render partial: 'form', locals: {f: f}, object: @item_comment
 
   = f.submit "Save"
-  = link_to 'Cancel', item_path(@item)
+  = link_to 'Cancel', item_path(@item_comment.item)

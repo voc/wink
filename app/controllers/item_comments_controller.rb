@@ -1,25 +1,23 @@
 class ItemCommentsController < ApplicationController
 
   before_action :find_item_comment, except: [:index, :create, :new]
-  before_action :find_item
+  before_action :find_item, only: [:index, :create, :new]
 
   def show
   end
 
   def index
-    @item_comments = ItemComment.where(item_id: params[:item_id])
+    @item_comments = @item.item_comments
   end
 
   def new
-    @item_comment = ItemComment.new(item_id: Item.find(params[:item_id]))
+    @item_comment = @item.item_comments.new
   end
 
   def create
-    @item_comment = ItemComment.new(item_comment_params)
-    @item_comment.item_id = @item.id
+    @item_comment = @item.item_comments.new item_comment_params
 
     if @item_comment.save!
-      p @item_comment
       redirect_to item_path(@item), notice: "Created comment for item '#{@item.name}'"
     else
       render action: 'new'
@@ -31,7 +29,7 @@ class ItemCommentsController < ApplicationController
 
   def update
     if @item_comment.update(item_comment_params)
-      redirect_to item_path(@item.id), notice: "Updated item comment for '#{@item.name}'"
+      redirect_to item_path(@item_comment.item), notice: "Updated item comment for '#{@item_comment.item.name}'"
     else
       render action: 'edit'
     end

@@ -101,7 +101,7 @@
           %a.mark.missing{href: item_path(item)}= item.name
         - elsif item.broken
           %a.mark.broken{href: item_path(item)}= item.name
-        - else 
+        - else
           %a{href: item_path(item)}= item.name
         = item.model
 
@@ -109,7 +109,7 @@
 %h3= "Comments (#{@item.item_comments.count})"
 
 - unless @item.deleted
-  %a{href: new_item_comment_path(@item)} create new comment
+  %a{href: new_item_item_comment_path(@item)} create new comment
 
 %table
   %thead
@@ -125,4 +125,4 @@
         %td= comment.author
         %td= comment.comment
         %td
-          %a{href: item_comment_path(id: comment, item_id: @item)} show
+          %a{href: item_comment_path(comment)} show
