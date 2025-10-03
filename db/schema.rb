@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_02_142829) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_03_073305) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -82,7 +82,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_02_142829) do
     t.string "author"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
+    t.bigint "users_id"
     t.index ["item_id"], name: "index_item_comments_on_item_id"
+    t.index ["users_id"], name: "index_item_comments_on_users_id"
   end
 
   create_table "item_types", force: :cascade do |t|
@@ -143,4 +145,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_02_142829) do
     t.datetime "updated_at", null: false
     t.index ["uid"], name: "index_users_on_uid"
   end
+
+  add_foreign_key "item_comments", "users", column: "users_id"
 end
