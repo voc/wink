@@ -1,5 +1,5 @@
 class ItemComment < ActiveRecord::Base
-  has_one :item
+  belongs_to :item
   belongs_to :user, optional: true
 
   validate :author_or_user_present
