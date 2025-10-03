@@ -9,9 +9,14 @@ class AddForeignKeys < ActiveRecord::Migration[8.0]
     add_foreign_key :check_list_items, :cases
 
     # event_cases → events, cases, transports, check_lists
-    EventCase.all.each do |ec|
-      ec.destroy! if ec.event.nil? or ec.case.nil?
-    end
+    execute <<~SQL # remove event cases with no longer existing event or case
+      DELETE FROM event_cases
+      WHERE
+        event_cases.event_id IS NULL
+        OR NOT EXISTS (SELECT 1 FROM events WHERE events.id = event_cases.event_id)
+        OR event_cases.case_id IS NULL
+        OR NOT EXISTS (SELECT 1 FROM cases WHERE cases.id = event_cases.case_id);
+    SQL
     add_foreign_key :event_cases, :events
     add_foreign_key :event_cases, :cases
     add_foreign_key :event_cases, :transports
