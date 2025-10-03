@@ -43,7 +43,7 @@ Rails.application.routes.draw do
   end
 
   get    "/login",              to: "sessions#new",     as: :login
-  post   "/auth",               to: "sessions#redirect", as: :auth_request
+  post   "/auth/oidc",          to: "sessions#redirect", as: :auth_request
   get    "/auth/oidc/callback", to: "sessions#create"   # note provider in path
   get    "/auth/failure",       to: "sessions#failure"
   delete "/logout",             to: "sessions#destroy"
