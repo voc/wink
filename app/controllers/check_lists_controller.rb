@@ -21,7 +21,6 @@ class CheckListsController < ApplicationController
 
   def new
     @check_list = @event_case.build_check_list
-    print(@check_list.inspect)
   end
 
   def create
