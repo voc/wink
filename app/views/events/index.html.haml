@@ -46,10 +46,10 @@
             - if event.removel
               %a{href: event_path(event)}= l event.removel
           %td.no_color
-            - if event.cases.count == 0
+            - if event.cases.none?
               no cases assigned
             - else
-              %a{href: event_path(event)}= event.cases.map{|c| c.acronym }.join(", ")
+              %a{href: event_path(event)}= event.cases.pluck(:acronym).join(", ")
           %td
             %a{href: event_path(event)} show
             %a{href: edit_event_path(event)} edit
