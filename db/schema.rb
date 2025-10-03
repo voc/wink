@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_03_075536) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_03_081740) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -108,11 +108,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_03_075536) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.bigint "item_type_id"
-    t.integer "location_item_id"
+    t.bigint "location_item_id"
     t.boolean "deleted", default: false
     t.index ["case_id"], name: "index_items_on_case_id"
     t.index ["item_id"], name: "index_items_on_item_id"
     t.index ["item_type_id"], name: "index_items_on_item_type_id"
+    t.index ["location_item_id"], name: "index_items_on_location_item_id"
   end
 
   create_table "transports", force: :cascade do |t|
@@ -127,13 +128,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_03_075536) do
     t.boolean "quotation", default: false
     t.boolean "ordered", default: false
     t.string "carrier"
-    t.integer "destination_event_id"
-    t.integer "source_event_id"
+    t.bigint "destination_event_id"
+    t.bigint "source_event_id"
     t.string "tracking_number"
     t.integer "shipment_id"
     t.string "delivery_state"
     t.datetime "actual_pickup_time", precision: nil
     t.datetime "actual_delivery_time", precision: nil
+    t.index ["destination_event_id"], name: "index_transports_on_destination_event_id"
+    t.index ["source_event_id"], name: "index_transports_on_source_event_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -146,5 +149,20 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_03_075536) do
     t.index ["uid"], name: "index_users_on_uid"
   end
 
+  add_foreign_key "cases", "case_types"
+  add_foreign_key "check_list_items", "cases"
+  add_foreign_key "check_list_items", "check_lists"
+  add_foreign_key "check_list_items", "items"
+  add_foreign_key "event_cases", "cases"
+  add_foreign_key "event_cases", "check_lists"
+  add_foreign_key "event_cases", "events"
+  add_foreign_key "event_cases", "transports"
+  add_foreign_key "item_comments", "items"
   add_foreign_key "item_comments", "users"
+  add_foreign_key "items", "cases"
+  add_foreign_key "items", "item_types"
+  add_foreign_key "items", "items"
+  add_foreign_key "items", "items", column: "location_item_id"
+  add_foreign_key "transports", "events", column: "destination_event_id"
+  add_foreign_key "transports", "events", column: "source_event_id"
 end
