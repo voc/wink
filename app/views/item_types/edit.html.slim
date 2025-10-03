@@ -1,0 +1,15 @@
+- content_for :title, "Edit #{@item_type.name} - "
+
+h2 "Edit '#{@item_type.name}'"
+
+- if @item_type.errors.any?
+  ul
+    - @item_type.errors.each do |message|
+      li
+        = message
+
+= form_for(@item_type, as: :item, url: item_type_path(@item_type), method: 'PUT') do |f|
+  = render partial: 'form', locals: {f: f}, object: @item_type
+
+  = f.submit "Edit"
+  = link_to 'Cancel', item_types_path

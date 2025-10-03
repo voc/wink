@@ -1,0 +1,14 @@
+- content_for :title, "New item - "
+
+h2 "Create new item for '#{@item.case.name}'"
+- if @item.errors.any?
+  ul
+    - @item.errors.each do |message|
+      li
+        = message
+
+= form_for(@item, as: :item) do |f|
+  = render partial: 'form', locals: {f: f}, object: @item
+
+  = f.submit "Create"
+  = link_to 'Cancel', case_path(@item.case)

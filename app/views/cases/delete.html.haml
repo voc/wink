@@ -1,7 +1,0 @@
-%form{action: case_path(@case), method: 'POST'}
-  %input{type: 'hidden', name: '_method', value: 'DELETE'}
-
-  %p= "Delete case '#{@case.name}'?"
-
-  %input{type: 'submit', value: "Delete"}
-  = link_to 'Cancel', cases_path

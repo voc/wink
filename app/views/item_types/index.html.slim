@@ -1,0 +1,25 @@
+- content_for :title, "Item types - "
+
+h2 Item types
+
+a href=new_item_type_path create new item type
+
+table border="1"
+  thead
+    tr
+      th Name
+      th Location
+      th Action
+  tbody
+    - @item_types.sort.each do |type|
+      tr
+        td.no_color
+          a href=item_type_path(type) = type.name
+        td.no_color
+          - if ItemType::LOCATIONS.include?(type.name)
+            a href=item_type_path(type) true
+          - else
+            a href=item_type_path(type) false
+        td
+          a href=item_type_path(type) show
+          a href=edit_item_type_path(type) edit

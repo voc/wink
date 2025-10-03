@@ -1,0 +1,38 @@
+doctype html
+html
+  head
+    title
+      = "#{yield(:title)}#{Rails.configuration.application_slogan}"
+    = csrf_meta_tags
+    = stylesheet_link_tag "application", "data-turbo-track": "reload"
+    = javascript_importmap_tags
+
+  body
+    #header
+      h1
+        a href=root_path WINK
+
+    #menu
+      ul.menu
+        li
+          = active_link_to('dashboard', dashboard_path)
+        li
+          = active_link_to('events', events_path)
+        / TODO: implement transport planing
+        li
+          = active_link_to('transports', transports_path)
+        li
+          = active_link_to('cases', cases_path)
+        li
+          = active_link_to('items', items_path)
+
+      - if controller.controller_name == 'cases'
+        ul.submenu
+          - Case.all.each do |c|
+            li = active_link_to(c.acronym, case_path(c))
+        br clear="all"
+
+    #main
+      = yield
+
+    #footer
