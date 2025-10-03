@@ -1,7 +1,7 @@
 class CheckListsController < ApplicationController
 
   before_action :find_check_list, except: [:index, :create, :new]
-  before_action :find_event_case, only: [:index, :create, :new]
+  before_action :find_event_case, only: [:create, :new]
 
   def show
     respond_to do |format|
