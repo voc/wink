@@ -28,12 +28,6 @@ class CheckListsController < ApplicationController
     @check_list = @event_case.build_check_list(check_list_params)
 
     if @check_list.save!
-      # TODO: move that into the model
-      @check_list.copy_items!
-
-      # TODO: Send mqtt message, when checklist was created.
-      Wink::MqttClient.send_message("'#{@check_list.advisor}' created '#{@check_list.event.name}' checklist for '#{@check_list.case.name}'")
-
       redirect_to check_list_path(@check_list)
     else
       render action: 'new'
