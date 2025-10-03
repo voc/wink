@@ -49,7 +49,7 @@ class CasesController < ApplicationController
   end
 
   def update
-    if @case.update_attributes(case_params)
+    if @case.update(case_params)
       redirect_to cases_path
     else
       render action: 'edit'

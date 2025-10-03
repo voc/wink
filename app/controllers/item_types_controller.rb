@@ -28,7 +28,7 @@ class ItemTypesController < ApplicationController
   end
 
   def update
-    if @item_type.update_attributes(item_params)
+    if @item_type.update(item_params)
       redirect_to case_path(@item_type.case)
     else
       render action: 'edit'

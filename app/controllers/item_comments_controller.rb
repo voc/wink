@@ -30,7 +30,7 @@ class ItemCommentsController < ApplicationController
   end
 
   def update
-    if @item_comment.update_attributes(item_comment_params)
+    if @item_comment.update(item_comment_params)
       redirect_to item_path(@item.id), notice: "Updated item comment for '#{@item.name}'"
     else
       render action: 'edit'
