@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_03_073305) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_03_075536) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_catalog.plpgsql"
+
   create_table "case_types", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: nil, null: false
@@ -18,7 +21,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_03_073305) do
   end
 
   create_table "cases", force: :cascade do |t|
-    t.integer "case_type_id"
+    t.bigint "case_type_id"
     t.string "name"
     t.string "acronym"
     t.datetime "created_at", precision: nil, null: false
@@ -27,9 +30,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_03_073305) do
   end
 
   create_table "check_list_items", force: :cascade do |t|
-    t.integer "check_list_id"
-    t.integer "item_id"
-    t.integer "case_id"
+    t.bigint "check_list_id"
+    t.bigint "item_id"
+    t.bigint "case_id"
     t.boolean "broken"
     t.boolean "missing"
     t.text "comment"
@@ -50,12 +53,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_03_073305) do
   end
 
   create_table "event_cases", force: :cascade do |t|
-    t.integer "event_id"
-    t.integer "case_id"
-    t.integer "transport_id"
+    t.bigint "event_id"
+    t.bigint "case_id"
+    t.bigint "transport_id"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.integer "check_list_id"
+    t.bigint "check_list_id"
     t.index ["case_id"], name: "index_event_cases_on_case_id"
     t.index ["check_list_id"], name: "index_event_cases_on_check_list_id"
     t.index ["event_id"], name: "index_event_cases_on_event_id"
@@ -74,14 +77,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_03_073305) do
   end
 
   create_table "item_comments", force: :cascade do |t|
-    t.integer "item_id"
+    t.bigint "item_id"
     t.text "comment"
     t.string "author"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.integer "users_id"
+    t.bigint "user_id"
     t.index ["item_id"], name: "index_item_comments_on_item_id"
-    t.index ["users_id"], name: "index_item_comments_on_users_id"
+    t.index ["user_id"], name: "index_item_comments_on_user_id"
   end
 
   create_table "item_types", force: :cascade do |t|
@@ -95,8 +98,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_03_073305) do
     t.string "description"
     t.string "manufacturer"
     t.string "model"
-    t.integer "item_id"
-    t.integer "case_id"
+    t.bigint "item_id"
+    t.bigint "case_id"
     t.date "date_of_purchase"
     t.decimal "price"
     t.string "serial_number"
@@ -104,13 +107,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_03_073305) do
     t.boolean "missing", default: false
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.integer "item_type_id"
+    t.bigint "item_type_id"
     t.integer "location_item_id"
     t.boolean "deleted", default: false
     t.index ["case_id"], name: "index_items_on_case_id"
     t.index ["item_id"], name: "index_items_on_item_id"
     t.index ["item_type_id"], name: "index_items_on_item_type_id"
-    t.index ["location_item_id"], name: "index_items_on_location_item_id"
   end
 
   create_table "transports", force: :cascade do |t|
@@ -144,5 +146,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_03_073305) do
     t.index ["uid"], name: "index_users_on_uid"
   end
 
-  add_foreign_key "item_comments", "users", column: "users_id"
+  add_foreign_key "item_comments", "users"
 end

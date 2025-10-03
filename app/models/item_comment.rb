@@ -8,13 +8,7 @@ class ItemComment < ActiveRecord::Base
 
   default_scope { order(created_at: :desc) }
 
-  def author_or_user
-    if self.user.present?
-      self.user.name || self.user.email
-    else
-      self.author
-    end
-  end
+  before_validation :set_author, on: :create
 
   def item
     Item.find(self.item_id)
@@ -25,6 +19,12 @@ class ItemComment < ActiveRecord::Base
   end
 
   private
+
+  def set_author
+    if self.user.present? && self.author.blank?
+      self.author = self.user.name || self.user.email
+    end
+  end
 
   def author_or_user_present
     if self.user.nil? && self.author.blank?

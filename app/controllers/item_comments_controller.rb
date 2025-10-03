@@ -56,7 +56,7 @@ class ItemCommentsController < ApplicationController
   end
 
   def item_comment_params
-    params.require(:item_comment).permit(:author, :comment)
+    params.require(:item_comment).permit(:author, :comment, :user_id)
   end
 
 end
