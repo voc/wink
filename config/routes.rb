@@ -15,7 +15,9 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :check_lists do
+  resources :check_lists, except: [:new, :create]
+  resources :event_cases do
+    resource :check_list, only: [:new, :create]
   end
 
   get '/transports/import', to: 'transports#import_transports'

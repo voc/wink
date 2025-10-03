@@ -1,6 +1,7 @@
 class CheckListsController < ApplicationController
 
   before_action :find_check_list, except: [:index, :create, :new]
+  before_action :find_event_case, only: [:index, :create, :new]
 
   def show
     respond_to do |format|
@@ -19,26 +20,21 @@ class CheckListsController < ApplicationController
   end
 
   def new
-    @event_case = EventCase.find_by(event_id: params[:event], case_id: params[:case])
-
-    if @event_case.check_list
-      redirect_to check_list_path(@event_case.check_list)
-    else
-      @event_case.check_list = CheckList.new
-    end
+    @check_list = @event_case.build_check_list
+    print(@check_list.inspect)
   end
 
   def create
-    @event_case = EventCase.find(event_case_params[:event_case])
-    @event_case.check_list = CheckList.new(check_list_params)
+    @check_list = @event_case.build_check_list(check_list_params)
 
-    if @event_case.save!
+    if @check_list.save!
       # TODO: move that into the model
-      @event_case.check_list.copy_items!
+      @check_list.copy_items!
 
-      redirect_to check_list_path(@event_case.check_list)
       # TODO: Send mqtt message, when checklist was created.
-      Wink::MqttClient.send_message("'#{@event_case.check_list.advisor}' created '#{@event_case.event.name}' checklist for '#{@event_case.case.name}'")
+      Wink::MqttClient.send_message("'#{@check_list.advisor}' created '#{@check_list.event.name}' checklist for '#{@check_list.case.name}'")
+
+      redirect_to check_list_path(@check_list)
     else
       render action: 'new'
     end
@@ -110,7 +106,15 @@ class CheckListsController < ApplicationController
   private
 
   def find_check_list
-    @check_list = CheckList.find(params[:id])
+    if params[:event_case_id]
+      @check_list = EventCase.find(params[:event_case_id]).check_list
+    else
+      @check_list = CheckList.find(params[:id])
+    end
+  end
+
+  def find_event_case
+    @event_case = EventCase.find(params[:event_case_id])
   end
 
   def check_list_params

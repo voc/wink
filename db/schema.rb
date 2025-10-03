@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_03_081740) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_03_100152) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -50,6 +50,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_03_081740) do
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.boolean "checked"
+    t.bigint "event_case_id", null: false
+    t.index ["event_case_id"], name: "index_check_lists_on_event_case_id"
   end
 
   create_table "event_cases", force: :cascade do |t|
@@ -58,9 +60,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_03_081740) do
     t.bigint "transport_id"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.bigint "check_list_id"
     t.index ["case_id"], name: "index_event_cases_on_case_id"
-    t.index ["check_list_id"], name: "index_event_cases_on_check_list_id"
     t.index ["event_id"], name: "index_event_cases_on_event_id"
     t.index ["transport_id"], name: "index_event_cases_on_transport_id"
   end
@@ -153,8 +153,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_03_081740) do
   add_foreign_key "check_list_items", "cases"
   add_foreign_key "check_list_items", "check_lists"
   add_foreign_key "check_list_items", "items"
+  add_foreign_key "check_lists", "event_cases"
   add_foreign_key "event_cases", "cases"
-  add_foreign_key "event_cases", "check_lists"
   add_foreign_key "event_cases", "events"
   add_foreign_key "event_cases", "transports"
   add_foreign_key "item_comments", "items"

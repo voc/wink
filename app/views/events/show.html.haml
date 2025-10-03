@@ -29,15 +29,15 @@
   %li
     %label Cases
     %span.cases
-      - @event.cases.each do |c|
+      - @event.event_cases.each do |event_case|
         %ul
           %li
-            %a{href: case_path(c)}= c.name
+            %a{href: case_path(event_case.case)}= event_case.case.name
           %li
-            - if c.check_list(@event)
-              %a{href: check_list_path(c.check_list(@event))}= "checklist"
+            - if event_case.check_list.present?
+              %a{href: check_list_path(event_case.check_list)}= "checklist"
             - else
-              %a{href: new_check_list_path(event: @event, case: c.id)}= "create checklist"
+              %a{href: new_event_case_check_list_path(event_case)}= "create checklist"
           %br
   %br
   %li
@@ -48,5 +48,5 @@
 
 %h3 Transports
 
-%a{href: new_transport_path(event: @event.id)} create new transport 
+%a{href: new_transport_path(event: @event.id)} create new transport
 %a{href: transports_path(event: @event.id)} assign existing

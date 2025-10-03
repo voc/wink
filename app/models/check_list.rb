@@ -1,9 +1,9 @@
 class CheckList < ActiveRecord::Base
-  has_one :event_case
+  belongs_to :event_case
   has_one :event, through: :event_case
   has_one :case,  through: :event_case
 
-  has_many :check_list_items
+  has_many :check_list_items, dependent: :destroy
 
   validates :advisor, presence: true
 

@@ -1,17 +1,14 @@
 - content_for :title, "Create #{@event_case.case.name} (#{@event_case.event.name}) checklist  - "
 
 %h2= "Create '#{@event_case.case.name}' (#{@event_case.event.name}) checklist "
-- if @event_case.check_list.errors.any?
+- if @check_list.errors.any?
   %ul
-    - @event_case.check_list.errors.each do |message|
+    - @check_list.errors.each do |message|
       %li
         = message
 
-= form_for(@event_case.check_list, as: :check_list) do |f|
-  = render partial: 'form', locals: {f: f}, object: @event_case.check_list
-
-  = f.hidden_field :event_case, value: @event_case.id
-
+= form_for @check_list, url: event_case_check_list_path(@event_case) do |f|
+  = render partial: 'form', locals: {f: f}, object: @check_list
 
   %p
     In the next step, all
