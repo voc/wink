@@ -37,7 +37,7 @@ ol.properties
             - if event_case.check_list.present?
               a href=check_list_path(event_case.check_list) checklist
             - else
-              a href=new_event_case_check_list_path(event_case) create checklist
+              = button_to "Create checklist", event_case_check_list_path(event_case)
           br
   br
   li

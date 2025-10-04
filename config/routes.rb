@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   resources :event_cases do
     resource :check_list, only: [:new, :create]
   end
+  resources :check_list_users
 
   get '/transports/import', to: 'transports#import_transports'
   resources :transports do

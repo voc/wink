@@ -3,8 +3,8 @@ class CheckList < ActiveRecord::Base
   has_one :event, through: :event_case
   has_one :case,  through: :event_case
   has_many :check_list_items, dependent: :destroy
-
-  validates :advisor, presence: true
+  has_many :check_list_users, dependent: :destroy
+  has_many :users, through: :check_list_users
 
   after_create :copy_items!
   after_create :send_mqtt_message!

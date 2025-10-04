@@ -24,7 +24,8 @@ class CheckListsController < ApplicationController
   end
 
   def create
-    @check_list = @event_case.build_check_list(check_list_params)
+    @check_list = @event_case.build_check_list
+    @check_list.users << current_user
 
     if @check_list.save!
       redirect_to check_list_path(@check_list)
@@ -51,12 +52,8 @@ class CheckListsController < ApplicationController
 
   # Check checklist.
   def update
-    CheckList.find(params[:id]).check_list_items.each do |cli|
-      if checked_check_list_params[:checked_check_list_items]&.include?("#{cli.id}")
-        cli.checked = true
-      else
-        cli.checked = false
-      end
+    @check_list.check_list_items.each do |cli|
+      cli.checked = check_list_params[:checked_check_list_items]&.include?(cli.id.to_s)
 
       if cli.save!
         next
@@ -78,6 +75,7 @@ class CheckListsController < ApplicationController
       @check_list.checked = false
     end
 
+    @check_list.check_list_users.find_or_create_by(user: current_user)
     @check_list.save!
 
     if params[:return]
@@ -111,11 +109,7 @@ class CheckListsController < ApplicationController
   end
 
   def check_list_params
-    params.require(:check_list).permit(:comment, :advisor, :checked)
-  end
-
-  def checked_check_list_params
-    params.require(:check_list).permit(checked_check_list_items: [])
+    params.require(:check_list).permit(:comment, :advisor, :checked, checked_check_list_items: [])
   end
 
   def event_case_params

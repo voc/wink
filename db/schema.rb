@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_03_100152) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_04_065743) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -42,6 +42,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_03_100152) do
     t.index ["case_id"], name: "index_check_list_items_on_case_id"
     t.index ["check_list_id"], name: "index_check_list_items_on_check_list_id"
     t.index ["item_id"], name: "index_check_list_items_on_item_id"
+  end
+
+  create_table "check_list_users", force: :cascade do |t|
+    t.bigint "check_list_id", null: false
+    t.bigint "user_id", null: false
+    t.index ["check_list_id", "user_id"], name: "index_check_list_users_on_check_list_id_and_user_id", unique: true
+    t.index ["check_list_id"], name: "index_check_list_users_on_check_list_id"
+    t.index ["user_id"], name: "index_check_list_users_on_user_id"
   end
 
   create_table "check_lists", force: :cascade do |t|
@@ -153,6 +161,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_03_100152) do
   add_foreign_key "check_list_items", "cases"
   add_foreign_key "check_list_items", "check_lists"
   add_foreign_key "check_list_items", "items"
+  add_foreign_key "check_list_users", "check_lists"
+  add_foreign_key "check_list_users", "users"
   add_foreign_key "check_lists", "event_cases"
   add_foreign_key "event_cases", "cases"
   add_foreign_key "event_cases", "events"

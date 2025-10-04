@@ -4,12 +4,13 @@ h2 "Checklist #{@check_list.case.name} - (#{@check_list.event.name})"
 
 ol.properties
   li
-    label Advisor:
-    span.advisor = @check_list.advisor
-  - unless @check_list.comment.empty?
-    li
-      label Comment:
-      span.comment = @check_list.comment
+    label Advisors:
+    span.advisors
+      - @check_list.users.each do |user|
+        = user
+  li
+    label Comment:
+    span.comment = @check_list.comment
   br
   li
     label Event:
