@@ -1,0 +1,13 @@
+- content_for :title, "Edit #{@transport.title}"
+h2 = "Edit #{@transport.title}"
+
+- if @transport.errors.any?
+  ul
+    - @transport.errors.each do |message|
+      li
+        = message
+
+= form_for(@transport, as: :transport, url: transport_path(@transport), method: 'PUT') do |f|
+  = render partial: 'form', locals: {f: f}, object: @transport
+  = f.submit "Save"
+  = link_to 'Cancel', transports_path

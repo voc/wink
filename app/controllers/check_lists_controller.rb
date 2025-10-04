@@ -1,6 +1,7 @@
 class CheckListsController < ApplicationController
 
   before_action :find_check_list, except: [:index, :create, :new]
+  before_action :find_event_case, only: [:create, :new]
 
   def show
     respond_to do |format|
@@ -19,26 +20,15 @@ class CheckListsController < ApplicationController
   end
 
   def new
-    @event_case = EventCase.find_by(event_id: params[:event], case_id: params[:case])
-
-    if @event_case.check_list
-      redirect_to check_list_path(@event_case.check_list)
-    else
-      @event_case.check_list = CheckList.new
-    end
+    @check_list = @event_case.build_check_list
   end
 
   def create
-    @event_case = EventCase.find(event_case_params[:event_case])
-    @event_case.check_list = CheckList.new(check_list_params)
+    @check_list = @event_case.build_check_list
+    @check_list.users << current_user
 
-    if @event_case.save!
-      # TODO: move that into the model
-      @event_case.check_list.copy_items!
-
-      redirect_to check_list_path(@event_case.check_list)
-      # TODO: Send mqtt message, when checklist was created.
-      Wink::MqttClient.send_message("'#{@event_case.check_list.advisor}' created '#{@event_case.event.name}' checklist for '#{@event_case.case.name}'")
+    if @check_list.save!
+      redirect_to check_list_path(@check_list)
     else
       render action: 'new'
     end
@@ -62,12 +52,8 @@ class CheckListsController < ApplicationController
 
   # Check checklist.
   def update
-    CheckList.find(params[:id]).check_list_items.each do |cli|
-      if checked_check_list_params[:checked_check_list_items]&.include?("#{cli.id}")
-        cli.checked = true
-      else
-        cli.checked = false
-      end
+    @check_list.check_list_items.each do |cli|
+      cli.checked = check_list_params[:checked_check_list_items]&.include?(cli.id.to_s)
 
       if cli.save!
         next
@@ -89,6 +75,7 @@ class CheckListsController < ApplicationController
       @check_list.checked = false
     end
 
+    @check_list.check_list_users.find_or_create_by(user: current_user)
     @check_list.save!
 
     if params[:return]
@@ -110,15 +97,19 @@ class CheckListsController < ApplicationController
   private
 
   def find_check_list
-    @check_list = CheckList.find(params[:id])
+    if params[:event_case_id]
+      @check_list = EventCase.find(params[:event_case_id]).check_list
+    else
+      @check_list = CheckList.find(params[:id])
+    end
+  end
+
+  def find_event_case
+    @event_case = EventCase.find(params[:event_case_id])
   end
 
   def check_list_params
-    params.require(:check_list).permit(:comment, :advisor, :checked)
-  end
-
-  def checked_check_list_params
-    params.require(:check_list).permit(checked_check_list_items: [])
+    params.require(:check_list).permit(:comment, :advisor, :checked, checked_check_list_items: [])
   end
 
   def event_case_params

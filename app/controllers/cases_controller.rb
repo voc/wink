@@ -10,9 +10,6 @@ class CasesController < ApplicationController
       i.location
     end
 
-    @flagged_items = @case.flagged_items
-    @deleted_items = Item.where(case: @case, deleted: true)
-
     respond_to do |format|
       format.html
       format.json { render json: @case.to_json }
@@ -52,7 +49,7 @@ class CasesController < ApplicationController
   end
 
   def update
-    if @case.update_attributes(case_params)
+    if @case.update(case_params)
       redirect_to cases_path
     else
       render action: 'edit'

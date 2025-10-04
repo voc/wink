@@ -1,0 +1,60 @@
+- content_for :title, "Checklist #{@check_list.case.name} - (#{@check_list.event.name}) - "
+
+h2 "Checklist #{@check_list.case.name} - (#{@check_list.event.name})"
+
+ol.properties
+  li
+    label Advisors:
+    span.advisors
+      - @check_list.users.each do |user|
+        = user
+  li
+    label Comment:
+    span.comment = @check_list.comment
+  br
+  li
+    label Event:
+    span.event
+      a href=event_path(@check_list.event) = @check_list.event.name
+  li
+    label Case:
+    span.case
+      a href=case_path(@check_list.case) = @check_list.case.name
+  br
+  li
+    label Status:
+    span.check_status
+      - if @check_list.checked
+        | Checklist already checked!
+      - else
+        | Please finisch checking…
+  - unless @check_list.checked
+    li
+      label Actions
+      span.actions
+        a href=edit_check_list_path(@check_list) Check me!
+
+ul
+  / TODO: Move items select to controller
+  - items = @check_list.items_without_shelfs.group_by { |ci| ci.checked }
+  - if items[false]
+    h3 "Missing (#{items[false].count})"
+    - items[false].group_by { |ci| ci.item.name }.each do |name,citems|
+      - citems.each do |ci|
+        li "#{ci.item.name_with_model}"
+
+  - if items[true]
+    h3 "Checked (#{items[true].count})"
+    ul
+    - items[true].group_by { |ci| ci.item.name }.each do |name,citems|
+      li
+        - if (citems.count == 1 || citems.group_by { |ci| ci.item.model }.count == 1)
+          = "#{name} " + ("✔" * citems.count)
+        - else
+          = "#{name}"
+          ul
+            - citems.group_by { |ci| ci.item.model }.each do |model,instances|
+              li
+                = "#{model}"
+                - instances.each do |i|
+                  = "✔"

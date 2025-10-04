@@ -34,7 +34,7 @@ class ItemsController < ApplicationController
         filter = ''
         headers["Content-Type"] ||= 'text/csv'
         if params['download'].in?([true, 'true'])
-          headers["Content-Disposition"] = "attachment; filename=\"export.csv\"" 
+          headers["Content-Disposition"] = "attachment; filename=\"export.csv\""
         end
 
         if params["export"]
@@ -96,7 +96,7 @@ class ItemsController < ApplicationController
       @item.save
     end
 
-    if @item.update_attributes(item_params)
+    if @item.update(item_params)
       # move subitems to same case
       @item.move_sub_items
 

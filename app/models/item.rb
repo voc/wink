@@ -1,6 +1,4 @@
 class Item < ActiveRecord::Base
-  #attr_accessor :is_deleted?
-
   has_many :item_comments
   has_many :items
 
@@ -9,9 +7,14 @@ class Item < ActiveRecord::Base
   belongs_to :item_type, optional: true
   belongs_to :location, optional: true, :class_name => "Item", :foreign_key => "location_item_id"
 
-  validates :name, presence: true
+  validates :name, presence: true, uniqueness: { scope: [:case_id, :location_item_id, :item_id] }
   validates :case, presence: true
 
+  scope :deleted, -> { where(deleted: true) }
+  scope :not_deleted, -> { where(deleted: false) }
+  scope :device, -> { where(item_type: ItemType.find_by(name: "Device")) }
+  #       deleted = false AND ( broken = true OR missing = true )")
+  scope :flagged, -> { where(broken: true).or(where(missing: true)).not_deleted }
 
   def name_with_model
     if self.model.nil? || self.model.empty?

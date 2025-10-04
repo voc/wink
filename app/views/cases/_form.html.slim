@@ -1,0 +1,11 @@
+p
+  label for="name" Name:
+  label.hint Audio case 1337
+  = f.text_field :name
+p
+  label for="acronym" Acronym:
+  label.hint A1337
+  = f.text_field :acronym
+p
+  label for="case_type_id" Case type:
+  = f.collection_select :case_type_id, CaseType.order(:name), :id, :name, include_blank: false

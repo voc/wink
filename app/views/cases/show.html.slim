@@ -1,0 +1,182 @@
+- content_for :title, "#{@case.name} - "
+
+h2 = @case.name
+
+.page_navigation
+  ul
+    li
+      a href="#flagged" data-turbolinks="false" Missing or broken
+    li
+      a href="#all" data-turbolinks="false" All (active)
+    ul
+      - @grouped_shelfs.sort_by { |g,s| "#{g}" }.each do |group,shelfs|
+        li
+          - if group.nil?
+            a href="#nolocation" no location
+          - else
+            a href="##{Digest::MD5.hexdigest(group)}" data-turbolinks="false" = group
+            - if shelfs && shelfs.length > 2
+              ul
+                - shelfs.each do |l|
+                  - if l.name != group
+                    li
+                      a href="##{Digest::MD5.hexdigest(l.name)}" data-turbolinks="false" = l.name
+    li
+      a href="#deleted" data-turbolinks="false" Deleted
+
+ol.properties
+  li
+    label Name
+    span.name = @case.name
+  li
+    label Case type
+    span.case_type = @case.case_type.name
+  li
+    label Acronym
+    span.acronym = @case.acronym
+  li
+    label Actions
+    span.actions
+      a href=edit_case_path(@case) edit
+      a href=delete_case_path(@case) delete
+  li
+    label Checklists
+    ul.events
+      - @case.check_lists.reverse.each do |cl|
+        li
+          a href=check_list_path(cl) = "#{cl.created_at.strftime('%F')} #{cl.event.name}"
+
+a name="flagged"
+h3 Missing or broken items
+table.flagged border="1"
+  thead
+    tr
+      th Name
+      th Model
+      th Last comment
+      th Actions
+  tbody
+    - @case.items.flagged.sort_by { |i| i.name }.each do |item|
+      tr
+        - if item.missing
+          td.missing title="missing"
+            a href=item_path(item) = item.name
+        - elsif item.broken
+          td.broken title="broken"
+            a href=item_path(item) = item.name
+        - else
+          td.no_color
+            a href=item_path(item) = item.name
+        td.no_color
+          a href=item_path(item) = item.model
+        - if item.item_comments.count == 0
+          td
+        - else
+          td.no_color
+            a href=item_path(item) = "#{item.item_comments.first.author}: #{item.item_comments.first.comment}"
+        td
+          a href=item_path(item) show
+          a href=edit_item_path(item) edit
+          a href=new_item_item_comment_path(item) comment
+
+a name="all"
+h3 All (active) items
+
+a href=new_item_path(case_id: @case.id) add new item
+
+.floating_filters
+  label for="item_filter" Item filter:
+  .value
+    img.spinner src=asset_path('spinner.gif') alt="Loading..."
+    input#item_filter.case_show type="text"
+    img#item_filter_clear src=asset_path('icons/cross.png') alt="Clear"
+
+- @grouped_items.sort_by { |l,items| "#{l.location.name unless l.nil? || l.location.nil?}#{l.name unless l.nil?}" }.each do |l,items|
+  .active_items
+    - if l.nil?
+      a name="nolocation"
+      h4 no location
+    - else
+      a name="#{Digest::MD5.hexdigest(l.name)}"
+      - if l.shelf_level == 0
+        h4 = l.name
+      - else
+        h5 = l.name
+    table border="1"
+      thead
+        tr
+          th Name
+          th Manufacturer
+          th Model
+          th Serial number
+          th Price
+          th Actions
+      tbody
+        - items.sort_by { |i| "#{i.item&.name}#{i.name}.#{format('%05.1f', i.model.to_f)}" }.each do |item|
+          tr
+            - if item.missing
+              td.left.missing title="missing"
+                - if item.item
+                  | &nbsp; &nbsp;
+                a href=item_path(item) = item.name
+            - elsif item.broken
+              td.left.broken title="broken"
+                - if item.item
+                  | &nbsp; &nbsp;
+                a href=item_path(item) = item.name
+            - else
+              td.left.no_color
+                - if item.item
+                  | &nbsp; &nbsp;
+                a href=item_path(item) = item.name
+            td.no_color
+              a href=item_path(item) = item.manufacturer
+            td.no_color
+              a href=item_path(item) = item.model
+            td.no_color
+              a href=item_path(item) = item.serial_number
+            td.no_color
+              a href=item_path(item) = number_to_currency(item.price, locale: :de)
+            td
+              a href=item_path(item) show
+              a href=edit_item_path(item) edit
+              a href=clone_item_path(item) clone
+    - unless l.nil?
+      a href=edit_item_path(l) edit location
+      a href=new_item_path(case_id: @case.id, location: l.id) add new item
+
+a name="deleted"
+h3 Deleted items
+
+table.deleted
+  thead
+    tr
+      th Name
+      th Manufacturer
+      th Model
+      th Serial number
+      th Price
+      th Actions
+  tbody
+    - @case.items.deleted.each do |item|
+      tr
+        - if item.missing
+          td.missing title="missing"
+            a href=item_path(item) = item.name
+        - elsif item.broken
+          td.broken title="broken"
+            a href=item_path(item) = item.name
+        - else
+          td.no_color
+            a href=item_path(item) = item.name
+        td.no_color
+          a href=item_path(item) = item.manufacturer
+        td.no_color
+          a href=item_path(item) = item.model
+        td.no_color
+          a href=item_path(item) = item.serial_number
+        td.no_color
+          a href=item_path(item) = number_to_currency(item.price, locale: :de)
+        td
+          a href=item_path(item) show
+          a href=clone_item_path(item) clone

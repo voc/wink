@@ -1,7 +1,7 @@
 class EventCase < ActiveRecord::Base
   belongs_to :event
   belongs_to :case
-  belongs_to :check_list, optional: true
+  has_one :check_list
   belongs_to :transport, optional: true
 
   before_destroy :check_for_list_and_transport

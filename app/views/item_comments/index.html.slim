@@ -1,0 +1,23 @@
+- content_for :title, "Item comments - "
+
+h2 "#{@item.case.acronym}: '#{@item.name}' comments (#{@item_comments.count})"
+
+table
+  thead
+    tr
+      th Created at
+      th Author
+      th Comment
+      th Action
+  tbody
+    - @item_comments.each do |comment|
+      tr
+        td.no_color
+          a href=item_comment_path(comment.item, comment) = comment.created_at
+        td.no_color
+          a href=item_comment_path(comment.item, comment) = comment.author
+        td.no_color
+          a href=item_comment_path(comment.item, comment) = comment.comment
+        td
+          a href=item_path(comment.item) show
+          a href=edit_item_path(comment.item) edit

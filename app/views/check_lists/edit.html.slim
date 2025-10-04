@@ -1,0 +1,28 @@
+- content_for :title, "Checklist #{@check_list.case.name} - (#{@check_list.event.name}) - "
+
+h2
+  | Checklist
+  a href=case_path(@check_list.case) target="_blank" = @check_list.case.name
+  | at
+  a href=event_path(@check_list.event) target="_blank" = @check_list.event.name
+
+.filters
+  label for="item_filter"
+    | Item filter:
+  .value
+    img.spinner src=asset_path('spinner.gif') alt="Loading..."
+    input#item_filter.check_list_edit type="text"
+    img#item_filter_clear src=asset_path('icons/cross.png') alt="Clear"
+
+- if @check_list.errors.any?
+  ul
+    - @check_list.errors.each do |message|
+      li
+        = message
+
+= form_for(@check_list.check_list_items, as: :check_list_items, url: check_list_path(@check_list), method: 'PUT') do |f|
+  = render partial: 'form_check_item', locals: {f: f}, object: @check_list_item
+  div.floating_form_actions
+    = f.submit "Save"
+    = f.submit "Return", name: 'return'
+    = link_to 'Cancel', check_list_path(@check_list)

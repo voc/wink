@@ -15,8 +15,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :check_lists do
+  resources :check_lists, except: [:new, :create]
+  resources :event_cases do
+    resource :check_list, only: [:new, :create]
   end
+  resources :check_list_users
 
   get '/transports/import', to: 'transports#import_transports'
   resources :transports do
@@ -31,9 +34,8 @@ Rails.application.routes.draw do
       get :delete
       get :clone
     end
-    
-    resources :comments, controller: :item_comments do
-    end
+
+    resources :item_comments, shallow: true
   end
 
   resources :item_types do
@@ -41,6 +43,12 @@ Rails.application.routes.draw do
       get :delete
     end
   end
+
+  get    "/login",              to: "sessions#new",     as: :login
+  post   "/auth/oidc",          to: "sessions#redirect", as: :auth_request
+  get    "/auth/oidc/callback", to: "sessions#create"   # note provider in path
+  get    "/auth/failure",       to: "sessions#failure"
+  delete "/logout",             to: "sessions#destroy"
 
   root :to => 'root#show'
 end

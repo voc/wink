@@ -44,7 +44,23 @@ GET /check_lists/:id.json
 
 ## Deployment
 
-It is highly recommended to deploy this application with passenger or comparable webservers.
+```shell
+rm db/development.sqlite3
+bin/rails db:migrate
+bin/rails db:seed
+export OIDC_ISSUER=https://accounts.google.com
+export OIDC_CLIENT_ID=YOUR_CLIENT_ID
+export OIDC_CLIENT_SECRET=YOUR_CLIENT_SECRET
+export OIDC_REDIRECT_URI=https://localhost:3000/auth/oidc/callback
+bin/rails s
+```
+
+## Test
+
+```shell
+bin/rspec
+```
+
 
 ## License
 

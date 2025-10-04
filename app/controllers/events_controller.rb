@@ -12,7 +12,10 @@ class EventsController < ApplicationController
   end
 
   def index
-    @events = Event.where('start_date <= ?', DateTime.now.end_of_year).order(start_date: :desc)
+    @events = Event
+      .includes(:cases)
+      .where(start_date: DateTime.new(0)..DateTime.now.end_of_year)
+      .order(start_date: :desc)
 
     respond_to do |format|
       format.html
@@ -38,7 +41,7 @@ class EventsController < ApplicationController
   end
 
   def update
-    if @event.update_attributes(event_params)
+    if @event.update(event_params)
       redirect_to event_path(@event)
     else
       render action: 'edit'

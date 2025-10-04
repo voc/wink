@@ -38,7 +38,7 @@ class TransportsController < ApplicationController
   end
 
   def update
-    if @transport.update_attributes(transport_params)
+    if @transport.update(transport_params)
       @transport.save
       redirect_to transports_path
     else
@@ -51,7 +51,7 @@ class TransportsController < ApplicationController
     uri = URI("https://onlineservices.kuehne-nagel.com/tracking/api/my-shipments?sort=completionDate,desc&page=0&size=50&userTags=my-shipments")
     Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
       req = Net::HTTP::Get.new uri
-      req['Cookie'] = "ecom_app_token=" + fetch_KN_token 
+      req['Cookie'] = "ecom_app_token=" + fetch_KN_token
       res = http.request req # Net::HTTPResponse object
       if res.kind_of? Net::HTTPSuccess
         json = JSON.parse(res.body)
@@ -100,7 +100,7 @@ class TransportsController < ApplicationController
     # when token is nil –or– token is older than one hour (todo experiment with duration)
     if @@KN_token.nil? or (DateTime.now - @@KN_token_fetched_at) > (1/24.0)
       uri = URI("https://sso.kuehne-nagel.com/RDIApplication/login")
-      res = Net::HTTP.post_form(uri, 
+      res = Net::HTTP.post_form(uri,
         'user' => ENV['KN_USER'],
         'password' => ENV['KN_PASSWORD'],
         'target' => 'https%3A%2F%2Fonlineservices.kuehne-nagel.com%2Fac%2F_sso',
@@ -109,7 +109,7 @@ class TransportsController < ApplicationController
       )
       if res.kind_of? Net::HTTPSuccess
         @@KN_token, = /name="appToken" value="(.+?)"/.match(res.body).captures
-        @@KN_token_fetched_at = DateTime.now 
+        @@KN_token_fetched_at = DateTime.now
       end
     end
     return @@KN_token

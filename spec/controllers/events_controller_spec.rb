@@ -1,19 +1,25 @@
 require "rails_helper"
 
 
-RSpec.describe EventsController, :type => :controller do
 
-  describe "GET index" do
-    it "should return all events in json" do
-      get :index, { format: :json }
-      expect(response.content_type).to eq "application/json"
+RSpec.describe EventsController, :type => :controller do
+  before do
+    sign_in_as_test_user
+  end
+
+  describe "GET index.json" do
+    it "should return all events in json format" do
+      get :index, as: :json
+      expect(response).to have_http_status(:success)
+      expect(response.media_type).to eq "application/json"
     end
   end
 
-  describe "GET show" do
+  describe "GET show.json" do
     it "should return event in json format" do
-      get :show, { params: { id: 1 }, format: :json }
-      expect(response.content_type).to eq "application/json"
+      get :show, params: { id: Event.first.id }, format: :json
+      expect(response).to have_http_status(:success)
+      expect(response.media_type).to eq "application/json"
     end
   end
 end

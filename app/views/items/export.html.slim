@@ -1,0 +1,24 @@
+- content_for :title, "Export cases - "
+
+h2 Export cases
+
+= form_for("export", as: :item, url: items_path(), method: 'GET') do |f|
+  p
+    label for="format" Format:
+    = f.select(:format, options_for_select(["csv versicherung", "csv export"]), {}, class: "item_format")
+
+  p.export_cases
+    label for="cases" Cases:
+    = f.collection_check_boxes(:cases, Case.all.order(:id), :id, :name)
+
+  p
+    label for="price" Price over:
+    = f.text_field :price, value: "40"
+
+  p
+    label for="format" Item Types:
+    = f.collection_select(:item_type_id, ItemType.all.order(:name), :id, :name, {}, {multiple: true})
+
+  = f.submit 'Preview', data: { disable_with: false }
+  = f.submit 'Download', data: { disable_with: false }
+  = link_to 'Cancel', items_path
