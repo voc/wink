@@ -38,7 +38,7 @@ class TransportsController < ApplicationController
   end
 
   def update
-    if @transport.update_attributes(transport_params)
+    if @transport.update(transport_params)
       @transport.save
       redirect_to transports_path
     else

@@ -96,7 +96,7 @@ class ItemsController < ApplicationController
       @item.save
     end
 
-    if @item.update_attributes(item_params)
+    if @item.update(item_params)
       # move subitems to same case
       @item.move_sub_items
 
