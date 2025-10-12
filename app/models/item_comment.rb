@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
 class ItemComment < ApplicationRecord
-  has_one :item
+  belongs_to :item
 
-  validates :item_id, presence: true
   validates :author, presence: true
   validates :comment, presence: true
 
