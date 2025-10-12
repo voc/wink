@@ -27,7 +27,7 @@ gem "jquery-ui-rails"
 gem "active_link_to"
 
 gem "haml"
-gem "mqtt", "=0.5.0"
+gem "mqtt"
 gem "csv"
 
 
