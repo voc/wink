@@ -28,9 +28,6 @@ module Wink
 
     # config.eager_load_paths << Rails.root.join("extras")
 
-    # il8n config
-    config.i18n.default_locale = :de
-
     # set the application name and slogan
     config.application_name = "WINK"
     config.application_slogan = "(W)o (i)st mei(n)e Winke(k)atze?"
