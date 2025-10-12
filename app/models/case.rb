@@ -4,11 +4,11 @@ class Case < ApplicationRecord
   belongs_to :case_type
   belongs_to :event_case, optional: true
 
-  has_many :event_cases
+  has_many :event_cases, dependent: :restrict_with_error
   has_many :events, through: :event_cases
   has_many :check_lists, through: :event_cases
 
-  has_many :items
+  has_many :items, dependent: :destroy
 
   validates :name, presence: true
   validates :acronym, presence: true

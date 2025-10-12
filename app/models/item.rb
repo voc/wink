@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class Item < ApplicationRecord
-  has_many :item_comments
-  has_many :items
+  has_many :item_comments, dependent: :destroy
+  has_many :items, dependent: :destroy
 
   belongs_to :case
   belongs_to :item, optional: true

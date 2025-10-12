@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Event < ApplicationRecord
-  has_many :event_cases
+  has_many :event_cases, dependent: :destroy
   has_many :cases, through: :event_cases
   has_many :check_lists, through: :event_cases
 
