@@ -4,8 +4,7 @@ require "net/http"
 require "json"
 
 class TransportsController < ApplicationController
-  @@KN_token = nil
-  @@KN_token_fetched_at = nil
+  KN_TOKEN_CACHE_KEY = "transports_kn_token"
 
   before_action :find_transport, except: %i[index create new import_transports]
 
@@ -50,13 +49,13 @@ class TransportsController < ApplicationController
     uri = URI("https://onlineservices.kuehne-nagel.com/tracking/api/my-shipments?sort=completionDate,desc&page=0&size=50&userTags=my-shipments")
     Net::HTTP.start(uri.host, uri.port, use_ssl: uri.scheme == "https") do |http|
       req = Net::HTTP::Get.new uri
-      req["Cookie"] = "ecom_app_token=#{fetch_KN_token}"
+      req["Cookie"] = "ecom_app_token=#{fetch_kn_token}"
       res = http.request req # Net::HTTPResponse object
       if res.is_a? Net::HTTPSuccess
         json = JSON.parse(res.body)
       else
         # token probably invalid, so clear it for next round
-        @@KN_token = nil
+        Rails.cache.delete KN_TOKEN_CACHE_KEY
       end
     end
 
@@ -96,9 +95,8 @@ class TransportsController < ApplicationController
                                 destination_address delivery_time])
   end
 
-  def fetch_KN_token
-    # when token is nil –or– token is older than one hour (todo experiment with duration)
-    if @@KN_token.nil? or (DateTime.now - @@KN_token_fetched_at) > (1 / 24.0)
+  def fetch_kn_token
+    Rails.cache.fetch KN_TOKEN_CACHE_KEY, expires_in: 1.hour do
       uri = URI("https://sso.kuehne-nagel.com/RDIApplication/login")
       res = Net::HTTP.post_form(uri,
                                 "user" => ENV.fetch("KN_USER", nil),
@@ -106,11 +104,7 @@ class TransportsController < ApplicationController
                                 "target" => "https%3A%2F%2Fonlineservices.kuehne-nagel.com%2Fac%2F_sso",
                                 "appname" => "ECOM",
                                 "mode" => "post")
-      if res.is_a? Net::HTTPSuccess
-        @@KN_token, = /name="appToken" value="(.+?)"/.match(res.body).captures
-        @@KN_token_fetched_at = DateTime.now
-      end
+      /name="appToken" value="(.+?)"/.match(res.body)&.captures&.first if res.is_a? Net::HTTPSuccess
     end
-    @@KN_token
   end
 end
