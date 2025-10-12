@@ -36,8 +36,6 @@ class ItemCommentsController < ApplicationController
     end
   end
 
-  def delete; end
-
   def destroy
     @item_comment.destroy!
     redirect_to item_path(@item), notice: "Deleted comment"

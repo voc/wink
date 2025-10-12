@@ -1,8 +1,0 @@
-%form{action: item_path(@item), method: 'POST'} 
-  %input{type: 'hidden', name: '_method', value: 'DELETE'}
-  = hidden_field_tag :authenticity_token, form_authenticity_token
-
-  %p= "Delete item '#{@item.name}' in case '#{@item.case.name}'?"
-
-  %input{type: 'submit', value: "Delete"}
-  = link_to 'Cancel', item_path(@item)

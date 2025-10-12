@@ -57,11 +57,12 @@ class CasesController < ApplicationController
     end
   end
 
-  def delete; end
-
   def destroy
-    @case.destroy
-    redirect_to cases_path
+    if @case.destroy
+      redirect_to cases_path, notice: "Deleted case '#{@case.name}'"
+    else
+      render action: "show"
+    end
   end
 
   private

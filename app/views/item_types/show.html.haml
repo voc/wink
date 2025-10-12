@@ -1,6 +1,7 @@
 - content_for :title, "#{@item_type.name} - "
 
 %h2= "#{@item_type.name}"
+= render partial: 'record_errors', locals: { record: @item_type }
 
 %ol.properties
   %li
@@ -18,4 +19,4 @@
     %label Actions
     %span.actions
       %a{href: edit_item_type_path(@item_type)} edit
-      %a{href: delete_item_type_path(@item_type)} delete
+      = link_to 'delete', item_type_path(@item_type), data: {:confirm => "Delete item type '#{@item_type.name}'?"}, method: :delete

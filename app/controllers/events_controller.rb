@@ -45,11 +45,12 @@ class EventsController < ApplicationController
     end
   end
 
-  def delete; end
-
   def destroy
-    @event.destroy
-    redirect_to events_path
+    if @event.destroy
+      redirect_to events_path, notice: "Deleted event #{@event.name}"
+    else
+      render action: "show"
+    end
   end
 
   def import_events

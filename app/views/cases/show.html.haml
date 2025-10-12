@@ -24,6 +24,8 @@
     %li
       %a{href: "\#deleted", 'data-turbolinks': 'false'} Deleted
 
+= render partial: 'record_errors', locals: { record: @case }
+
 %ol.properties
   %li
     %label Name
@@ -38,7 +40,7 @@
     %label Actions
     %span.actions
       %a{href: edit_case_path(@case)} edit
-      %a{href: delete_case_path(@case)} delete
+      = link_to 'delete', case_path(@case), data: {:confirm => "Delete case '#{@case.name}'?"}, method: :delete
   %li
     %label Checklists
     %ul.events

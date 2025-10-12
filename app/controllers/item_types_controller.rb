@@ -33,11 +33,12 @@ class ItemTypesController < ApplicationController
     end
   end
 
-  def delete; end
-
   def destroy
-    @item_type.destroy
-    redirect_to items_path
+    if @item_type.destroy
+      redirect_to items_path, notice: "Deleted item type '#{@item_type.name}'"
+    else
+      render action: "show"
+    end
   end
 
   private

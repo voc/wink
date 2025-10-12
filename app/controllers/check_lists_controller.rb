@@ -99,12 +99,13 @@ class CheckListsController < ApplicationController
     end
   end
 
-  def delete; end
-
   def destroy
-    # TODO: Disable checklist deletion in views.
-    @check_list.destroy
-    redirect_to check_lists_path
+    if @check_list.destroy
+      redirect_to check_lists_path,
+                  notice: "Deleted '#{@check_list.event.name}' checklist for '#{@check_list.case.name}'"
+    else
+      render action: "show"
+    end
   end
 
   private

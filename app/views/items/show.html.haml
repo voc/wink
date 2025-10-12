@@ -1,6 +1,7 @@
 - content_for :title, "#{@item.case.acronym}: #{@item.name} - "
 
 %h2= "#{@item.case.name}: #{@item.name}"
+= render partial: 'record_errors', locals: { record: @item }
 
 %ol.properties
   %li
@@ -79,7 +80,7 @@
     %span.actions
       - unless @item.deleted
         %a{href: edit_item_path(@item)} edit
-        = link_to 'delete', item_path(@item), data: {:confirm => "Delete #{@item.name} (#{@item.case.acronym})"}, method: :delete
+        = link_to 'delete', item_path(@item), data: {:confirm => "Delete '#{@item.name}' (#{@item.case.acronym})?"}, method: :delete
 
       %a{href: clone_item_path(@item)} clone
 

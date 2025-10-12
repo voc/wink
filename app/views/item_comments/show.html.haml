@@ -1,6 +1,7 @@
 - content_for :title, "Item comment '#{@item_comment.created_at}': #{@item_comment.abstract} - "
 
 %h2= "Item comment"
+= render partial: 'record_errors', locals: { record: @item_comment }
 
 %ol.properties
   %li

@@ -102,11 +102,12 @@ class ItemsController < ApplicationController
     end
   end
 
-  def delete; end
-
   def destroy
-    @item.destroy
-    redirect_to case_path(@item.case), notice: "Disabled '#{@item.name}' in case '#{@item.case.acronym}'"
+    if @item.destroy
+      redirect_to case_path(@item.case), notice: "Disabled '#{@item.name}' in case '#{@item.case.acronym}'"
+    else
+      render action: "show"
+    end
   end
 
   def export

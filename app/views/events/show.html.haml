@@ -1,6 +1,7 @@
 - content_for :title, "#{@event.name} - "
 
 %h2= @event.name
+= render partial: 'record_errors', locals: { record: @event }
 
 %ol.properties
   %li
@@ -44,7 +45,7 @@
     %label Actions
     %span.actions
       %a{href: edit_event_path(@event)} edit
-      %a{href: delete_event_path(@event)} delete
+      = link_to 'delete', event_path(@event), data: {:confirm => "Delete event '#{@event.name}'?"}, method: :delete
 
 %h3 Transports
 
