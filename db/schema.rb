@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2025_10_07_213729) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_12_091238) do
   create_table "case_types", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: nil, null: false
@@ -30,12 +30,12 @@ ActiveRecord::Schema[7.0].define(version: 2025_10_07_213729) do
     t.integer "check_list_id"
     t.integer "item_id"
     t.integer "case_id"
-    t.boolean "broken"
-    t.boolean "missing"
+    t.boolean "broken", default: false, null: false
+    t.boolean "missing", default: false, null: false
     t.text "comment"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.boolean "checked"
+    t.boolean "checked", default: false, null: false
     t.index ["case_id"], name: "index_check_list_items_on_case_id"
     t.index ["check_list_id"], name: "index_check_list_items_on_check_list_id"
     t.index ["item_id"], name: "index_check_list_items_on_item_id"
@@ -46,7 +46,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_10_07_213729) do
     t.string "advisor"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.boolean "checked"
+    t.boolean "checked", default: false, null: false
   end
 
   create_table "event_cases", force: :cascade do |t|
@@ -71,6 +71,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_10_07_213729) do
     t.string "location"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
+    t.index ["name"], name: "index_events_on_name", unique: true
   end
 
   create_table "item_comments", force: :cascade do |t|
@@ -86,6 +87,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_10_07_213729) do
     t.string "name"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
+    t.index ["name"], name: "index_item_types_on_name", unique: true
   end
 
   create_table "items", force: :cascade do |t|
@@ -98,13 +100,13 @@ ActiveRecord::Schema[7.0].define(version: 2025_10_07_213729) do
     t.date "date_of_purchase"
     t.decimal "price"
     t.string "serial_number"
-    t.boolean "broken", default: false
-    t.boolean "missing", default: false
+    t.boolean "broken", default: false, null: false
+    t.boolean "missing", default: false, null: false
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
     t.integer "item_type_id"
     t.integer "location_item_id"
-    t.boolean "deleted", default: false
+    t.boolean "deleted", default: false, null: false
     t.index ["case_id"], name: "index_items_on_case_id"
     t.index ["item_id"], name: "index_items_on_item_id"
     t.index ["item_type_id"], name: "index_items_on_item_type_id"
@@ -119,8 +121,8 @@ ActiveRecord::Schema[7.0].define(version: 2025_10_07_213729) do
     t.integer "delivery_timeframe"
     t.text "pickup_contact"
     t.text "delivery_contact"
-    t.boolean "quotation", default: false
-    t.boolean "ordered", default: false
+    t.boolean "quotation", default: false, null: false
+    t.boolean "ordered", default: false, null: false
     t.string "carrier"
     t.integer "destination_event_id"
     t.integer "source_event_id"
@@ -129,6 +131,7 @@ ActiveRecord::Schema[7.0].define(version: 2025_10_07_213729) do
     t.string "delivery_state"
     t.datetime "actual_pickup_time", precision: nil
     t.datetime "actual_delivery_time", precision: nil
+    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
   end
-
 end
