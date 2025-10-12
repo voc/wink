@@ -1,41 +1,45 @@
-require 'mqtt'
+# frozen_string_literal: true
 
-class Wink::MqttClient
+require "mqtt"
+
+module Wink
+  class MqttClient
   def self.send_message(text)
     client = Wink::MqttClient.connect
     return if client.nil?
 
     message = {}
-    message['component'] = 'wink'
-    message['level'] = 'info'
-    message['msg'] = text
+    message["component"] = "wink"
+    message["level"] = "info"
+    message["msg"] = text
 
-    if ENV['RAILS_ENV'] == 'production'
-      client.publish('/voc/alert', message.to_json)
+    if ENV["RAILS_ENV"] == "production"
+      client.publish("/voc/alert", message.to_json)
     else
-      puts "MQTT: #{message}"
+      Rails.logger.debug { "MQTT: #{message}" }
     end
   end
 
+  SLEEP_TIMES = [ 0.1, 0.2, 0.3, 0.4, 0.5 ].freeze
   def self.listen
     client = Wink::MqttClient.connect
     return if client.nil?
 
-    puts "Listen to /voc/wink…"
-    client.get('/voc/wink') do |topic,message|
+    Rails.logger.debug "Listen to /voc/wink…"
+    client.get("/voc/wink") do |_topic, message|
       hash = JSON.parse(message)
-      msg = hash['msg']
+      msg = hash["msg"]
 
-      command = msg.split(' ')
+      command = msg.split
 
       case command[0]
       when /help/
-        help =<<END
-viri wink commands:
-  * help
-  * show (broken|missing) items
-More on https://c3voc.de/wink/
-END
+        help = <<~END_HELP
+          viri wink commands:
+            * help
+            * show (broken|missing) items
+          More on https://c3voc.de/wink/
+        END_HELP
 
       help.each_line do |l|
         Wink::MqttClient.send_message(l.chomp)
@@ -45,15 +49,15 @@ END
 
         case command[1]
         when /broken/
-          items = Item.all.where('deleted = ? and broken = ?', false, true)
+          items = Item.where("deleted = ? and broken = ?", false, true)
         when /missing/
-          items = Item.all.where('deleted = ? and missing = ?', false, true)
+          items = Item.where("deleted = ? and missing = ?", false, true)
         end
 
         items.each do |i|
           Wink::MqttClient.send_message("#{i.case.name}: '#{i.name}' is #{command[1]}")
           # to avoid flooding errors
-          sleep([0.1,0.2,0.3,0.4,0.5].sample)
+          sleep(SLEEP_TIMES.sample)
         end
 
         Wink::MqttClient.send_message("See https://c3voc.de/wink/dashboard#items for more details.")
@@ -61,14 +65,10 @@ END
     end
   end
 
-  private
-
   def self.connect
-    begin
-      client = MQTT::Client.connect("mqtts://#{Rails.configuration.mqtt['username']}:#{Rails.configuration.mqtt['password']}@#{Rails.configuration.mqtt['host']}")
-    rescue
-      return nil
-    end
+      MQTT::Client.connect("mqtts://#{Rails.configuration.mqtt['username']}:#{Rails.configuration.mqtt['password']}@#{Rails.configuration.mqtt['host']}")
+  rescue StandardError
+      nil
   end
-
+  end
 end

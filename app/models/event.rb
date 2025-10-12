@@ -1,4 +1,6 @@
-class Event < ActiveRecord::Base
+# frozen_string_literal: true
+
+class Event < ApplicationRecord
   has_many :event_cases
   has_many :cases, through: :event_cases
   has_many :check_lists, through: :event_cases
@@ -9,6 +11,6 @@ class Event < ActiveRecord::Base
   validates :location, presence: true
 
   def transports
-    Transport.where("destination_event_id = #{self.id} or source_event_id = #{id}")
+    Transport.where("destination_event_id = #{id} or source_event_id = #{id}")
   end
 end

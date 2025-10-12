@@ -1,14 +1,15 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-RSpec.describe ItemType, type: :model do
-
+RSpec.describe ItemType do
   context "LOCATIONS" do
-    it "should be an array" do
+    it "is an array" do
       expect(ItemType::LOCATIONS).to be_a Array
     end
 
-    it "should be exist" do
-      expect(ItemType::LOCATIONS).not_to be nil
+    it "is exist" do
+      expect(ItemType::LOCATIONS).not_to be_nil
     end
   end
 end

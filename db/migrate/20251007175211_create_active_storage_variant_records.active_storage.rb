@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This migration comes from active_storage (originally 20191206030411)
 class CreateActiveStorageVariantRecords < ActiveRecord::Migration[6.0]
   def change
@@ -14,6 +16,7 @@ class CreateActiveStorageVariantRecords < ActiveRecord::Migration[6.0]
   end
 
   private
+
     def primary_key_type
       config = Rails.configuration.generators
       config.options[config.orm][:primary_key_type] || :primary_key

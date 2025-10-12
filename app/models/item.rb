@@ -1,94 +1,85 @@
-class Item < ActiveRecord::Base
-  #attr_accessor :is_deleted?
+# frozen_string_literal: true
 
+class Item < ApplicationRecord
   has_many :item_comments
   has_many :items
 
   belongs_to :case
   belongs_to :item, optional: true
   belongs_to :item_type, optional: true
-  belongs_to :location, optional: true, :class_name => "Item", :foreign_key => "location_item_id"
+  belongs_to :location, optional: true, class_name: "Item", foreign_key: "location_item_id"
 
   validates :name, presence: true
-  validates :case, presence: true
-
 
   def name_with_model
-    if self.model.nil? || self.model.empty?
-      if self.manufacturer.nil? || self.manufacturer.empty?
-        "#{name}"
+    if model.blank?
+      if manufacturer.blank?
+        name.to_s
       else
         "#{name} (#{manufacturer})"
       end
+    elsif manufacturer.blank? || manufacturer == "-"
+      "#{name} (#{model})"
     else
-      if self.manufacturer.nil? || self.manufacturer.empty? || self.manufacturer == '-'
-        "#{name} (#{model})"
-      else
         "#{name} (#{manufacturer} #{model})"
-      end
     end
   end
 
   def shelf?
-    return false if self.item_type.nil?
+    return false if item_type.nil?
 
-    if ItemType::LOCATIONS.include?(self.item_type.name)
-      true
-    else
-      false
-    end
+    ItemType::LOCATIONS.include?(item_type.name)
   end
 
   def shelf_level
-    return false if self.item_type.nil?
-    ItemType::LOCATIONS.index { |x| self.item_type.name == x }
+    return false if item_type.nil?
+
+    ItemType::LOCATIONS.index { |x| item_type.name == x }
   end
 
   # Overwrite default functions.
   #
   # Items should be only disabled instead of deleted!
   def delete
-    self.destroy
+    destroy
   end
 
   def destroy
-    self.update_attribute(:deleted, true)
+    update_attribute(:deleted, true)
   end
 
-  def is_deleted?
-    self.read_attribute(:deleted)
+  def deleted?
+    self[:deleted]
   end
 
   def md5_sum
-    Digest::MD5.hexdigest(self.to_json)
+    Digest::MD5.hexdigest(to_json)
   end
 
   # Move all suitems to the same case.
   #
   # TODO: show message in view before save
   def move_sub_items
-    self.items.each do |sub_item|
-      if self.case != sub_item.case
-        sub_item.case = self.case
-        sub_item.location = nil
-        sub_item.save!
-      end
+    items.each do |sub_item|
+      next unless self.case != sub_item.case
+
+      sub_item.case = self.case
+      sub_item.location = nil
+      sub_item.save!
     end
   end
 
   def clone_item
-    new_item = self.dup
-    new_item.name = "#{self.name}"
+    new_item = dup
+    new_item.name = name.to_s
     new_item.serial_number = ""
     new_item.items = []
 
-    self.items.each do |sub_item|
+    items.each do |sub_item|
       new_item.items << sub_item.clone_item
     end
 
     new_item.save
     new_item
   end
-
-
 end

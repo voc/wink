@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
 #
@@ -7,17 +9,17 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 # Case types
-["Room case", "Audio case"].each do |type|
+[ "Room case", "Audio case" ].each do |type|
   CaseType.create(name: type)
 end
 
 # Cases
-[1,2,3,4,5,6].each do |number|
+[ 1, 2, 3, 4, 5, 6 ].each do |number|
   Case.create(name: "Case #{number}", acronym: "S#{number}",
-    case_type: CaseType.find_by(name: "Room case"))
+              case_type: CaseType.find_by(name: "Room case"))
 
   Case.create(name: "Audio case #{number}", acronym: "A#{number}",
-    case_type: CaseType.find_by(name: "Audio case"))
+              case_type: CaseType.find_by(name: "Audio case"))
 end
 
 # Events
@@ -28,11 +30,10 @@ Event.create(
   end_date: Date.parse("2018-08-26"),
   buildup: DateTime.parse("2018-08-24 10:00"),
   removel: DateTime.parse("2018-08-26 18:00"),
-  case_ids: [1,5,6]
+  case_ids: [ 1, 5, 6 ]
 )
 
-
-["Netzteil", "Kabel", "Adapter", "Device", "Meshbag", "Fach"].each do |type|
+%w[Netzteil Kabel Adapter Device Meshbag Fach].each do |type|
   ItemType.create(
     name: type
   )
@@ -159,7 +160,6 @@ ItemComment.create(
   item_id: Item.last.id
 )
 # Transports
-
 
 # Checklists
 event_case = EventCase.first

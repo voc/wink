@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddDeletedToItems < ActiveRecord::Migration[5.2]
   def change
     change_table(:items) do |t|

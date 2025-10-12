@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Use this file to easily define all of your cron jobs.
 #
 # It's helpful, but not entirely necessary to understand cron before proceeding.
@@ -20,8 +22,8 @@
 # Learn more: http://github.com/javan/whenever
 
 every 1.day, at: "8:00 pm" do
-  #runner "Wink::MqttClient.send_message(\"Broken items: \
-            #{Item.all.where(deleted: false, broken: true).count}\
-            #Missing items: #{Item.all.where(deleted: false, missing: true).count}\")"
+  # runner "Wink::MqttClient.send_message(\"Broken items: \
+  # {Item.all.where(deleted: false, broken: true).count}\
+  # Missing items: #{Item.all.where(deleted: false, missing: true).count}\")"
   rake "wink:send_broken_missing_items"
 end

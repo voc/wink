@@ -1,77 +1,79 @@
-require 'csv'
+# frozen_string_literal: true
+
+require "csv"
 
 class ItemsController < ApplicationController
+  before_action :find_item, except: %i[index create new export]
 
-  before_action :find_item, except: [:index, :create, :new, :export]
+  def index
+    if params["commit"].in?(%w[Export Download Preview])
+      redirect_to controller: "items", action: "index", format: :csv, export: params["export"].permit!,
+                  download: params["commit"] == "Download"
+    end
+
+    respond_to do |format|
+      format.html do
+        @items = Item.where(deleted: false)
+      end
+
+      format.json do
+        @items = Item.where(deleted: false)
+
+        render json: @items
+      end
+
+      format.csv do
+        filter = ""
+        headers["Content-Type"] ||= "text/csv"
+        if params["download"].in?([ true, "true" ])
+          headers["Content-Disposition"] = "attachment; filename=\"export.csv\""
+        end
+
+        cases = if params["export"]
+          params["export"]["cases"].reject(&:empty?)
+        else
+          []
+        end
+
+        filter += " and price >= #{params['export']['price']}" unless params["export"]["price"].empty?
+
+        unless params["export"]["item_type_id"].empty? || params["export"]["item_type_id"] == [ "" ]
+          filter += " and item_type_id IN(#{params['export']['item_type_id'].reject(&:empty?).join(',')})"
+        end
+
+        if cases.any?
+          @items = []
+
+          cases.each do |c|
+            Item.where("case_id = #{c}" + filter).where(deleted: false).find_each { |i| @items << i }
+          end
+          Rails.logger.debug @items
+        else
+          @items = Item.where(deleted: false)
+        end
+      end
+    end
+  end
 
   def show
     @subitems = Item.where(item: @item)
 
     respond_to do |format|
       format.html
-      format.json { render :json => @item.to_json }
+      format.json { render json: @item.to_json }
     end
   end
-
-  def index
-    if params['commit'].in?(['Export', 'Download', 'Preview'])
-      redirect_to controller: 'items', action: 'index', format: :csv, export: params['export'].permit!, download: params['commit'] == 'Download'
-    end
-
-
-    respond_to do |format|
-      format.html do
-        @items = Item.all.where(deleted: false)
-      end
-
-      format.json do
-        @items = Item.all.where(deleted: false)
-
-        render json: @items
-      end
-
-      format.csv do
-        filter = ''
-        headers["Content-Type"] ||= 'text/csv'
-        if params['download'].in?([true, 'true'])
-          headers["Content-Disposition"] = "attachment; filename=\"export.csv\"" 
-        end
-
-        if params["export"]
-          cases = params["export"]["cases"].reject(&:empty?)
-        else
-          cases = []
-        end
-
-        unless params['export']['price'].empty?
-          filter += " and price >= #{params['export']['price']}"
-        end
-
-        unless params['export']['item_type_id'].empty? || params['export']['item_type_id'] == ['']
-          filter += " and item_type_id IN(#{params['export']['item_type_id'].reject { |c| c.empty? }.join(',')})"
-        end
-
-        if cases.count > 0
-          @items = []
-
-          cases.each do |c|
-            Item.where("case_id = #{c}" + filter).where(deleted: false).each{ |i| @items << i }
-          end
-          p @items
-        else
-          @items = Item.all.where(deleted: false)
-        end
-      end
-    end
-  end
-
 
   def new
     @item = Item.new(case: Case.find(params[:case_id]))
-    if params[:location]
-      @item.location_item_id = params[:location]
-    end
+    @item.location_item_id = params[:location] if params[:location]
     @locations = ItemType.where(case_id: @item.case).order(:name)
+  end
+
+  def edit
+    return unless @item.deleted == true
+
+      redirect_to item_path(@item), notify: "Item is still deleted!"
   end
 
   def create
@@ -80,13 +82,7 @@ class ItemsController < ApplicationController
     if @item.save
       redirect_to case_path(@item.case), notice: "Created item #{@item.name}"
     else
-      render action: 'new'
-    end
-  end
-
-  def edit
-    if @item.deleted == true
-      redirect_to item_path(@item), notify: "Item is still deleted!"
+      render action: "new"
     end
   end
 
@@ -102,12 +98,11 @@ class ItemsController < ApplicationController
 
       redirect_to case_path(@item.case), notice: "Updated '#{@item.name}'"
     else
-      render action: 'edit'
+      render action: "edit"
     end
   end
 
-  def delete
-  end
+  def delete; end
 
   def destroy
     @item.destroy
@@ -134,10 +129,9 @@ class ItemsController < ApplicationController
   end
 
   def item_params
-    params.require(:item).permit(:name, :description, :manufacturer, :model,
-                                 :item_id, :case_id, :date_of_purchase,
-                                 :price, :serial_number, :broken, :missing,
-                                 :item_type_id, :location_item_id)
+    params.expect(item: %i[name description manufacturer model
+                           item_id case_id date_of_purchase
+                           price serial_number broken missing
+                           item_type_id location_item_id])
   end
-
 end

@@ -1,63 +1,59 @@
-class Case < ActiveRecord::Base
+# frozen_string_literal: true
+
+class Case < ApplicationRecord
   belongs_to :case_type
   belongs_to :event_case, optional: true
 
   has_many :event_cases
-  has_many :events,      through: :event_cases
+  has_many :events, through: :event_cases
   has_many :check_lists, through: :event_cases
 
   has_many :items
 
   validates :name, presence: true
   validates :acronym, presence: true
-  validates :case_type, presence: true
-
 
   def locations
-    Item.where("case_id = #{self.id} AND \
+    Item.where("case_id = #{id} AND \
       deleted = false AND
-      (item_type_id = #{ItemType.find_by(name: "Meshbag").id} or
-      item_type_id = #{ItemType.find_by(name: "Fach").id})")
+      (item_type_id = #{ItemType.find_by(name: 'Meshbag').id} or
+      item_type_id = #{ItemType.find_by(name: 'Fach').id})")
   end
 
   def sections
-    Item.where("case_id = #{self.id} AND \
+    Item.where("case_id = #{id} AND \
       deleted = false AND
-      item_type_id = #{ItemType.find_by(name: "Fach").id}")
+      item_type_id = #{ItemType.find_by(name: 'Fach').id}")
   end
 
   def relateable_items
-    Item.where("case_id = #{self.id} AND \
+    Item.where("case_id = #{id} AND \
       deleted = false AND
       item_type_id IN(
-        #{ItemType.find_by(name: "Device").id}
+        #{ItemType.find_by(name: 'Device').id}
       )")
   end
 
   def active_items
-    Item.where("case_id = #{self.id} AND \
+    Item.where("case_id = #{id} AND \
       deleted = false AND
       item_type_id NOT IN(
-        #{ItemType.find_by(name: "Meshbag").id}, 
-        #{ItemType.find_by(name: "Fach").id}
+        #{ItemType.find_by(name: 'Meshbag').id},
+        #{ItemType.find_by(name: 'Fach').id}
       )")
   end
 
   def not_deleted_items
-    Item.where("case_id = #{self.id} AND deleted = false")
+    Item.where("case_id = #{id} AND deleted = false")
   end
 
   def flagged_items
-    Item.where("case_id = #{self.id} AND 
+    Item.where("case_id = #{id} AND
       deleted = false AND ( broken = true OR missing = true )")
   end
 
   def check_list_exists?(event)
-    if check_list(event).nil?
-      false
-    else
-      true
-    end
+    !check_list(event).nil?
   end
 
   def check_list(event)

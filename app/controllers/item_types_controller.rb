@@ -1,18 +1,19 @@
+# frozen_string_literal: true
+
 class ItemTypesController < ApplicationController
-
-  before_action :find_item_type, except: [:index, :create, :new]
-
-  def show
-  end
+  before_action :find_item_type, except: %i[index create new]
 
   def index
     @item_types = ItemType.all
   end
 
+  def show; end
 
   def new
-    @item_type = ItemType.new()
+    @item_type = ItemType.new
   end
+
+  def edit; end
 
   def create
     @item_type = ItemType.new(item_params)
@@ -20,23 +21,19 @@ class ItemTypesController < ApplicationController
     if @item_type.save
       redirect_to item_type_path(@item_type)
     else
-      render action: 'new'
+      render action: "new"
     end
-  end
-
-  def edit
   end
 
   def update
     if @item_type.update(item_params)
       redirect_to case_path(@item_type.case)
     else
-      render action: 'edit'
+      render action: "edit"
     end
   end
 
-  def delete
-  end
+  def delete; end
 
   def destroy
     @item_type.destroy
@@ -50,7 +47,6 @@ class ItemTypesController < ApplicationController
   end
 
   def item_params
-    params.require(:item).permit(:name)
+    params.expect(item: [ :name ])
   end
-
 end

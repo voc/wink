@@ -1,4 +1,5 @@
-class CaseType < ActiveRecord::Base
-  has_many :cases
+# frozen_string_literal: true
 
+class CaseType < ApplicationRecord
+  has_many :cases
 end

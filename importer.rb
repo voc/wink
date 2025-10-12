@@ -1,6 +1,10 @@
+# frozen_string_literal: true
+
 require 'pathname'
+# rubocop:disable Layout/LineLength
 #     0        1            2             3             4         5              6                7   8 9       10     11     12            13     14
 # Hersteller,Modell,Gerätebeschreibung,Seriennummer,Eigentümer,Eigentümer,Wiederbeschaffungswert,Case,,Class ,Kommentar,,Anschaffungsjahr,Händler,Rechnung
+# rubocop:enable Layout/LineLength
 
 def load_csv
   @cases = {}
@@ -8,14 +12,10 @@ def load_csv
   index = 0
   File.open(Pathname("seriennummern.csv")).each_line do |line|
     index += 1
-    if index == 1
-      next
-    end
+    next if index == 1
 
-    object = line.split(/,/)
-    if @cases[object[7]].nil?
-      @cases[object[7]] = []
-    end
+    object = line.split(",")
+    @cases[object[7]] = [] if @cases[object[7]].nil?
 
     item = {
       name: object[2],
@@ -31,9 +31,8 @@ def load_csv
   end
 end
 
-
 def import_items
-  @cases.keys.each do |key|
+  @cases.each_key do |key|
     c = Case.find_by(acronym: key)
 
     if c.nil?
@@ -44,9 +43,7 @@ def import_items
     end
 
     @cases[key].each do |item|
-      if item[:name].empty?
-        next
-      end
+      next if item[:name].empty?
 
       i = Item.new(
         name: item[:name],
@@ -54,7 +51,7 @@ def import_items
         manufacturer: item[:hersteller],
         description: item[:beschreibung],
         serial_number: item[:seriennummer],
-        price: item[:price].gsub('€', '').to_f,
+        price: item[:price].delete('€').to_f,
         case: c
       )
 

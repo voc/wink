@@ -1,4 +1,6 @@
-class EventCase < ActiveRecord::Base
+# frozen_string_literal: true
+
+class EventCase < ApplicationRecord
   belongs_to :event
   belongs_to :case
   belongs_to :check_list, optional: true
@@ -6,14 +8,13 @@ class EventCase < ActiveRecord::Base
 
   before_destroy :check_for_list_and_transport
 
-
   private
 
- # Don't remove EventCases when a transport or a
- # CheckList exists.
+  # Don't remove EventCases when a transport or a
+  # CheckList exists.
   def check_for_list_and_transport
-    if self.check_list.nil? || self.transport.nil?
-      return false
-    end
+    return unless check_list.nil? || transport.nil?
+
+      false
   end
 end

@@ -1,4 +1,6 @@
-class ItemComment < ActiveRecord::Base
+# frozen_string_literal: true
+
+class ItemComment < ApplicationRecord
   has_one :item
 
   validates :item_id, presence: true
@@ -7,12 +9,11 @@ class ItemComment < ActiveRecord::Base
 
   default_scope { order(created_at: :desc) }
 
-
   def item
-    Item.find(self.item_id)
+    Item.find(item_id)
   end
 
   def abstract
-    self.comment[0..10]
+    comment[0..10]
   end
 end

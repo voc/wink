@@ -1,8 +1,58 @@
 # Omakase Ruby styling for Rails
 inherit_gem: { rubocop-rails-omakase: rubocop.yml }
 
+plugins:
+  - rubocop-capybara
+  - rubocop-rspec
+  - rubocop-rspec_rails
+
 # Overwrite or add rules to create your own house style
 #
 # # Use `[a, [b, c]]` not `[ a, [ b, c ] ]`
 # Layout/SpaceInsideArrayLiteralBrackets:
 #   Enabled: false
+
+Gemspec:
+  Enabled: true
+Layout:
+  Enabled: true
+Lint:
+  Enabled: true
+Naming:
+  Enabled: true
+Performance:
+  Enabled: true
+  Exclude:
+    - "test/**/*"
+Rails:
+  Enabled: true
+Security:
+  Enabled: true
+Style:
+  Enabled: true
+
+AllCops:
+  NewCops: enable
+  SuggestExtensions: true
+  Exclude:
+  - 'bin/*'
+  - 'db/*schema.rb'
+  - 'data/**/*'
+
+Rails/SkipsModelValidations:
+  Enabled: false
+
+Rails/ReversibleMigration:
+  Enabled: false
+
+# Disable structural lints for existing migrations
+Rails/ThreeStateBooleanColumn:
+  Exclude:
+    - 'db/migrate/201*.rb'
+Rails/CreateTableWithTimestamps:
+  Exclude:
+    - 'db/migrate/201*.rb'
+
+# TODO: Document WINK
+Style/Documentation:
+  Enabled: false

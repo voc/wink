@@ -1,13 +1,7 @@
+# frozen_string_literal: true
+
 class CheckListsController < ApplicationController
-
-  before_action :find_check_list, except: [:index, :create, :new]
-
-  def show
-    respond_to do |format|
-      format.html
-      format.json { render json: @check_list.to_json }
-    end
-  end
+  before_action :find_check_list, except: %i[index create new]
 
   def index
     @check_lists = CheckList.all
@@ -15,6 +9,13 @@ class CheckListsController < ApplicationController
     respond_to do |format|
       format.html
       format.json { render json: @check_lists.to_json }
+    end
+  end
+
+  def show
+    respond_to do |format|
+      format.html
+      format.json { render json: @check_list.to_json }
     end
   end
 
@@ -28,6 +29,22 @@ class CheckListsController < ApplicationController
     end
   end
 
+  def edit
+    shelfs = @check_list.locations
+    @check_list_items = @check_list.check_list_items - shelfs
+    @check_list_items = @check_list_items.reject { |cli| cli.item.deleted? }
+
+    @grouped_items = @check_list_items.group_by do |cli|
+      next if cli.item.shelf?
+
+      if cli.item.location.nil?
+        ""
+      else
+        cli.item.location.name.to_s
+      end
+    end
+  end
+
   def create
     @event_case = EventCase.find(event_case_params[:event_case])
     @event_case.check_list = CheckList.new(check_list_params)
@@ -37,43 +54,25 @@ class CheckListsController < ApplicationController
       @event_case.check_list.copy_items!
 
       redirect_to check_list_path(@event_case.check_list)
+      # rubocop:disable Layout/LineLength
       # TODO: Send mqtt message, when checklist was created.
-      Wink::MqttClient.send_message("'#{@event_case.check_list.advisor}' created '#{@event_case.event.name}' checklist for '#{@event_case.case.name}'")
+      Wink::MqttClient.send_message(
+        "'#{@event_case.check_list.advisor}' created '#{@event_case.event.name}' checklist for '#{@event_case.case.name}'"
+      )
+      # rubocop:enable Layout/LineLength
     else
-      render action: 'new'
-    end
-  end
-
-  def edit
-    shelfs = @check_list.locations
-    @check_list_items = @check_list.check_list_items - shelfs
-    @check_list_items = @check_list_items.select { |cli| !cli.item.is_deleted? }
-
-    @grouped_items = @check_list_items.group_by do |cli|
-      next if cli.item.shelf?
-
-      if cli.item.location.nil?
-        ""
-      else
-        "#{cli.item.location.name}"
-      end
+      render action: "new"
     end
   end
 
   # Check checklist.
   def update
     CheckList.find(params[:id]).check_list_items.each do |cli|
-      if checked_check_list_params[:checked_check_list_items]&.include?("#{cli.id}")
-        cli.checked = true
-      else
-        cli.checked = false
-      end
+      cli.checked = (checked_check_list_params[:checked_check_list_items]&.include?(cli.id.to_s) || false)
 
-      if cli.save!
-        next
-      else
-        render action: 'edit'
-      end
+      next if cli.save!
+
+        render action: "edit"
     end
 
     if ActiveModel::Type::Boolean.new.cast(check_list_params[:checked])
@@ -84,7 +83,9 @@ class CheckListsController < ApplicationController
       mark_missing_items(@check_list)
       #
       # TODO: Send mqtt message, when checklist is finished.
-      Wink::MqttClient.send_message("'#{@check_list.advisor}' finished '#{@check_list.event.name}' checklist for '#{@check_list.case.name}'")
+      Wink::MqttClient.send_message(
+        "'#{@check_list.advisor}' finished '#{@check_list.event.name}' checklist for '#{@check_list.case.name}'"
+      )
     else
       @check_list.checked = false
     end
@@ -98,8 +99,7 @@ class CheckListsController < ApplicationController
     end
   end
 
-  def delete
-  end
+  def delete; end
 
   def destroy
     # TODO: Disable checklist deletion in views.
@@ -114,15 +114,15 @@ class CheckListsController < ApplicationController
   end
 
   def check_list_params
-    params.require(:check_list).permit(:comment, :advisor, :checked)
+    params.expect(check_list: %i[comment advisor checked])
   end
 
   def checked_check_list_params
-    params.require(:check_list).permit(checked_check_list_items: [])
+    params.expect(check_list: [ checked_check_list_items: [] ])
   end
 
   def event_case_params
-    params.require(:check_list).permit(:event_case)
+    params.expect(check_list: [ :event_case ])
   end
 
   def unmark_missing_items(checklist)
@@ -130,16 +130,16 @@ class CheckListsController < ApplicationController
       # Unmark previously missing items
       # when checklist is finished and item on list is checked.
       item = checklist_item.item
-      if item.missing == true and checklist_item.checked == true
-        item.missing = false
-        item.save!
+      next unless item.missing == true and checklist_item.checked == true
 
-        ItemComment.create(
-          author: "WINK",
-          comment: "Item was found by '#{checklist.advisor}' during '#{checklist.event.name}'.",
-          item_id: checklist_item.item.id
-        )
-      end
+      item.missing = false
+      item.save!
+
+      ItemComment.create(
+        author: "WINK",
+        comment: "Item was found by '#{checklist.advisor}' during '#{checklist.event.name}'.",
+        item_id: checklist_item.item.id
+      )
     end
   end
 
@@ -147,17 +147,17 @@ class CheckListsController < ApplicationController
     checklist.items_without_shelfs.each do |checklist_item|
       # Mark items as missing when checklist is finished and items on list are
       # not checked.
-      if checklist_item.checked == false
-        item = checklist_item.item
-        item.missing = true
-        item.save!
+      next unless checklist_item.checked == false
 
-        ItemComment.create(
-          author: "WINK",
-          comment: "Item marked as missing by '#{checklist.advisor}' during '#{checklist.event.name}'.",
-          item_id: checklist_item.item.id
-        )
-      end
+      item = checklist_item.item
+      item.missing = true
+      item.save!
+
+      ItemComment.create(
+        author: "WINK",
+        comment: "Item marked as missing by '#{checklist.advisor}' during '#{checklist.event.name}'.",
+        item_id: checklist_item.item.id
+      )
     end
     # TODO: Copy broken state to items and create
     #       a comment containing the event and checklist number.

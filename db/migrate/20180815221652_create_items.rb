@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateItems < ActiveRecord::Migration[5.2]
   def change
     create_table :items do |t|
@@ -12,7 +14,6 @@ class CreateItems < ActiveRecord::Migration[5.2]
       t.string :serial_number
       t.boolean :broken, default: false
       t.boolean :missing, default: false
-
 
       t.timestamps
     end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateSchemaChanges < ActiveRecord::Migration[5.2]
   def change
     change_table(:event_cases) do |t|

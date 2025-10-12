@@ -1,29 +1,13 @@
+# frozen_string_literal: true
+
 class CasesController < ApplicationController
-
-  before_action :find_case, except: [:index, :create, :new]
-
-  def show
-    @grouped_shelfs = @case.locations.group_by { |i| i.location.nil? ? i.name : i.location.name }
-
-    @items_without_sections = @case.items.where(deleted: false) - @case.sections
-    @grouped_items = @items_without_sections.group_by do |i|
-      i.location
-    end
-
-    @flagged_items = @case.flagged_items
-    @deleted_items = Item.where(case: @case, deleted: true)
-
-    respond_to do |format|
-      format.html
-      format.json { render json: @case.to_json }
-    end
-  end
+  before_action :find_case, except: %i[index create new]
 
   def index
     @cases = {}
-    CaseType.all.each do |type|
+    CaseType.find_each do |type|
       @cases[type.name] = []
-      Case.where(case_type: type).each do |c|
+      Case.where(case_type: type).find_each do |c|
         @cases[type.name] << c
       end
     end
@@ -34,9 +18,26 @@ class CasesController < ApplicationController
     end
   end
 
+  def show
+    @grouped_shelfs = @case.locations.group_by { |i| i.location.nil? ? i.name : i.location.name }
+
+    @items_without_sections = @case.items.where(deleted: false) - @case.sections
+    @grouped_items = @items_without_sections.group_by(&:location)
+
+    @flagged_items = @case.flagged_items
+    @deleted_items = Item.where(case: @case, deleted: true)
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @case.to_json }
+    end
+  end
+
   def new
     @case = Case.new
   end
+
+  def edit; end
 
   def create
     @case = Case.new(case_params)
@@ -44,23 +45,19 @@ class CasesController < ApplicationController
     if @case.save
       redirect_to cases_path
     else
-      render action: 'new'
+      render action: "new"
     end
-  end
-
-  def edit
   end
 
   def update
     if @case.update(case_params)
       redirect_to cases_path
     else
-      render action: 'edit'
+      render action: "edit"
     end
   end
 
-  def delete
-  end
+  def delete; end
 
   def destroy
     @case.destroy
@@ -74,6 +71,6 @@ class CasesController < ApplicationController
   end
 
   def case_params
-    params.require(:case).permit(:name, :acronym, :case_type_id)
+    params.expect(case: %i[name acronym case_type_id])
   end
 end
