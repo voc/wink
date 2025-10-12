@@ -25,29 +25,29 @@
         %th Cases
         %th Checklists
     %tbody
-    - events.each do |event|
-      %tr
-        %td.no_color
-          %a{href: event_path(event)}= event.name
-        %td.no_color
-          %a{href: event_path(event)}= l event.start_date
-        %td.no_color
-          %a{href: event_path(event)}= l event.end_date
-        %td.no_color
-          %a{href: event_path(event)}= event.location
-        %td
-          %ul
-          - event.transports.each do |c|
-            %li
-              %a{href: case_path(c)}= c.name
-        %td
-          %span.cases
-            - event.cases.each do |c|
-              %a{href: case_path(c)}= c.acronym
-        %td
-          %span
-            - event.check_lists.each do |cl|
-              %a{href: check_list_path(cl)}= cl.case.acronym
+      - events.each do |event|
+        %tr
+          %td.no_color
+            %a{href: event_path(event)}= event.name
+          %td.no_color
+            %a{href: event_path(event)}= l event.start_date
+          %td.no_color
+            %a{href: event_path(event)}= l event.end_date
+          %td.no_color
+            %a{href: event_path(event)}= event.location
+          %td
+            %ul
+            - event.transports.each do |c|
+              %li
+                %a{href: case_path(c)}= c.name
+          %td
+            %span.cases
+              - event.cases.each do |c|
+                %a{href: case_path(c)}= c.acronym
+          %td
+            %span
+              - event.check_lists.each do |cl|
+                %a{href: check_list_path(cl)}= cl.case.acronym
 
 %a{name: "items"}
 %h3 Broken or missing items
@@ -66,22 +66,22 @@
           %th Last comment
           %th Actions
       %tbody
-      - items.each do |bitem|
-        %tr
-          - if bitem.missing
-            %td.missing{title: "missing"} missing
-          - else
-            %td.broken{title: "broken"} broken
-          %td.no_color
-            %a{href: item_path(bitem)}= bitem.name
-          %td.no_color
-            %a{href: item_path(bitem)}= bitem.model
-          - if bitem.item_comments.count == 0
-            %td
-          - else
+        - items.each do |bitem|
+          %tr
+            - if bitem.missing
+              %td.missing{title: "missing"} missing
+            - else
+              %td.broken{title: "broken"} broken
             %td.no_color
-              %a{href: item_path(bitem)}
-                = "#{bitem.item_comments.first.author}: #{bitem.item_comments.first.comment}"
-          %td
-            %a{href: item_path(bitem)} show
-            %a{href: edit_item_path(bitem)} edit
+              %a{href: item_path(bitem)}= bitem.name
+            %td.no_color
+              %a{href: item_path(bitem)}= bitem.model
+            - if bitem.item_comments.count == 0
+              %td
+            - else
+              %td.no_color
+                %a{href: item_path(bitem)}
+                  = "#{bitem.item_comments.first.author}: #{bitem.item_comments.first.comment}"
+            %td
+              %a{href: item_path(bitem)} show
+              %a{href: edit_item_path(bitem)} edit
