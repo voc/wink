@@ -8,6 +8,12 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
+ItemType::SPECIAL_TYPES.each do |location|
+  ItemType.create(name: location)
+end
+
+return unless Rails.env.local?
+
 # Case types
 [ "Room case", "Audio case" ].each do |type|
   CaseType.create(name: type)
@@ -34,7 +40,7 @@ Event.create(
 )
 
 %w[Netzteil Kabel Adapter Device Meshbag Fach].each do |type|
-  ItemType.create(
+  ItemType.create_or_find_by(
     name: type
   )
 end
@@ -159,9 +165,3 @@ ItemComment.create(
   comment: "wieder ganz",
   item_id: Item.last.id
 )
-# Transports
-
-# Checklists
-event_case = EventCase.first
-event_case.check_list = CheckList.new(advisor: 'Peter Lustig', comment: 'foobar, möp möp 23')
-event_case.save

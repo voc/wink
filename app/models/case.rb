@@ -14,42 +14,27 @@ class Case < ApplicationRecord
   validates :acronym, presence: true
 
   def locations
-    Item.where("case_id = #{id} AND \
-      deleted = false AND
-      (item_type_id = #{ItemType.find_by(name: 'Meshbag').id} or
-      item_type_id = #{ItemType.find_by(name: 'Fach').id})")
+    not_deleted_items.where(item_type: ItemType.locations)
   end
 
   def sections
-    Item.where("case_id = #{id} AND \
-      deleted = false AND
-      item_type_id = #{ItemType.find_by(name: 'Fach').id}")
+    not_deleted_items.where(item_type: ItemType.sections)
   end
 
-  def relateable_items
-    Item.where("case_id = #{id} AND \
-      deleted = false AND
-      item_type_id IN(
-        #{ItemType.find_by(name: 'Device').id}
-      )")
+  def relatable_items
+    not_deleted_items.where(item_type: ItemType.relatable_items)
   end
 
   def active_items
-    Item.where("case_id = #{id} AND \
-      deleted = false AND
-      item_type_id NOT IN(
-        #{ItemType.find_by(name: 'Meshbag').id},
-        #{ItemType.find_by(name: 'Fach').id}
-      )")
+    not_deleted_items.where.not(item_type: ItemType.locations)
   end
 
   def not_deleted_items
-    Item.where("case_id = #{id} AND deleted = false")
+    Item.existing.where(case: self)
   end
 
   def flagged_items
-    Item.where("case_id = #{id} AND
-      deleted = false AND ( broken = true OR missing = true )")
+    not_deleted_items.where("( broken = true OR missing = true )")
   end
 
   def check_list_exists?(event)

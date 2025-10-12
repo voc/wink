@@ -14,6 +14,9 @@ class Item < ApplicationRecord
 
   validates :name, presence: true
 
+  scope :existing, -> { where(deleted: false) }
+  scope :deleted, -> { where(deleted: true) }
+
   def name_with_model
     if model.blank?
       if manufacturer.blank?
