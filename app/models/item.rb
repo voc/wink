@@ -3,11 +3,14 @@
 class Item < ApplicationRecord
   has_many :item_comments, dependent: :destroy
   has_many :items, dependent: :destroy
+  has_many :location_items, dependent: :destroy, inverse_of: :location,
+                            class_name: "Item", foreign_key: "location_item_id"
 
   belongs_to :case
   belongs_to :item, optional: true
   belongs_to :item_type, optional: true
-  belongs_to :location, optional: true, class_name: "Item", foreign_key: "location_item_id"
+  belongs_to :location, optional: true, inverse_of: :location_items,
+                        class_name: "Item", foreign_key: "location_item_id"
 
   validates :name, presence: true
 
