@@ -1,0 +1,21 @@
+- content_for :title, "New case type - "
+
+%h2 Create new case type
+= render partial: 'record_errors', locals: { record: @case_type }
+
+= form_for(@case_type, as: :case) do |f|
+  = render partial: 'form', locals: {f: f}, object: @case_type
+
+  %h3 existing case types
+  %ul
+    - CaseType.all.each do |type|
+      %li= type.name
+
+  = f.submit "Create"
+  = link_to 'Cancel', case_types_path
+
+
+:javascript
+  $(function() {
+    $('#case_date_of_purchase').datepicker({ dateFormat: 'dd-mm-yy' }).val();
+  });

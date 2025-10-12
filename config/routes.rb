@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   end
 
   resources :item_types
+  resources :case_types
 
   root to: "root#show"
 end

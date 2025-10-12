@@ -1,0 +1,15 @@
+- content_for :title, "#{@case_type.name} - "
+
+%h2= "#{@case_type.name}"
+= render partial: 'record_errors', locals: { record: @case_type }
+
+%ol.properties
+  %li
+    %label Name
+    %span.name= @case_type.name
+
+  %li
+    %label Actions
+    %span.actions
+      %a{href: edit_case_type_path(@case_type)} edit
+      = link_to 'delete', case_type_path(@case_type), data: {:confirm => "Delete case type '#{@case_type.name}'?"}, method: :delete

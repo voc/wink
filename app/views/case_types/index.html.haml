@@ -1,0 +1,19 @@
+- content_for :title, "Case types - "
+
+%h2 Case types
+
+%a{href: new_case_type_path} create new case type
+
+%table{border: 1}
+  %thead
+    %tr
+      %th Name
+      %th Action
+  %tbody
+    - @case_types.sort.each do |type|
+      %tr
+        %td.no_color
+          %a{href: case_type_path(type)}= type.name
+        %td
+          %a{href: case_type_path(type)} show
+          %a{href: edit_case_type_path(type)} edit
