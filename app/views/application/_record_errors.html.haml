@@ -1,0 +1,7 @@
+-if record.errors.any?
+  %b
+    Errors:
+  %ul
+    - record.errors.each do |error|
+      %li
+        = error.full_message

@@ -1,11 +1,7 @@
 - content_for :title, "New item type - "
 
 %h2 Create new item type
-- if @item_type.errors.any?
-  %ul
-    - @item_type.errors.each do |message|
-      %li
-        = message
+= render partial: 'record_errors', locals: { record: @item_type }
 
 = form_for(@item_type, as: :item) do |f|
   = render partial: 'form', locals: {f: f}, object: @item_type

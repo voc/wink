@@ -1,12 +1,7 @@
 - content_for :title, "Edit #{@case.acronym} - "
 
 %h2= "Edit '#{@case.name}' (#{@case.acronym})"
-
-- if @case.errors.any?
-  %ul
-    - @case.errors.each do |message|
-      %li
-        = message
+= render partial: 'record_errors', locals: { record: @case }
 
 = form_for(@case, as: :case, url: case_path(@case), method: 'PUT') do |f|
   = render partial: 'form', locals: {f: f}, object: @case

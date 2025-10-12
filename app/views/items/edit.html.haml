@@ -1,12 +1,7 @@
 - content_for :title, "Edit #{@item.case.acronym}: #{@item.name} - "
 
 %h2= "Edit '#{@item.name}'"
-
-- if @item.errors.any?
-  %ul
-    - @item.errors.each do |message|
-      %li
-        = message
+= render partial: 'record_errors', locals: { record: @item }
 
 %a{href: new_item_path(case_id: @item.case)} new item
 

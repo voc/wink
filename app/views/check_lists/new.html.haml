@@ -1,11 +1,7 @@
 - content_for :title, "Create #{@event_case.case.name} (#{@event_case.event.name}) checklist  - "
 
 %h2= "Create '#{@event_case.case.name}' (#{@event_case.event.name}) checklist "
-- if @event_case.check_list.errors.any?
-  %ul
-    - @event_case.check_list.errors.each do |message|
-      %li
-        = message
+= render partial: 'record_errors', locals: { record: @event_case }
 
 = form_for(@event_case.check_list, as: :check_list) do |f|
   = render partial: 'form', locals: {f: f}, object: @event_case.check_list

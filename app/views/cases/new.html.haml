@@ -1,11 +1,7 @@
 - content_for :title, "New case - "
 
 %h2 Create new case
-- if @case.errors.any?
-  %ul
-    - @case.errors.each do |message|
-      %li
-        = message
+= render partial: 'record_errors', locals: { record: @case }
 
 = form_for(@case, as: :case) do |f|
   = render partial: 'form', locals: {f: f}, object: @case

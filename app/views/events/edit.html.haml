@@ -1,12 +1,7 @@
 - content_for :title, "Edit #{@event.name}"
 
 %h2= "Edit '#{@event.name}'"
-
-- if @event.errors.any?
-  %ul
-    - @event.errors.each do |message|
-      %li
-        = message
+= render partial: 'record_errors', locals: { record: @event }
 
 = form_for(@event, as: :event, url: event_path(@event), method: 'PUT') do |f|
   = render partial: 'form', locals: {f: f}, object: @event

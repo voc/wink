@@ -1,12 +1,7 @@
 - content_for :title, "Edit #{@transport.title}"
 
 %h2= "Edit #{@transport.title}"
-
-- if @transport.errors.any?
-  %ul
-    - @transport.errors.each do |message|
-      %li
-        = message
+= render partial: 'record_errors', locals: { record: @transport }
 
 = form_for(@transport, as: :transport, url: transport_path(@transport), method: 'PUT') do |f|
   = render partial: 'form', locals: {f: f}, object: @transport

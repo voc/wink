@@ -1,11 +1,7 @@
 - content_for :title, "New transport - "
 
 %h2 Create transport
--# if @transport.errors.any?
-  %ul
-    - @transport.errors.each do |message|
-      %li
-        = message
+= render 'record_errors', locals: { record: @transport }
 
 = form_for(@transport, as: :transport) do |f|
   %p
