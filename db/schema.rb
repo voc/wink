@@ -10,52 +10,52 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_12_091238) do
+ActiveRecord::Schema[8.1].define(version: 2025_10_12_091238) do
   create_table "case_types", force: :cascade do |t|
-    t.string "name"
     t.datetime "created_at", precision: nil, null: false
+    t.string "name"
     t.datetime "updated_at", precision: nil, null: false
   end
 
   create_table "cases", force: :cascade do |t|
-    t.integer "case_type_id"
-    t.string "name"
     t.string "acronym"
+    t.integer "case_type_id"
     t.datetime "created_at", precision: nil, null: false
+    t.string "name"
     t.datetime "updated_at", precision: nil, null: false
     t.index ["case_type_id"], name: "index_cases_on_case_type_id"
   end
 
   create_table "check_list_items", force: :cascade do |t|
-    t.integer "check_list_id"
-    t.integer "item_id"
-    t.integer "case_id"
     t.boolean "broken", default: false, null: false
-    t.boolean "missing", default: false, null: false
+    t.integer "case_id"
+    t.integer "check_list_id"
+    t.boolean "checked", default: false, null: false
     t.text "comment"
     t.datetime "created_at", precision: nil, null: false
+    t.integer "item_id"
+    t.boolean "missing", default: false, null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.boolean "checked", default: false, null: false
     t.index ["case_id"], name: "index_check_list_items_on_case_id"
     t.index ["check_list_id"], name: "index_check_list_items_on_check_list_id"
     t.index ["item_id"], name: "index_check_list_items_on_item_id"
   end
 
   create_table "check_lists", force: :cascade do |t|
-    t.text "comment"
     t.string "advisor"
+    t.boolean "checked", default: false, null: false
+    t.text "comment"
     t.datetime "created_at", precision: nil, null: false
     t.datetime "updated_at", precision: nil, null: false
-    t.boolean "checked", default: false, null: false
   end
 
   create_table "event_cases", force: :cascade do |t|
-    t.integer "event_id"
     t.integer "case_id"
-    t.integer "transport_id"
-    t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
     t.integer "check_list_id"
+    t.datetime "created_at", precision: nil, null: false
+    t.integer "event_id"
+    t.integer "transport_id"
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["case_id"], name: "index_event_cases_on_case_id"
     t.index ["check_list_id"], name: "index_event_cases_on_check_list_id"
     t.index ["event_id"], name: "index_event_cases_on_event_id"
@@ -63,75 +63,75 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_12_091238) do
   end
 
   create_table "events", force: :cascade do |t|
-    t.string "name"
-    t.date "start_date"
-    t.date "end_date"
     t.datetime "buildup", precision: nil
-    t.datetime "removel", precision: nil
-    t.string "location"
     t.datetime "created_at", precision: nil, null: false
+    t.date "end_date"
+    t.string "location"
+    t.string "name"
+    t.datetime "removel", precision: nil
+    t.date "start_date"
     t.datetime "updated_at", precision: nil, null: false
     t.index ["name"], name: "index_events_on_name", unique: true
   end
 
   create_table "item_comments", force: :cascade do |t|
-    t.integer "item_id"
-    t.text "comment"
     t.string "author"
+    t.text "comment"
     t.datetime "created_at", precision: nil, null: false
+    t.integer "item_id"
     t.datetime "updated_at", precision: nil, null: false
     t.index ["item_id"], name: "index_item_comments_on_item_id"
   end
 
   create_table "item_types", force: :cascade do |t|
-    t.string "name"
     t.datetime "created_at", precision: nil, null: false
+    t.string "name"
     t.datetime "updated_at", precision: nil, null: false
     t.index ["name"], name: "index_item_types_on_name", unique: true
   end
 
   create_table "items", force: :cascade do |t|
-    t.string "name"
-    t.string "description"
-    t.string "manufacturer"
-    t.string "model"
-    t.integer "item_id"
-    t.integer "case_id"
-    t.date "date_of_purchase"
-    t.decimal "price"
-    t.string "serial_number"
     t.boolean "broken", default: false, null: false
-    t.boolean "missing", default: false, null: false
+    t.integer "case_id"
     t.datetime "created_at", precision: nil, null: false
-    t.datetime "updated_at", precision: nil, null: false
+    t.date "date_of_purchase"
+    t.boolean "deleted", default: false, null: false
+    t.string "description"
+    t.integer "item_id"
     t.integer "item_type_id"
     t.integer "location_item_id"
-    t.boolean "deleted", default: false, null: false
+    t.string "manufacturer"
+    t.boolean "missing", default: false, null: false
+    t.string "model"
+    t.string "name"
+    t.decimal "price"
+    t.string "serial_number"
+    t.datetime "updated_at", precision: nil, null: false
     t.index ["case_id"], name: "index_items_on_case_id"
     t.index ["item_id"], name: "index_items_on_item_id"
     t.index ["item_type_id"], name: "index_items_on_item_type_id"
   end
 
   create_table "transports", force: :cascade do |t|
-    t.text "source_address"
-    t.text "destination_address"
-    t.datetime "pickup_time", precision: nil
-    t.datetime "delivery_time", precision: nil
-    t.integer "pickup_timeframe"
-    t.integer "delivery_timeframe"
-    t.text "pickup_contact"
-    t.text "delivery_contact"
-    t.boolean "quotation", default: false, null: false
-    t.boolean "ordered", default: false, null: false
+    t.datetime "actual_delivery_time", precision: nil
+    t.datetime "actual_pickup_time", precision: nil
     t.string "carrier"
+    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
+    t.text "delivery_contact"
+    t.string "delivery_state"
+    t.datetime "delivery_time", precision: nil
+    t.integer "delivery_timeframe"
+    t.text "destination_address"
     t.integer "destination_event_id"
+    t.boolean "ordered", default: false, null: false
+    t.text "pickup_contact"
+    t.datetime "pickup_time", precision: nil
+    t.integer "pickup_timeframe"
+    t.boolean "quotation", default: false, null: false
+    t.integer "shipment_id"
+    t.text "source_address"
     t.integer "source_event_id"
     t.string "tracking_number"
-    t.integer "shipment_id"
-    t.string "delivery_state"
-    t.datetime "actual_pickup_time", precision: nil
-    t.datetime "actual_delivery_time", precision: nil
-    t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
   end
 end
