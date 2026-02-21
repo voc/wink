@@ -1,4 +1,4 @@
-<%= CSV.generate_line(['name', 'manufacturer', 'model', 'case', 'serial_number', 'price']) -%>
+<%= CSV.generate_line(['name', 'manufacturer', 'model', 'case', 'serial_number', 'inventory_number', 'price']) -%>
 <%- @items.each do |i| -%>
 <%= CSV.generate_line([
         i.name,
@@ -6,6 +6,7 @@
         i.model,
         i.case.acronym,
         i.serial_number,
+        i.inventory_number,
         i.price.nil? ? '' : "#{'%.2f' % i.price}",
     ]).html_safe -%>
 <%- end -%>

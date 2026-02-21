@@ -115,6 +115,7 @@
           %th Manufacturer
           %th Model
           %th Serial number
+          %th Inventory number
           %th Price
           %th Actions
 
@@ -146,6 +147,8 @@
             %td.no_color
               %a{href: item_path(item)}= item.serial_number
             %td.no_color
+              %a{href: item_path(item)}= item.inventory_number
+            %td.no_color
               %a{href: item_path(item)}= number_to_currency item.price
 
             %td
@@ -167,6 +170,7 @@
       %th Manufacturer
       %th Model
       %th Serial number
+      %th Inventory number
       %th Price
       %th Actions
 
@@ -188,6 +192,8 @@
           %a{href: item_path(item)}= item.model
         %td.no_color
           %a{href: item_path(item)}= item.serial_number
+        %td.no_color
+          %a{href: item_path(item)}= item.inventory_number
         %td.no_color
           %a{href: item_path(item)}= number_to_currency item.price
         %td

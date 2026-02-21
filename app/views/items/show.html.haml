@@ -24,6 +24,9 @@
   %li
     %label Serial number
     %span.serial_number= @item.serial_number
+  %li
+    %label Inventory number
+    %span.inventory_number= @item.inventory_number
   - unless @item.description.nil? || @item.description.empty?
     %br
     %li

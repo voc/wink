@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_10_12_091238) do
+ActiveRecord::Schema[8.1].define(version: 2026_02_21_113247) do
   create_table "case_types", force: :cascade do |t|
     t.datetime "created_at", precision: nil, null: false
     t.string "name"
@@ -97,6 +97,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_10_12_091238) do
     t.date "date_of_purchase"
     t.boolean "deleted", default: false, null: false
     t.string "description"
+    t.string "inventory_number"
     t.integer "item_id"
     t.integer "item_type_id"
     t.integer "location_item_id"
@@ -108,6 +109,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_10_12_091238) do
     t.string "serial_number"
     t.datetime "updated_at", precision: nil, null: false
     t.index ["case_id"], name: "index_items_on_case_id"
+    t.index ["inventory_number"], name: "index_items_on_inventory_number", unique: true
     t.index ["item_id"], name: "index_items_on_item_id"
     t.index ["item_type_id"], name: "index_items_on_item_type_id"
   end

@@ -13,6 +13,7 @@ class Item < ApplicationRecord
                         class_name: "Item", foreign_key: "location_item_id"
 
   validates :name, presence: true
+  validates :inventory_number, uniqueness: true
 
   scope :existing, -> { where(deleted: false) }
   scope :deleted, -> { where(deleted: true) }

@@ -20,6 +20,7 @@
       %th Name
       %th Manufacturer
       %th Model
+      %th Inventory number
       %th Location
       %th Action
   %tbody
@@ -40,6 +41,8 @@
           %a{href: item_path(item)}= item.manufacturer
         %td.no_color
           %a{href: item_path(item)}= item.model
+        %td.no_color
+          %a{href: item_path(item)}= item.inventory_number
         %td.no_color
           - if item.location
             %a{href: item_path(item.location)}= item.location.name

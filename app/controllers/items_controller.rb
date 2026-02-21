@@ -132,7 +132,7 @@ class ItemsController < ApplicationController
   def item_params
     params.expect(item: %i[name description manufacturer model
                            item_id case_id date_of_purchase
-                           price serial_number broken missing
+                           price serial_number inventory_number broken missing
                            item_type_id location_item_id])
   end
 end

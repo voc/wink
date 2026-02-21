@@ -51,6 +51,7 @@ def import_items
         manufacturer: item[:hersteller],
         description: item[:beschreibung],
         serial_number: item[:seriennummer],
+        inventory_number: item[:inventarnummer],
         price: item[:price].delete('€').to_f,
         case: c
       )
