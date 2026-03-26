@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class ItemType < ApplicationRecord
-  SECTIONS = %w[Fach].freeze
-  BAGS = %w[Meshbag].freeze
+  SECTIONS = %w[Case Compartment].freeze
+  BAGS = %w[Box Meshbag].freeze
   LOCATIONS = (SECTIONS + BAGS).freeze
 
   RELATABLE_ITEMS = %w[Device].freeze

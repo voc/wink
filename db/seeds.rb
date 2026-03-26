@@ -2,11 +2,6 @@
 
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
 
 ItemType::SPECIAL_TYPES.each do |location|
   ItemType.create(name: location)
@@ -14,18 +9,17 @@ end
 
 return unless Rails.env.local?
 
-# Case types
-[ "Room case", "Audio case" ].each do |type|
-  CaseType.create(name: type)
+# Set types
+[ "Lecture room set", "Regie set", "other"].each do |type|
+  CaseType.create_or_find_by(name: type)
 end
 
-# Cases
+## Sets
+# We called 'sets' initally, 'cases' but now each set consits of multiple flight cases, 
+# This is a bit confusing but we can not change it now without breaking existing code and tests.
 [ 1, 2, 3, 4, 5, 6 ].each do |number|
-  Case.create(name: "Case #{number}", acronym: "S#{number}",
-              case_type: CaseType.find_by(name: "Room case"))
-
-  Case.create(name: "Audio case #{number}", acronym: "A#{number}",
-              case_type: CaseType.find_by(name: "Audio case"))
+  Case.create(name: "Room #{number}", acronym: "S#{number}",
+              case_type: CaseType.find_by(name: "Lecture room set"))
 end
 
 # Events
@@ -39,34 +33,64 @@ Event.create(
   case_ids: [ 1, 5, 6 ]
 )
 
-%w[Netzteil Kabel Adapter Device Meshbag Fach].each do |type|
+["Case", "Compartment", "Box", "Device", "Power supply", "Cable", "Adapter"].each do |type|
   ItemType.create_or_find_by(
     name: type
   )
 end
 
+# Flight Cases
+Item.create(
+  name: "Case 1.1",
+  case: Case.first,
+  item_type: ItemType.find_by(name: "Case")
+)
+
+Item.create(
+  name: "Case 1.2",
+  case: Case.first,
+  item_type: ItemType.find_by(name: "Case")
+)
+
+case1_1 = Item.find_by(name: "Case 1.1")
+case1_2 = Item.find_by(name: "Case 1.2")
+
 # Items
 Item.create(
-  name: "Fach vorne links",
+  name: "Compartment Audio",
   case: Case.first,
-  item_type: ItemType.find_by(name: "Fach")
+  item_type: ItemType.find_by(name: "Compartment"),
+  location: case1_1
 )
 
 Item.create(
-  name: "Fach hinten rechts",
+  name: "Compartment Video",
   case: Case.first,
-  item_type: ItemType.find_by(name: "Fach")
+  item_type: ItemType.find_by(name: "Compartment"),
+  location: case1_2
 )
 
 Item.create(
-  name: "Meshbag Speaker-Adapter",
+  name: "Box Mixer Laptop",
   case: Case.first,
-  item_type: ItemType.find_by(name: "Meshbag"),
-  location: Item.find_by(name: "Fach vorne links")
+  item_type: ItemType.find_by(name: "Box")
 )
 
 Item.create(
-  name: "Encoding Cube",
+  name: "Box Speaker Adapters",
+  case: Case.first,
+  item_type: ItemType.find_by(name: "Meshbag")
+)
+
+Item.create(
+  name: "Box Speaker Adapters",
+  case: Case.first,
+  item_type: ItemType.find_by(name: "Box"),
+  location: Item.find_by(name: "Compartment Audio")
+)
+
+Item.create(
+  name: "Module Encoder",
   case: Case.first,
   price: 1000,
   date_of_purchase: Date.parse("2014-05-01"),
@@ -74,7 +98,7 @@ Item.create(
 )
 
 Item.create(
-  name: "Encoding Cube",
+  name: "Module Encoder",
   case: Case.find(3),
   price: 1000,
   date_of_purchase: Date.parse("2014-05-01"),
@@ -83,9 +107,9 @@ Item.create(
 )
 
 Item.create(
-  name: "TouchMix",
-  manufacturer: "QSC",
-  model: "TouchMix-16",
+  name: "Audio Mixer",
+  manufacturer: "Allen&Heath",
+  model: "CQ18T",
   case: Case.find(2),
   price: 666,
   date_of_purchase: Date.parse("2017-05-23"),
@@ -101,7 +125,7 @@ Item.create(
   price: 800,
   date_of_purchase: Date.parse("2014-05-01"),
   serial_number: "7d9dc4bf-d9c6-4818-8ebd-138428b27a62",
-  location: Item.find_by(name: "Notebook-Fach")
+  location: Item.find_by(name: "Box Mixer Laptop")
 )
 
 Item.create(
@@ -109,14 +133,14 @@ Item.create(
   case: Case.first,
   item_type: ItemType.find_by(name: "Netzteil"),
   item: Item.find_by(case: Case.first, name: "Mixer Notebook"),
-  location: Item.find_by(name: "Fach hinten rechts")
+  location: Item.find_by(name: "Box Mixer Laptop")
 )
 
 Item.create(
   name: "VGA → HDMI-Adapter",
   case: Case.first,
   item_type: ItemType.find_by(name: "Adapter"),
-  location: Item.find_by(name: "Meshbag Speaker-Adapter")
+  location: Item.find_by(name: "Box Speaker Adapters")
 )
 
 Item.create(
@@ -124,7 +148,7 @@ Item.create(
   case: Case.first,
   missing: true,
   item_type: ItemType.find_by(name: "Adapter"),
-  location: Item.find_by(name: "Meshbag Speaker-Adapter")
+  location: Item.find_by(name: "Box Speaker Adapters")
 )
 
 Item.create(
@@ -132,7 +156,7 @@ Item.create(
   case: Case.first,
   missing: true,
   item_type: ItemType.find_by(name: "Adapter"),
-  location: Item.find_by(name: "Meshbag Speaker-Adapter"),
+  location: Item.find_by(name: "Box Speaker Adapters"),
   deleted: true
 )
 
@@ -141,7 +165,7 @@ Item.create(
   case: Case.first,
   broken: true,
   item_type: ItemType.find_by(name: "Adapter"),
-  location: Item.find_by(name: "Meshbag Speaker-Adapter")
+  location: Item.find_by(name: "Box Speaker Adapters")
 )
 
 Item.create(
@@ -149,7 +173,7 @@ Item.create(
   case: Case.first,
   broken: true,
   item_type: ItemType.find_by(name: "Adapter"),
-  location: Item.find_by(name: "Meshbag Speaker-Adapter"),
+  location: Item.find_by(name: "Box Speaker Adapters"),
   deleted: true
 )
 

@@ -8,7 +8,7 @@ RSpec.describe Item do
 
     @item = described_class.new(name: 'my item', model: 'foobar', case: @case,
                                 serial_number: "1337")
-    @item.item_type = ItemType.new(name: 'Fach')
+    @item.item_type = ItemType.new(name: 'Compartment')
   end
 
   describe "#shelf? (virtual attribute)" do
