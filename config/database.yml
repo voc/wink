@@ -1,4 +1,9 @@
-default: &default
+default_sqlite: &default_sqlite
+  adapter: sqlite3
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  timeout: 5000
+
+default_postgres: &default_postgres
   adapter: postgresql
   encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
@@ -7,27 +12,42 @@ default: &default
   password: <%= ENV.fetch("DATABASE_PASSWORD", "") %>
 
 development:
-  <<: *default
-  database: wink_development
+  primary:
+    <<: *default_sqlite
+    database: storage/development.sqlite3
+  cache:
+    <<: *default_sqlite
+    database: storage/development_cache.sqlite3
+    migrations_paths: db/cache_migrate
+  queue:
+    <<: *default_sqlite
+    database: storage/development_queue.sqlite3
+    migrations_paths: db/queue_migrate
+  cable:
+    <<: *default_sqlite
+    database: storage/development_cable.sqlite3
+    migrations_paths: db/cable_migrate
 
+# Warning: The database defined as "test" will be erased and
+# re-generated from your development database when you run "rake".
+# Do not set this db to the same as development or production.
 test:
-  <<: *default
-  database: wink_test
+  <<: *default_sqlite
+  database: storage/test.sqlite3
 
 production:
   primary:
-    <<: *default
+    <<: *default_postgres
     database: <%= ENV.fetch("DATABASE_NAME", "wink") %>
-    # migrations_paths: db/migrate is not necessary, because it's the default value 
   cache:
-    <<: *default
+    <<: *default_postgres
     database: <%= ENV.fetch("CACHE_DATABASE_NAME", "wink_cache") %>
     migrations_paths: db/cache_migrate
   queue:
-    <<: *default
+    <<: *default_postgres
     database: <%= ENV.fetch("QUEUE_DATABASE_NAME", "wink_queue") %>
     migrations_paths: db/queue_migrate
   cable:
-    <<: *default
+    <<: *default_postgres
     database: <%= ENV.fetch("CABLE_DATABASE_NAME", "wink_cable") %>
     migrations_paths: db/cable_migrate
