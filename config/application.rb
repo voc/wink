@@ -33,5 +33,8 @@ module Wink
     config.application_slogan = "(W)o (i)st mei(n)e Winke(k)atze?"
 
     config.mqtt = config_for(:mqtt)
+
+    # Disable image variant processing for unused ActiveStorage
+    config.active_storage.variant_processor = :disabled
   end
 end
