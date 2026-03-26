@@ -7,20 +7,24 @@ C3VOC inventory and transport planning interface.
 
 Clone repository.
 
-```
+```sh
  git clone https://github.com/voc/wink;
  cd wink
 ```
 
 Install dependencies.
 
-```
+```sh
  bundle install
 ```
 
-Create database and add test data.
+Create database (+user) and add test data.
 
+```psql
+ CREATE USER wink WITH CREATEDB PASSWORD 'wink';
 ```
+
+```sh
  rake db:drop db:create db:migrate db:seed
 ```
 
@@ -31,7 +35,7 @@ Run application
 
 ## API
 
-A real API is not implemented yet. Nevertheless you cann call `.json` to some of
+A real API is not implemented yet. Nevertheless you can call `.json` to some of
 the views to get an JSON output:
 
 ```
@@ -44,11 +48,11 @@ GET /check_lists/:id.json
 
 ## Deployment
 
-It is highly recommended to deploy this application with passenger or comparable webservers.
+It is highly recommended to deploy this application with passenger or comparable web servers.
 
 ## License
 
-Copyright (c) 2018, c3voc<br>
+Copyright (c) 2018-2026, c3voc<br>
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without
