@@ -10,7 +10,7 @@ class EventCase < ApplicationRecord
 
   private
 
-  # Don't remove EventCases when a transport or a
+  # Don't remove EventSets when a transport or a
   # CheckList exists.
   def check_for_list_and_transport
     return unless check_list.nil? || transport.nil?

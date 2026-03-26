@@ -36,7 +36,7 @@
   %label{for: 'item_id'}= "Relates to:"
   = f.collection_select :item_id, @item.case.relatable_items.order(:name), :id, :name_with_model, include_blank: true
 %p
-  %label{for: 'case_id'}= "Case:"
+  %label{for: 'case_id'}= "Set:"
   = f.collection_select :case_id, Case.order(:name), :id, :name, include_blank: false
 %p
   %label{for: 'broken'}= "Broken:"

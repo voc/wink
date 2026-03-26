@@ -31,7 +31,7 @@
     %label Name
     %span.name= @case.name
   %li
-    %label Case type
+    %label Type
     %span.case_type= @case.case_type.name
   %li
     %label Acronym
@@ -40,7 +40,7 @@
     %label Actions
     %span.actions
       %a{href: edit_case_path(@case)} edit
-      = link_to 'delete', case_path(@case), data: {:confirm => "Delete case '#{@case.name}'?"}, method: :delete
+      = link_to 'delete', case_path(@case), data: {:confirm => "Delete set '#{@case.name}'?"}, method: :delete
   %li
     %label Checklists
     %ul.events

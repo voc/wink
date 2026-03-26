@@ -1,4 +1,4 @@
-- content_for :title, "Export cases - "
+- content_for :title, "Export sets - "
 
 %h2 Export cases
 
@@ -8,7 +8,7 @@
     = f.select(:format, options_for_select(["csv versicherung", "csv export"]), {}, class: "item_format")
 
   %p.export_cases
-    %label{for: "cases"}= "Cases:"
+    %label{for: "cases"}= "Sets:"
     = f.collection_check_boxes(:cases, Case.all.order(:id), :id, :name)
 
   %p

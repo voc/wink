@@ -1,12 +1,12 @@
-- content_for :title, "New case type - "
+- content_for :title, "New set type - "
 
-%h2 Create new case type
+%h2 Create new set type
 = render partial: 'record_errors', locals: { record: @case_type }
 
 = form_for(@case_type, as: :case) do |f|
   = render partial: 'form', locals: {f: f}, object: @case_type
 
-  %h3 existing case types
+  %h3 existing set types
   %ul
     - CaseType.all.each do |type|
       %li= type.name

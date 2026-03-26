@@ -24,7 +24,7 @@
         %th.end_date End date
         %th.buildup Buildup
         %th.removel Removel
-        %th.cases Cases
+        %th.cases Sets
         %th.actions Actions
     %tbody
       - events.each do |event|
@@ -47,7 +47,7 @@
               %a{href: event_path(event)}= l event.removel
           %td.no_color
             - if event.cases.count == 0
-              no cases assigned
+              no sets assigned
             - else
               %a{href: event_path(event)}= event.cases.map{|c| c.acronym }.join(", ")
           %td

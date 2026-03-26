@@ -1,9 +1,9 @@
-- content_for :title, "Cases - "
+- content_for :title, "Sets - "
 
-%h2 Cases
+%h2 Sets
 
-%a{href: new_case_path} create new case
-%a{href: case_types_path} create case type
+%a{href: new_case_path} create new set
+%a{href: case_types_path} create set type
 
 - @cases.each do |type, cases|
   %h2= type
