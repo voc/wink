@@ -1,7 +1,7 @@
 - content_for :title, "New transport - "
 
 %h2 Create transport
-= render 'record_errors', locals: { record: @transport }
+= render partial: 'record_errors', locals: { record: @transport }
 
 = form_for(@transport, as: :transport) do |f|
   %p
