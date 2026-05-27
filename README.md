@@ -2,6 +2,8 @@
 
 C3VOC inventory and transport planning interface.
 
+> [!Important]
+> This repository has been moved to our forgejo instance. [You can find it here](https://forgejo.c3voc.de/voc/wink).
 
 ## Install
 
